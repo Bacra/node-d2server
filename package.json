@@ -1,0 +1,27 @@
+{
+  "name": "D2Server",
+  "version": "3.0.0",
+  "description": "Web Server For D2",
+  "main": "server.js",
+  "scripts": {
+    "test": "modenon server.js",
+    "start": "node server.js"
+  },
+  "repository": "",
+  "keywords": [
+    "D2",
+    "nondejs",
+    "server",
+    "less",
+    "template"
+  ],
+  "dependencies": {
+    "less": "*"
+  },
+  "devDependencies": {
+
+  },
+  "author": "Bacra Woo <Bacra.Woo@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README"
+}
