@@ -16,7 +16,8 @@
     "template"
   ],
   "dependencies": {
-    "less": "*"
+    "less": "*",
+    "socket.io": "*"
   },
   "devDependencies": {
 
