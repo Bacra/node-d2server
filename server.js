@@ -5,234 +5,411 @@ var http = require('http'),
 	less = require('less'),
 	zlib = require("zlib"),
 	stream = require('stream'),
-	util = require('util'),
-	Event = require("events").EventEmitter,
+	// util = require('util'),
+	// Event = require("events").EventEmitter,
 
-	_app = http.createServer(handler),
-	io = require('socket.io').listen(_app),
+	io = require('socket.io'),
 	ejs = require('ejs'),
 
 	mime = require('./lib/mime.js'),
 	notice = require('./lib/notice.js'),
+	_conf = require('./lib/conf.js'),
 
-	_lastModified = {},					// 文件修改时间
-	_cache = {},						// 缓存的内容
+	_fileServer = http.createServer(),
+
+	_apps = {},
+	_cache = {
+		'tempCache': {}
+	},
+	_alias = {},
+
+
 	_cacheTpl = {},						// 缓存模板解析之后的函数  不使用ejs默认的缓存函数（变量冲突）
 	_watch = {},						// 文件监视对象
-	_serverStartTime = new Date().toUTCString(),
-	// _specialExtname = /html|css|less|js/,		// 需要进行缓存、解析的文件拓展名
-	_gzipReg = /\bgzip\b/i;
+	_serverStartTime = getUTCtime(),
+	_gzipExtname = /^(html|css|less|js)$/,		// 注意 只有使用gzip的文件 缓存才不会放入tempCache
+	_gzipReg = /\bgzip\b/i,
+	_aliasReg = /^([^\.]+)\./;
 
-var DEBUG = true;
-if (DEBUG) notice.warn('INFO', 'Server run in debug module');
 
-function handler(req, res){
-	var uri = url.parse(req.url, true),
-		file = 'view/'+path.normalize(uri.pathname).toLowerCase(),
-		lastModified = _lastModified[file];
 
-	if (DEBUG) lastModified = false;
-	if (lastModified && lastModified == req.headers['if-modified-since']) {
-		res.statusCode = 304;
-		res.end();
-	} else {
 
-		var cache = _cache[file],
-			supGzip = req.headers['accept-encoding'] && _gzipReg.test(req.headers['accept-encoding']);
 
-		if (!supGzip) notice.warn('GZIP', 'Browser do not support gzip');
 
-		if (DEBUG) cache = false;
-		if (cache) {
-			if (supGzip) {
-				res.writeHead(200, cache.zipHead);
-				res.end(cache.zipBuf);
-			} else {
-				cache.sendCont(res);
-			}
-		} else if (!fs.existsSync(file)) {
-			notice.log(404, file);
-			res.statusCode = 404;
-			res.end();
-		} else {
-			build(res, file, uri, lastModified);
+
+
+var HightMemory = true;
+
+
+setInterval(function(){
+	_cache.tempCache = {};
+}, HightMemory ? 1200000 : 10000);		// 每20分钟/10秒，清除临时缓存一次
+
+
+
+// 初始化项目属性
+fs.readdir(_conf.DocumentRoot, function(err, files) {
+	if (err) throw new Error();
+	files.forEach(function(v){
+		if (v != '.'&& v != '..') {
+			var p = _conf.DocumentRoot +v+'/'+_conf.AppConfigFile;
+			if (fs.existsSync(p)) initAppConfig(path.normalize(_conf.DocumentRoot +v), require(p));
 		}
-	}
+	});
+});
+
+
+
+function initAppConfig(root, cont) {
+
 }
 
 
 
-// 生产（Apache）
-// 带有缓存的文件，在没有修改的情况下，只可能运行一次（HTML？？）
-function build(res, file, uri, lastModified){
-	
-	if (!lastModified) {
-		_lastModified[file] = _serverStartTime;		// 临时缓存
-		try {
-			lastModified = fs.statSync(file).mtime.toUTCString();
-			_lastModified[file] = lastModified;
-		} catch (err) {
-			notice.error('FS', err);
+
+
+_fileServer.on('request', function(req, res){
+	var uri = url.parse(req.url, true),
+		host = req.headers.host,
+		docRoot = _conf.DocumentRoot,
+		file, proConf;
+
+	// 获取文件顶端路径
+	if (host) {
+		host = host.match(_aliasReg);
+		if (host) {
+			host = host[1].toLowerCase();
+			if (_alias[host]) docRoot = _alias[host];
 		}
 	}
 
+	// 获取文件完整路径
+	file = parsePath(docRoot + uri.pathname);
+
+	// 获取项目配置文件
+	mapObject(_apps, function(i){
+		if (!file.indexOf(i)) {
+			proConf = _apps[i];
+			return false;
+		}
+	});
+
+	if (proConf) {
+		// 判断是否为数据文件
+		var isDataFile = false,
+			dataFile;
+		forEach(proConf.dataFiles, function(){
+			if (!file.indexOf(this)) {
+				isDataFile = true;
+				return false;
+			}
+		});
+
+		if (isDataFile) {
+			dataFile = proConf.docRoot + _DynamicDataPath + uri.pathname.replace(/[\/\\]/g, '_') + '/' + sortAndStringifyJSON(url.query);
+			
+			// 是否是post提交
+			if (false) {
+				dataFile += '&&_post';
+			}
+
+			fs.readFile(dataFile, function(err, buf){
+				if (err) {
+					fs.write(dataFile, '', function(err){
+						if (err) notice.warn('FS', 'Create DataFile error');
+					});
+					res.statusCode = 404;
+					res.end();
+				} else if (buf.length) {
+					res.end(buf);
+				} else {
+					res.statusCode = 404;
+					res.end();
+				}
+			});
+
+			return;
+		} else if (proConf.fileMap[file]){			// 是否在映射列表中
+			file = proConf.fileMap[file];
+		}
+	}
+
+	fileServer(req, res, file, uri);
+});
+
+
+
+function fileServer(req, res, file, uri){
 	var extname = path.extname(file).substring(1),
-		fileMime = mime(extname),
-		headerParam = {
-			'Content-Type': fileMime,
-			'Last-Modified': lastModified
+		useGzip = false, cache;
+
+	if (_gzipExtname.test(extname)) {
+		// 判断浏览器是否支持gzip
+		useGzip = req.headers['accept-encoding'] && _gzipReg.test(req.headers['accept-encoding']);
+		if (!useGzip) notice.warn('GZIP', 'Browser do not support gzip');
+	}
+	cache = useGzip ? _cache[file] : _cache.tempCache[file];
+
+	if (!cache) {
+		if (!fs.existsSync(file)) {
+			notice.log(404, file);
+			res.statusCode = 404;
+			res.end();
+			return;
+		} else {
+			cache = new Cache(file, extname, useGzip);
+		}
+	}
+
+	cache.getLastModified(function(err, lastModified){		// err 永远都是false 所以不用判断
+		if (lastModified == req.headers['if-modified-since']) {
+			res.statusCode = 304;
+			res.end();
+			return;
+		} else {
+			// 注意 由于sendCont和sendZipCont方法在fileServer函数中，是在getLastModified执行之后再执行的，所以lastModified值已经获取成功
+			cache.sendCont(res);
+		}
+
+		if (!_watch[file]) {
+			if (extname == 'css' || extname == 'less') {
+				initFsWatch(file, function(){
+					// 动态刷新
+					cache.refresh();
+				});
+			} else if (extname == 'html') {
+				initFsWatch(file, function(){
+					// 刷新页面
+					delete _cacheTpl[file];
+					cache.refresh();
+				});
+			} else {
+				initFsWatch(file, function(){
+					// 刷新页面
+					cache.refresh();
+				});
+			}
+		}
+	});
+}
+
+
+
+
+
+
+// 创建带有等待队列的生成函数（附加带有数据缓存）
+// isFirstSync：第一次创建数据的时候，是否要执行添加的回调
+function createCacheQuery(createDateFunc, isFirstSync){
+	var data, query;
+
+	return function(callback, createDataFuncParams){	// createDataFuncParams 一般是不需要的，但考虑到 isFirstSync就有可能传入动态的数据
+		if (data !== undefined) {
+			callback(false, data);
+		} else if (query){
+			query.push(callback);
+		} else {
+			query = [];
+			createDateFunc(function(err, rs){
+				if (!err) data = rs;
+
+				if (!isFirstSync) callback(err, rs);
+
+				notice.log('Query', query.length +' has waited');
+				var cb;
+				while((cb = query.pop())) cb(err, rs);
+				query = null;
+			}, createDataFuncParams);
+		}
+	};
+}
+
+
+
+
+function Cache(file, extname, useGzip, lastModified){
+	// 赶紧注册全局变量
+	if (useGzip) {
+		_cache[file] = this;
+	} else {
+		_cache.tempCache[file] = this;
+	}
+
+
+
+	var self = this,
+		contentType = mime(extname),
+		needParseCont = extname == 'html' || extname == 'less',
+		getLastModified, getContData, getHead, destory;
+
+	if (lastModified) {
+		getLastModified = function(callback){
+			callback(false, lastModified);
+		};
+	} else {
+		getLastModified = createCacheQuery(function(callback){
+			try {
+				lastModified = fs.statSync(file).mtime.toUTCString();
+			} catch (err) {
+				lastModified = _serverStartTime;
+				notice.error('FS', err);
+			}
+
+			callback(false, lastModified);
+		});
+	}
+
+
+	if (useGzip) {
+		getHead = function(){
+			return {
+				'Content-Encoding': 'gzip',
+				'Content-Type': contentType,
+				'Last-Modified': lastModified
+			};
 		};
 
-	if (extname == 'html' || extname == 'less'){
-		fs.readFile(file, function(err, cont){
-			if (err) {
-				res.writeHead(500, 'FS Can Not ReadFile');
-				res.end();
-				notice.error('FS', err);
-				return;
-			}
-
-			cont = cont.toString();
-
-			if (extname == 'less') {
-				parseLess(cont, file, function(cont){
-					res.writeHead(200, headerParam);
-					res.end(cont);
-
-					inGzip(cont, function(buf){
-						_cache[file] = new Cache(buf, fileMime, lastModified);
-					});
-				}, function(err){
-					delete _lastModified[file];
-					res.writeHead(500, 'LESSC Parser ERROR');
-					res.end();
-					notice.error('LESSC', err);
-				});
+		destory = function(){
+			delete _cache[file];
+			if (_cache.tempCache[file]) delete _cache.tempCache[file];
+		};
 
 
-				initFsWatch4cache(file, function(buf, callback){
-						parseLess(buf.toString(), file, callback, function(err){
-							notice.error('LESSC', err);
+		if (needParseCont) { 
+			getContData = createCacheQuery(function(callback, res){
+
+				// 先生成没有压缩的缓存，然后再对cont进行压缩
+				// 注意：由于query本身就是带有缓存的，所以在处理useGzip的时候，必须使用isFirstSync参数
+				var cache = _cache.tempCache[file];
+				if (!cache) cache = new Cache(file, extname, false);
+
+				cache.getContData(function(err, data){
+					directSendData(res, extname.toUpperCase(), err, data);
+					if (err) {
+						callback(err);
+						return;
+					} else {
+						zlib.gzip(data.buf, function(err, buf){
+							if (err) {
+								callback(err);
+							} else {
+								callback(false, {
+									'head': getHead(),
+									'buf': buf
+								});
+							}
 						});
-					}, fileMime);
-			} else {		// HTML
-
-				parseHtml(cont, file, function(cont){
-					res.writeHead(200, headerParam);
-					res.end(cont);
-
-					inGzip(cont, function(buf){
-						_cache[file] = new Cache(buf, fileMime, lastModified);
-					});
-				}, function(err){
-					delete _lastModified[file];
-					res.writeHead(500, 'EJS Parser ERROR');
-					res.end();
-					notice.error('EJS', err);
+					}
 				});
-				
-
-				initFsWatch4cache(file, function(buf, callback){
-					delete _cacheTpl[file];
-					parseHtml(cont, file, callback, function(err){
-						notice.error('EJS', err);
-					});
-				}, fileMime);
-			}
-		});
-
+			}, true);
+		}
 	} else {
-		var jsOrCss = extname == 'js' || extname == 'css';
-		if (jsOrCss) headerParam['Content-Encoding'] = 'gzip';
-		res.writeHead(200, headerParam);
+		getHead = function(){
+			return {
+				'Content-Type': contentType,
+				'Last-Modified': lastModified
+			};
+		};
 
-		var st = fs.createReadStream(file);
-		st.on('error', function(err){
-			if (DEBUG) notice.error('Stream', err);
-			res.writeHead(504, 'Stream Error');
-			res.end();
-		});
-	
-		if (jsOrCss) {
-			// 内容缓存
-			var cachePipe = stream.PassThrough(),
+		destory = function(){
+			delete _cache.tempCache[file];
+		};
+
+		if (needParseCont) {
+			var createGetContData = function(parseFunc, options){
+				return createCacheQuery(function(callback){
+					fs.readFile(file, function(err, cont){
+						if (err) {
+							callback(err);
+							return;
+						}
+						cont = cont.toString();
+						parseFunc(cont, file, function(cont){
+							callback(false, {
+								'head': getHead(),
+								'buf': cont
+							});
+						}, function(err){
+							callback(err);
+						}, options);
+					});
+				});
+			};
+
+			if (extname == 'html') {
+				getContData = createGetContData(parseHtml);
+			} else if (extname == 'less'){
+				getContData = createGetContData(parseLess);
+			}
+		}
+	}
+
+
+	if (!needParseCont) {
+		getContData = createCacheQuery(function(callback, res){
+			var head = getHead();
+			res.writeHead(200, head);
+
+			var st = fs.createReadStream(file),
+				cachePipe = stream.PassThrough(),
 				bufs = [];
 			cachePipe.on('data', function(buf){
 				bufs.push(buf);
 			});
 			cachePipe.on('end', function(){
-				_cache[file] = new Cache(Buffer.concat(bufs), fileMime, lastModified);
+				callback(false, {
+					'head': head,
+					'buf': Buffer.concat(bufs)
+				});
+			});
+			st.on('error', function(err){
+				callback(err);
+
+				notice.error('Stream', err);
+				res.writeHead(500, 'Stream Error');
+				res.end();
 			});
 
-			st.pipe(zlib.createGzip()).pipe(cachePipe).pipe(res);
-
-			initFsWatch4cache(file, function(buf, callback){callback(buf);}, fileMime);
-		} else {
-			st.pipe(res);
-		}
+			if (useGzip) {
+				st.pipe(zlib.createGzip()).pipe(cachePipe).pipe(res);
+			} else {
+				st.pipe(cachePipe).pipe(res);
+			}
+		}, true);
 	}
-}
 
 
-
-
-
-function Cache(zipBuf, fileMime, lastModified){
-	this.zipStatus = -1;
-	this.contStatus = -1;
-	this.zipQuery = [];
-	this.contQuery = [];
-
-	this.fileMime = fileMime;
-	this.lastModified = lastModified;
-
-	this.zipBuf = zipBuf;
-	this.zipHead = {
-		// 'Z-Data-From': 'Server Cache',
-		'Content-Type': fileMime,
-		'Content-Encoding': 'gzip',
-		'Content-Length': zipBuf.length,
-		'Last-Modified': lastModified
+	this.getContData = getContData;
+	this.destory = destory;
+	this.getLastModified = getLastModified;
+	this.sendCont = function(res){
+		getContData(function(err, data){
+			directSendData(res, extname.toUpperCase(), err, data);
+		}, res);
+	};
+	this.refresh = function(){
+		destory();
+		new Cache(file, extname, useGzip, getUTCtime());
 	};
 }
 
-Cache.prototype = {
-	'sendZip': function(res){
-		if (this.zipStatus == 1) {
 
-		}
-	},
-	'updateZip': function(res) {},
-	'sendCont': function(res){
-		if (this.cont) {
-			res.writeHead(200, this.contHead);
-			res.end(this.cont);
-		} else {
-			var self = this;
-			zlib.unzip(this.zipBuf, function(err, buf){
-				if (err) {
-					res.writeHead(500, 'Cache unzip ERROR');
-					res.end();
-				} else {
-					self.setCont(buf);
 
-					res.writeHead(200, self.contHead);
-					res.end(buf);
-				}
-			});
-		}
-	},
-	'setCont': function(buf){
-		this.cont = buf;
-		this.contHead = {
-			'Content-Type': this.fileMime,
-			'Content-Length': buf.length,
-			'Last-Modified': this.lastModified
-		};
+// 直接发送数据
+function directSendData(res, errorName, err, data){
+	if (err) {
+		res.writeHead(500, err);
+		res.end();
+		notice.error(errorName, err);
+	} else {
+		res.writeHead(200, data.head);
+		res.end(data.buf);
 	}
-};
+}
 
-util.inherits(Cache, Event);
+
+
+
 
 
 
@@ -270,34 +447,16 @@ function parseHtml(cont, file, callback, errorCallback, options) {
 
 
 
-// 将string压缩成gzip
-function inGzip(cont, callback){
-	zlib.gzip(cont, function(err, buf){
-		if (err) {
-			notice.error('GZIP', 'in gzip error:'+file);
-		} else {
-			callback(buf);
-		}
-	});
-}
 
-
-
-// 包含调整lastModified操作 关闭watch
 function initFsWatch(file, changeFunc, removeFunc) {
 	var watch = fs.watch(file);
 	_watch[file] = watch;
 
 	watch.on('change', function(e, filename){
 		if (e == 'change') {
-			var lastModified = new Date().toUTCString();
-			_lastModified[file] = lastModified;		// 更新时间
-
-			changeFunc(lastModified);
-
+			changeFunc();
 			notice.log('Watch', 'file change:' + file);
 		} else {
-			delete _lastModified[file];
 			watch.close();
 
 			if (removeFunc) removeFunc();
@@ -320,32 +479,96 @@ function initFsWatch(file, changeFunc, removeFunc) {
 
 
 
-// 相比于initFsWatch 增加了文件内容读取 解析 gzip压缩步骤
-function initFsWatch4cache(file, parseFunc, fileMime) {
-	return initFsWatch(file, function(lastModified){
-			fs.readFile(file, function(err, buf){
-				if (err) {
-					notice.error('FS', err);
-					return;
-				}
 
-				parseFunc(buf, function(cont){
-					inGzip(cont, function(buf2){
-						_cache[file] = new Cache(buf2, fileMime, lastModified);
-					});
-				});
-			});
-		}, function(){
-			delete _cache[file];
-		});
+_fileServer.listen(82);
+notice.log(HightMemory ? 'Hight' : 'Normal',  'Server run in Port:80\t\t'+_serverStartTime);
+
+
+
+
+
+
+
+
+var _infoServer = http.createServer(function(req, res){
+	res.end('111');
+});
+
+
+
+
+io.listen(_infoServer);
+_infoServer.listen(81);
+
+
+
+
+
+
+
+
+// 命令行拓展
+var readline = require('readline'),
+	rl = readline.createInterface(process.stdin, process.stdout);
+
+rl.setPrompt('D2server> ');
+rl.prompt();
+
+rl.on('line', function(line) {
+	switch(line.trim()) {
+		case 'hello':
+			console.log('world!');
+			break;
+		default:
+			console.log('Say what? I might have heard `' + line.trim() + '`');
+	}
+	rl.prompt();
+}).on('close', function() {
+	console.log('Have a great day!');
+	process.exit(0);
+});
+
+
+
+
+
+
+/******************
+		util
+*******************/
+
+function getUTCtime(){
+	return new Date().toUTCString();
 }
 
 
-_app.listen(81);
+function forEach(arr, callback) {
+	for (var i = 0, num = arr.length; i < num; i++) {
+		if (callback.call(arr[i], i, arr[i], num) === false) break;
+	}
+}
 
-notice.log('INFO', 'Server run in Port:81\t\t'+_serverStartTime);
+function mapObject(obj, callback) {
+	for (var i in obj) {
+		if (callback.call(obj[i], i, obj[i]) === false) break;
+	}
+}
 
+function sortAndStringifyJSON(json) {
+	var arr = [],
+		str = [];
+	for (var i in json) {
+		arr.push(i);
+	}
+	arr.sort();
 
-http.createServer(function(req, res){
-	res.end('111');
-}).listen(82);
+	forEach(arr, function(){
+		str.push(this + '=' +json[this]);
+	});
+
+	return str.join('&');
+}
+
+function parsePath(str) {
+	return path.normalize(str).toLowerCase();
+}
