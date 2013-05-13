@@ -35,15 +35,9 @@ var http = require('http'),
 
 
 
-
-
-
-var HightMemory = true;
-
-
 setInterval(function(){
 	_cache.tempCache = {};
-}, HightMemory ? 1200000 : 10000);		// 每20分钟/10秒，清除临时缓存一次
+}, _conf.AutoClearCache);		// 每xxx分钟，清除临时缓存一次
 
 
 
@@ -481,7 +475,7 @@ function initFsWatch(file, changeFunc, removeFunc) {
 
 
 _fileServer.listen(82);
-notice.log(HightMemory ? 'Hight' : 'Normal',  'Server run in Port:80\t\t'+_serverStartTime);
+notice.log('INFO',  'Server run in Port:82\t\t'+_serverStartTime);
 
 
 
