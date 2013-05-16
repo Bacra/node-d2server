@@ -12,7 +12,8 @@ var http = require('http'),
 	ejs = require('ejs'),
 
 	mime = require('./lib/mime.js'),
-	notice = require('./lib/notice.js'),
+	_log = {},
+	notice = require('./lib/notice.js')(_log, true),
 	_conf = require('./lib/conf.js'),
 
 	_fileServer = http.createServer(),
@@ -22,6 +23,7 @@ var http = require('http'),
 		'tempCache': {}
 	},
 	_alias = {},
+	_faviconIcoBuf = '',
 
 
 	_cacheTpl = {},						// 缓存模板解析之后的函数  不使用ejs默认的缓存函数（变量冲突）
@@ -40,6 +42,13 @@ setInterval(function(){
 }, _conf.AutoClearCache);		// 每xxx分钟，清除临时缓存一次
 
 
+fs.readFile('./favicon.ico', function(err, buf){
+	if (err) {
+		notice.warn('SYS', 'favicon not exists');
+	} else {
+		_faviconIcoBuf = buf;
+	}
+});
 
 // 初始化项目属性
 fs.readdir(_conf.DocumentRoot, function(err, files) {
@@ -47,26 +56,75 @@ fs.readdir(_conf.DocumentRoot, function(err, files) {
 	files.forEach(function(v){
 		if (v != '.'&& v != '..') {
 			var p = _conf.DocumentRoot +v+'/'+_conf.AppConfigFile;
-			if (fs.existsSync(p)) initAppConfig(path.normalize(_conf.DocumentRoot +v), require(p));
+			if (fs.existsSync(p)) new AppConfig(parsePath(_conf.DocumentRoot +v+'/'), require(p));
 		}
 	});
 });
 
 
 
-function initAppConfig(root, cont) {
+function AppConfig(root, cont) {
+	_apps[root] = this;
 
+	this.root = root;
+	var self = this;
+
+	if (cont.dataFiles) {
+		this.dataFiles = cont.dataFiles.map(function(v){
+			return parsePath(root+v);
+		});
+	} else {
+		this.dataFiles = [];
+	}
+
+	if (cont.alias) {
+		_alias[cont.alias] = root;
+		// this.alias = alias;
+	}
+
+	if (cont.fileMap) {
+		var fileMap = {};
+		eachObject(cont.fileMap, function(i, v){
+			fileMap[parsePath(root+i)] = parsePath(root+cont.SourcePath+v);
+		});
+		this.fileMap = fileMap;
+	} else {
+		this.fileMap = {};
+	}
+
+	if (cont.baseLess) {
+		var file = root + cont.baseLess,
+			watch = fs.watch(p);
+		this.baseLessCont = fs.readFileSync(file).toString();
+		watch.on('change', function(e){
+			if (e == 'change') {
+				notice.log('BASELESS', 'updata cont', file);
+			}
+		});
+		watch.on('error', function(){
+			notice.error('Watch', 'Base Less File Status Error', file);
+		});
+	} else {
+		this.baseLessCont = '';
+	}
 }
 
 
 
 
 
+
 _fileServer.on('request', function(req, res){
+	if (req.url == '/favicon.ico') {
+		res.statusCode = 200;
+		res.end(_faviconIcoBuf);
+		return;
+	}
+	
 	var uri = url.parse(req.url, true),
 		host = req.headers.host,
 		docRoot = _conf.DocumentRoot,
-		file, proConf;
+		file, appConf;
 
 	// 获取文件顶端路径
 	if (host) {
@@ -81,18 +139,18 @@ _fileServer.on('request', function(req, res){
 	file = parsePath(docRoot + uri.pathname);
 
 	// 获取项目配置文件
-	mapObject(_apps, function(i){
+	eachObject(_apps, function(i){
 		if (!file.indexOf(i)) {
-			proConf = _apps[i];
+			appConf = _apps[i];
 			return false;
 		}
 	});
 
-	if (proConf) {
+	if (appConf) {
 		// 判断是否为数据文件
 		var isDataFile = false,
 			dataFile;
-		forEach(proConf.dataFiles, function(){
+		forEach(appConf.dataFiles, function(){
 			if (!file.indexOf(this)) {
 				isDataFile = true;
 				return false;
@@ -100,7 +158,7 @@ _fileServer.on('request', function(req, res){
 		});
 
 		if (isDataFile) {
-			dataFile = proConf.docRoot + _DynamicDataPath + uri.pathname.replace(/[\/\\]/g, '_') + '/' + sortAndStringifyJSON(url.query);
+			dataFile = appConf.docRoot + _DynamicDataPath + uri.pathname.replace(/[\/\\]/g, '_') + '/' + sortAndStringifyJSON(url.query);
 			
 			// 是否是post提交
 			if (false) {
@@ -123,17 +181,17 @@ _fileServer.on('request', function(req, res){
 			});
 
 			return;
-		} else if (proConf.fileMap[file]){			// 是否在映射列表中
-			file = proConf.fileMap[file];
+		} else if (appConf.fileMap[file]){			// 是否在映射列表中
+			file = appConf.fileMap[file];
 		}
 	}
 
-	fileServer(req, res, file, uri);
+	fileServer(req, res, file, uri, appConf);
 });
 
 
 
-function fileServer(req, res, file, uri){
+function fileServer(req, res, file, uri, appConf){
 	var extname = path.extname(file).substring(1),
 		useGzip = false, cache;
 
@@ -209,9 +267,13 @@ function createCacheQuery(createDateFunc, isFirstSync){
 
 				if (!isFirstSync) callback(err, rs);
 
-				notice.log('Query', query.length +' has waited');
-				var cb;
-				while((cb = query.pop())) cb(err, rs);
+				var len = query.length;
+				notice.log('Query', len +' has waited');
+				
+				if (len) {
+					var cb;
+					while((cb = query.pop())) cb(err, rs);
+				}
 				query = null;
 			}, createDataFuncParams);
 		}
@@ -449,16 +511,16 @@ function initFsWatch(file, changeFunc, removeFunc) {
 	watch.on('change', function(e, filename){
 		if (e == 'change') {
 			changeFunc();
-			notice.log('Watch', 'file change:' + file);
+			notice.log('Watch', 'file change', file);
 		} else {
 			watch.close();
 
 			if (removeFunc) removeFunc();
 
 			if (e == 'rename') {
-				notice.warn('Watch', 'file rename:' + file);
+				notice.warn('Watch', 'file rename', file);
 			} else {
-				notice.error('Watch', 'undefined Event:' + file);
+				notice.error('Watch', 'undefined Event', file);
 			}
 		}
 	});
@@ -502,25 +564,6 @@ _infoServer.listen(81);
 
 
 // 命令行拓展
-var readline = require('readline'),
-	rl = readline.createInterface(process.stdin, process.stdout);
-
-rl.setPrompt('D2server> ');
-rl.prompt();
-
-rl.on('line', function(line) {
-	switch(line.trim()) {
-		case 'hello':
-			console.log('world!');
-			break;
-		default:
-			console.log('Say what? I might have heard `' + line.trim() + '`');
-	}
-	rl.prompt();
-}).on('close', function() {
-	console.log('Have a great day!');
-	process.exit(0);
-});
 
 
 
@@ -542,7 +585,7 @@ function forEach(arr, callback) {
 	}
 }
 
-function mapObject(obj, callback) {
+function eachObject(obj, callback) {
 	for (var i in obj) {
 		if (callback.call(obj[i], i, obj[i]) === false) break;
 	}
