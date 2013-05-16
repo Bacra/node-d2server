@@ -19,26 +19,148 @@ var http = require('http'),
 	_fileServer = http.createServer(),
 
 	_apps = {},
-	_cache = {
-		'tempCache': {}
-	},
 	_alias = {},
 	_faviconIcoBuf = '',
 
-
-	_cacheTpl = {},						// 缓存模板解析之后的函数  不使用ejs默认的缓存函数（变量冲突）
 	_watch = {},						// 文件监视对象
 	_serverStartTime = getUTCtime(),
-	_gzipExtname = /^(html|css|less|js)$/,		// 注意 只有使用gzip的文件 缓存才不会放入tempCache
+	_gzipExtname = /^(html|css|less|js)$/,		// 注意 只有使用gzip的文件 缓存才不会放入cacheTemp
 	_gzipReg = /\bgzip\b/i,
 	_aliasReg = /^([^\.]+)\./;
 
 
 
+var AppConfig = function(root, cont) {
+	_apps[root] = this;
+
+	this.root = root;
+
+	this.cacheCont = {};
+	this.cacheTemp = {};
+	this.cacheTpl = {};			// 缓存模板解析之后的函数  不使用ejs默认的缓存函数（变量冲突）
+
+	this.fileWatch = {};		// 文件监视
+
+	var self = this;
+
+	// 数据文件
+	if (cont.dataFiles) {
+		this.dataFiles = cont.dataFiles.map(function(v){
+			return parsePath(root+v);
+		});
+	}
+
+	// 二级域名
+	if (cont.alias) {
+		_alias[cont.alias] = root;
+	}
+
+	// 文件映射
+	if (cont.fileMap) {
+		var fileMap = [],			// html中一个文件对应多个文件（转化之后，变成虚拟文件名）
+			sourceMap = {},			// 对应的多个文件 每个文件又要虚拟出一个目录和名字
+			fileIndex = 0;
+		eachObject(cont.fileMap, function(ofile, srcfiles){
+			var basePath = path.dirname(ofile)+'/',
+				baseExtname = path.extname(ofile).substring(1).toLowerCase(),
+				getConvertStrFunc = self.getConvertStr[baseExtname];
+			
+			fileMap.push(self.getConvertReg[baseExtname](ofile), srcfiles.map(function(v){
+				var extname = path.extname(v),
+					virtualFile = basePath+path.basename(v, extname)+'.m'+(fileIndex++)+extname;
+
+				sourceMap[parsePath(root+virtualFile)] = parsePath(root+_conf.SourcePath+v);
+				return getConvertStrFunc(virtualFile);
+			}).join('\n'));
+		});
+
+		this.sourceMap = sourceMap;
+		this.convertSource4HTML = function(cont){
+			for(var i = 0, num = fileMap.length; i < num; i = i +2) {
+				cont = cont.replace(fileMap[i], fileMap[i+1]);
+			}
+			return cont;
+		};
+	}
+
+
+	// baseLess 文件
+	if (cont.baseLess) {
+		var baseLess = path.normalize(root + _conf.SourcePath+ cont.baseLess);
+
+		this.readLessCont(baseLess);
+		notice.log('BASELESS', 'read file', baseLess);
+
+		this.fileWatch[this.baseLess] = initFsWatch(baseLess, function(){
+			notice.log('BASELESS', 'updata cont', baseLess);
+			self.readLessCont(baseLess);
+		}, function(e){
+			notice.warn('BASELESS', 'Base Less File '+e, baseLess);
+		}, function(err){
+			notice.error('BASELESS', err, baseLess);
+		});
+	}
+};
+
+AppConfig.prototype = {
+	// 设置默认值
+	'dataFiles': [],
+	'baseLessCont': '',
+	'sourceMap': {},
+	'convertSource4HTML': function(cont){
+		return cont;
+	},
+
+
+	'getConvertStr': {
+		'js': function(path){
+			return '<script type="text/javascript" src="'+path+'"></script>';
+		},
+		'css': function(path){
+			return '<link rel="stylesheet" type="text/css" href="'+path+'" />';
+		}
+	},
+	'getConvertReg': {
+		'js': function(path) {
+			return new RegExp('<script [^>]*src="'+getRegExpUnicode(path)+'"[^>]*><\/script>', 'i');
+		},
+		'css': function(path) {
+			return new RegExp('<link [^>]*href="'+getRegExpUnicode(path)+'"[^>]*>', 'i');
+		}
+	},
+
+	'readLessCont': function(baseLess) {
+		var self = this;
+		fs.readFile(baseLess, function(err, buf){
+			if (err) {
+				console.error('BASELESS', err, baseLess);
+			} else {
+				self.baseLessCont = buf.toString();
+
+				// 需要刷新less的缓存
+				eachObject(self.cacheCont, function(i, v){
+					if (v.extname == 'less') v.destory();
+				});
+				eachObject(self.cacheTemp, function(i, v){
+					if (v.extname == 'less') v.destory();
+				});
+			}
+		});
+	},
+	'destory': function(){
+		eachObject(this.fileWatch, function(i, v){
+			v.close();
+		});
+		delete _apps[this.root];
+	}
+};
+
 
 
 setInterval(function(){
-	_cache.tempCache = {};
+	eachObject(_apps, function(i, v){
+		v.cacheTemp = {};
+	});
 }, _conf.AutoClearCache);		// 每xxx分钟，清除临时缓存一次
 
 
@@ -50,64 +172,40 @@ fs.readFile('./favicon.ico', function(err, buf){
 	}
 });
 
+
+
+// 新建一个空白项目，用于存放没有项目遮盖的文件
+new AppConfig('widthoutApp', {});
 // 初始化项目属性
 fs.readdir(_conf.DocumentRoot, function(err, files) {
 	if (err) throw new Error();
 	files.forEach(function(v){
 		if (v != '.'&& v != '..') {
-			var p = _conf.DocumentRoot +v+'/'+_conf.AppConfigFile;
-			if (fs.existsSync(p)) new AppConfig(parsePath(_conf.DocumentRoot +v+'/'), require(p));
+			var file = _conf.DocumentRoot +v+'/'+_conf.AppConfigFile;
+			fs.exists(file, function(exists){
+				if (exists) {
+					var root = parsePath(_conf.DocumentRoot +v+'/'),
+						appconf = new AppConfig(root, require(file));
+
+					initFsWatch(file, function(){
+						appconf.destory();
+						delete require.cache[require.resolve(file)];
+						appconf = new AppConfig(root, require(file));
+						notice.log('APPConf', 'updata cont', file);
+					}, function(e){
+						notice.warn('APPConf', 'config file '+e, file);
+					}, function(err){
+						notice.error('APPConf', err, file);
+					});
+				}
+			});
 		}
 	});
 });
 
 
 
-function AppConfig(root, cont) {
-	_apps[root] = this;
 
-	this.root = root;
-	var self = this;
-
-	if (cont.dataFiles) {
-		this.dataFiles = cont.dataFiles.map(function(v){
-			return parsePath(root+v);
-		});
-	} else {
-		this.dataFiles = [];
-	}
-
-	if (cont.alias) {
-		_alias[cont.alias] = root;
-		// this.alias = alias;
-	}
-
-	if (cont.fileMap) {
-		var fileMap = {};
-		eachObject(cont.fileMap, function(i, v){
-			fileMap[parsePath(root+i)] = parsePath(root+cont.SourcePath+v);
-		});
-		this.fileMap = fileMap;
-	} else {
-		this.fileMap = {};
-	}
-
-	if (cont.baseLess) {
-		var file = root + cont.baseLess,
-			watch = fs.watch(p);
-		this.baseLessCont = fs.readFileSync(file).toString();
-		watch.on('change', function(e){
-			if (e == 'change') {
-				notice.log('BASELESS', 'updata cont', file);
-			}
-		});
-		watch.on('error', function(){
-			notice.error('Watch', 'Base Less File Status Error', file);
-		});
-	} else {
-		this.baseLessCont = '';
-	}
-}
 
 
 
@@ -181,9 +279,11 @@ _fileServer.on('request', function(req, res){
 			});
 
 			return;
-		} else if (appConf.fileMap[file]){			// 是否在映射列表中
-			file = appConf.fileMap[file];
+		} else if (appConf.sourceMap[file]){			// 是否在映射列表中
+			file = appConf.sourceMap[file];
 		}
+	} else {
+		appConf = _apps['widthoutApp'];
 	}
 
 	fileServer(req, res, file, uri, appConf);
@@ -200,7 +300,7 @@ function fileServer(req, res, file, uri, appConf){
 		useGzip = req.headers['accept-encoding'] && _gzipReg.test(req.headers['accept-encoding']);
 		if (!useGzip) notice.warn('GZIP', 'Browser do not support gzip');
 	}
-	cache = useGzip ? _cache[file] : _cache.tempCache[file];
+	cache = useGzip ? appConf.cacheCont[file] : appConf.cacheTemp[file];
 
 	if (!cache) {
 		if (!fs.existsSync(file)) {
@@ -209,7 +309,7 @@ function fileServer(req, res, file, uri, appConf){
 			res.end();
 			return;
 		} else {
-			cache = new Cache(file, extname, useGzip);
+			cache = new Cache(file, extname, useGzip, appConf);
 		}
 	}
 
@@ -223,20 +323,20 @@ function fileServer(req, res, file, uri, appConf){
 			cache.sendCont(res);
 		}
 
-		if (!_watch[file]) {
+		if (!appConf.fileWatch[file]) {
 			if (extname == 'css' || extname == 'less') {
-				initFsWatch(file, function(){
+				appConf.fileWatch[file] = initFsWatch(file, function(){
 					// 动态刷新
 					cache.refresh();
 				});
 			} else if (extname == 'html') {
-				initFsWatch(file, function(){
+				appConf.fileWatch[file] = initFsWatch(file, function(){
 					// 刷新页面
-					delete _cacheTpl[file];
+					delete appConf.cacheTpl[file];
 					cache.refresh();
 				});
 			} else {
-				initFsWatch(file, function(){
+				appConf.fileWatch[file] = initFsWatch(file, function(){
 					// 刷新页面
 					cache.refresh();
 				});
@@ -283,15 +383,16 @@ function createCacheQuery(createDateFunc, isFirstSync){
 
 
 
-function Cache(file, extname, useGzip, lastModified){
+function Cache(file, extname, useGzip, appConf, lastModified){
 	// 赶紧注册全局变量
 	if (useGzip) {
-		_cache[file] = this;
+		appConf.cacheCont[file] = this;
 	} else {
-		_cache.tempCache[file] = this;
+		appConf.cacheTemp[file] = this;
 	}
 
 
+	this.extname = extname;			// baseLess刷新时需要
 
 	var self = this,
 		contentType = mime(extname),
@@ -317,6 +418,7 @@ function Cache(file, extname, useGzip, lastModified){
 
 
 	if (useGzip) {
+		// 注意 由于sendCont和sendZipCont方法在fileServer函数中，是在getLastModified执行之后再执行的，所以lastModified值已经获取成功
 		getHead = function(){
 			return {
 				'Content-Encoding': 'gzip',
@@ -326,8 +428,8 @@ function Cache(file, extname, useGzip, lastModified){
 		};
 
 		destory = function(){
-			delete _cache[file];
-			if (_cache.tempCache[file]) delete _cache.tempCache[file];
+			delete appConf.cacheCont[file];
+			if (appConf.cacheTemp[file]) delete appConf.cacheTemp[file];
 		};
 
 
@@ -336,8 +438,8 @@ function Cache(file, extname, useGzip, lastModified){
 
 				// 先生成没有压缩的缓存，然后再对cont进行压缩
 				// 注意：由于query本身就是带有缓存的，所以在处理useGzip的时候，必须使用isFirstSync参数
-				var cache = _cache.tempCache[file];
-				if (!cache) cache = new Cache(file, extname, false);
+				var cache = appConf.cacheTemp[file];
+				if (!cache) cache = new Cache(file, extname, false, appConf);
 
 				cache.getContData(function(err, data){
 					directSendData(res, extname.toUpperCase(), err, data);
@@ -368,7 +470,7 @@ function Cache(file, extname, useGzip, lastModified){
 		};
 
 		destory = function(){
-			delete _cache.tempCache[file];
+			delete appConf.cacheTemp[file];
 		};
 
 		if (needParseCont) {
@@ -393,13 +495,12 @@ function Cache(file, extname, useGzip, lastModified){
 			};
 
 			if (extname == 'html') {
-				getContData = createGetContData(parseHtml);
+				getContData = createGetContData(parseHtml, appConf);
 			} else if (extname == 'less'){
-				getContData = createGetContData(parseLess);
+				getContData = createGetContData(parseLess, appConf);
 			}
 		}
 	}
-
 
 	if (!needParseCont) {
 		getContData = createCacheQuery(function(callback, res){
@@ -445,7 +546,7 @@ function Cache(file, extname, useGzip, lastModified){
 	};
 	this.refresh = function(){
 		destory();
-		new Cache(file, extname, useGzip, getUTCtime());
+		new Cache(file, extname, useGzip, appConf, getUTCtime());
 	};
 }
 
@@ -471,27 +572,35 @@ function directSendData(res, errorName, err, data){
 
 
 // 解析less文件
-function parseLess(cont, file, callback, errorCallback){
-	var parser = new(less.Parser)({
-		paths: [path.dirname(file)],
-		filename: path.basename(file)
-	});
+function parseLess(cont, file, callback, errorCallback, options){
+	try {
+		var parser = new(less.Parser)({
+			paths: [path.dirname(file)],
+			filename: path.basename(file)
+		});
 
-	parser.parse(cont, function (err, tree) {
-		if (err) {
-			errorCallback(err);
-			return;
-		}
-		cont = tree.toCSS();
-		cont = cont.replace(/([\w-]) +\.(--|__)/g, '$1$2');		// BEM支持
-		callback(cont);
-	});
+		if (options && options.baseLessCont) cont = options.baseLessCont + cont;
+
+		parser.parse(cont, function (err, tree) {
+			if (err) {
+				errorCallback(err);
+				return;
+			}
+			cont = tree.toCSS();
+			cont = cont.replace(/([\w-]) +\.(--|__)/g, '$1$2');		// BEM支持
+			callback(cont);
+		});
+	} catch (err) {
+		errorCallback(err.message);
+	}
 }
 
 
 function parseHtml(cont, file, callback, errorCallback, options) {
 	try {
-		var tpl = _cacheTpl[file] || (_cacheTpl[file] = ejs.compile(cont, {
+		cont = options.convertSource4HTML(cont);
+
+		var tpl = options.cacheTpl[file] || (options.cacheTpl[file] = ejs.compile(cont, {
 			'filename': file
 		}));
 
@@ -504,18 +613,23 @@ function parseHtml(cont, file, callback, errorCallback, options) {
 
 
 
-function initFsWatch(file, changeFunc, removeFunc) {
-	var watch = fs.watch(file);
-	_watch[file] = watch;
+function initFsWatch(file, changeFunc, removeFunc, errorFunc) {
+	var watch = fs.watch(file),
+		chWaitTime;
 
-	watch.on('change', function(e, filename){
+	watch.on('change', function(e){
 		if (e == 'change') {
+			if (chWaitTime) return;
+			chWaitTime = setTimeout(function(){
+				chWaitTime = null;
+			}, 300);
+
 			changeFunc();
 			notice.log('Watch', 'file change', file);
 		} else {
 			watch.close();
 
-			if (removeFunc) removeFunc();
+			if (removeFunc) removeFunc(e);
 
 			if (e == 'rename') {
 				notice.warn('Watch', 'file rename', file);
@@ -524,8 +638,9 @@ function initFsWatch(file, changeFunc, removeFunc) {
 			}
 		}
 	});
-	watch.on('error', function(e){
-		notice.error('Watch', e);
+	watch.on('error', function(err){
+		if (errorFunc) errorFunc(err);
+		notice.error('Watch', err, file);
 	});
 
 	return watch;
@@ -564,6 +679,31 @@ _infoServer.listen(81);
 
 
 // 命令行拓展
+process.stdin.setEncoding('utf8');
+process.stdin.resume();
+
+process.stdin.on('data', function(data){
+	data = data.trim();
+
+	switch (data) {
+		case 'rs':
+			break;
+		default:
+			var root = _conf.DocumentRoot + data+'/';
+			if (!fs.existsSync(root)) {
+				try {
+					mkdirs(root+_conf.SourcePath);
+					mkdirs(root+_conf.DynamicDataPath);
+					writeFile(root+_conf.AppConfigFile, 'module.exports = {\n\t"dataFiles": [],\n\t"alias": "",\n\t"fileMap": {},\n\t"baseLess": "",\n\t"sync": {\n\t}\n};');
+				} catch(e) {
+					console.error(e);
+				}
+			} else {
+
+			}
+
+	}
+});
 
 
 
@@ -573,6 +713,50 @@ _infoServer.listen(81);
 /******************
 		util
 *******************/
+
+function mkdirs(p){
+	if (!fs.existsSync(p)) {
+		mkdirs(path.join(p, '..'));
+		fs.mkdirSync(p);
+	}
+}
+
+function writeFile(file, buf){
+	mkdirs(path.dirname(file));
+	fs.writeFile(file, buf);
+}
+
+function copyFile(from, to){
+	writeFile(to, fs.readFileSync(from));
+}
+
+
+
+
+
+function getRegExpUnicode(str){
+	var rs = '', code;
+	for (var i = 0, num = str.length; i < num; i++) {
+		// console.log(str.charCodeAt(i).toString(16));
+		code = str.charCodeAt(i).toString(16);
+		code = zeroize(code, 4);
+
+		rs += '\\u' + code;
+	}
+	return rs;
+}
+
+function zeroize(value, length) {
+	if (!length) return value;
+
+	value = String(value);		// 必须转化为字符串才行
+	for (var i = (length - value.length), zeros = ''; i > 0; i--) {
+		zeros += '0';
+	}
+	return zeros + value;
+}
+
+
 
 function getUTCtime(){
 	return new Date().toUTCString();
