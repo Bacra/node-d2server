@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body, html, form, textarea {
+	padding: 0;
+	margin: 0;
+}
+form {
+	font-size: 14px;
+	width: 800px;
+	margin: 0 auto;
+}
+.in, textarea {
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	box-shadow: 2px 2px 1px #e1e1e1 inset;
+}
+textarea {
+	width: 800px;
+	line-height: 1.4;
+	height: 400px;
+	padding: 4px 6px;
+}
+.in {
+	height: 16px;
+	line-height: 16px;
+	padding: 6px 4px;
+	width: 300px;
+}
+.sub {
+	border: 1px solid #7B828A;
+	background: #B5C3C5;
+	color: #fff;
+	padding: 4px 12px;
+	border-radius: 4px;
+	box-shadow: 2px 2px 2px #ccc;
+	font-size: 16px;
+	cursor: pointer;
+}
+.sub:hover {
+	border: 1px solid #74828A;
+	background: #B593C5;
+}
+</style>
+</head>
+<body>
+<form method="post">
+	<p>
+		<label for="appname">项目名称：</label><input id="appname" type="text" name="appname" class="in" />
+	</p>
+	<p>
+		<textarea name="files"></textarea>
+	</p>
+	<p>
+		<input type="submit" class="sub" value="提交" />
+	</p>
+</form>
+</body>
+</html>

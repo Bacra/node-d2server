@@ -6,8 +6,9 @@ var notice = require('./lib/notice.js'),
 
 
 require('./lib/module/fileserv.js').listen(_conf.fileServPort);
-require('./lib/module/ioserv.js');
 require('./lib/module/downserv.js');
 require('./lib/module/infoserv.js').listen(_conf.infoServPort);
+require('./lib/module/viewserv.js').listen(_conf.viewServPort);
 notice.log('INFO',  'File Server run in Port: '+_conf.fileServPort);
-notice.log('INFO',  'IO Server run in Port: '+_conf.infoServPort);
+notice.log('INFO',  'Info Server run in Port: '+_conf.infoServPort);
+notice.log('INFO',  'View Server run in Port: '+_conf.viewServPort);
