@@ -7,7 +7,7 @@ body, html, form, textarea {
 	margin: 0;
 }
 form {
-	font-size: 14px;
+	font: normal 14px arial, "Microsoft YaHei","宋体";
 	width: 800px;
 	margin: 0 auto;
 }
@@ -25,7 +25,7 @@ textarea {
 .in {
 	height: 16px;
 	line-height: 16px;
-	padding: 6px 4px;
+	padding: 6px;
 	width: 300px;
 }
 .sub {
@@ -40,14 +40,18 @@ textarea {
 }
 .sub:hover {
 	border: 1px solid #74828A;
-	background: #B593C5;
+	background: #939EA0;
+}
+.ch {
+	vertical-align: middle;
+	margin-top: 0;
 }
 </style>
 </head>
 <body>
 <form method="post">
 	<p>
-		<label for="appname">项目名称：</label><input id="appname" type="text" name="appname" class="in" />
+		<input id="appname" type="text" name="appname" class="in" placeholder="请输入文件保存的文件夹" /> <input type="checkbox" id="init" class="ch" name="init" checked="checked" /><label for="init">执行初始化</label>
 	</p>
 	<p>
 		<textarea name="files"></textarea>
