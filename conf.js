@@ -2,7 +2,7 @@ var SourcePath = ".source/";
 
 module.exports = {
 	// 'DocumentRoot': __dirname+"/../wwwroot/",
-	'DocumentRoot': 'w:/',
+	'DocumentRoot': 'D:/Projects/',
 	'Domain': 'test.com',
 	'SourcePath': SourcePath,
 	'AppConfigFile': SourcePath + '.appconf',
