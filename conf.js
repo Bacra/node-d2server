@@ -7,6 +7,7 @@ module.exports = {
 	'SourcePath': SourcePath,
 	'AppConfigFile': SourcePath + '.appconf',
 	'DynamicDataPath': SourcePath + '.data/',
+	'StyleMapFile': SourcePath+'.stylemap',
 	'fileServPort': 82,
 	'infoServPort': 81,
 	'viewServPort': 80,
