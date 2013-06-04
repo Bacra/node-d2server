@@ -8,8 +8,9 @@ module.exports = {
 	'AppConfigFile': SourcePath + '.appconf',
 	'DynamicDataPath': SourcePath + '.data/',
 	'StyleMapFile': SourcePath+'.stylemap',
-	'fileServPort': 82,
+	'devServPort': 82,
 	'infoServPort': 81,
 	'viewServPort': 80,
+	'spliceServPort': 83,
 	'AutoClearCache': 1200000
 };
