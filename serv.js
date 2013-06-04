@@ -9,7 +9,7 @@ require('./lib/apps/devserv.js').listen(_conf.devServPort);
 require('./lib/apps/downserv.js');
 require('./lib/apps/infoserv.js').listen(_conf.infoServPort);
 require('./lib/apps/viewserv.js').listen(_conf.viewServPort);
-require('./lib/apps/splitserv.js').listen(_conf.spliceServPort);
+require('./lib/apps/spliceserv.js').listen(_conf.spliceServPort);
 notice.log('INFO',  'Dev Server run in Port: '+_conf.fileServPort);
 notice.log('INFO',  'Info Server run in Port: '+_conf.infoServPort);
 notice.log('INFO',  'View Server run in Port: '+_conf.viewServPort);
