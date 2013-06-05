@@ -18,7 +18,9 @@
 	"dependencies": {
 		"less": "*",
 		"socket.io": "*",
-		"ejs": "*"
+		"ejs": "*",
+		"gcc": "*",
+		"yuicompressor": "*"
 	},
 	"engines": {
 		"node": ">=0.10.7"
