@@ -21,9 +21,3 @@ listen(devServ, _conf.DevServPort, 'Dev Server');
 listen(infoServ, _conf.InfoServPort, 'Info Server');
 listen(viewServ, _conf.ViewServPort, 'View Server');
 listen(spliceServ, _conf.SpliceServPort, 'Splice Server');
-
-
-setTimeout(function(){
-	var appConf = require('./lib/appconfig.js').find(require('./lib/util.js').parsePath('d:/projects/8684passport/'));
-	require('./lib/export.js')(appConf);
-}, 2000);
