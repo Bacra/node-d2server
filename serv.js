@@ -5,15 +5,15 @@ var notice = require('./lib/notice.js'),
 
 
 
-require('./lib/apps/devserv.js').listen(_conf.devServPort);
+require('./lib/apps/devserv.js').listen(_conf.DevServPort);
 require('./lib/apps/downserv.js');
-require('./lib/apps/infoserv.js').listen(_conf.infoServPort);
-require('./lib/apps/viewserv.js').listen(_conf.viewServPort);
-require('./lib/apps/spliceserv.js').listen(_conf.spliceServPort);
-notice.log('INFO',  'Dev Server run in Port: '+_conf.fileServPort);
-notice.log('INFO',  'Info Server run in Port: '+_conf.infoServPort);
-notice.log('INFO',  'View Server run in Port: '+_conf.viewServPort);
-notice.log('INFO',  'Splice Server run in Port: '+_conf.spliceServPort);
+require('./lib/apps/infoserv.js').listen(_conf.InfoServPort);
+require('./lib/apps/viewserv.js').listen(_conf.ViewServPort);
+require('./lib/apps/spliceserv.js').listen(_conf.SpliceServPort);
+notice.log('INFO',  'Dev Server run in Port: '+_conf.DevServPort);
+notice.log('INFO',  'Info Server run in Port: '+_conf.InfoServPort);
+notice.log('INFO',  'View Server run in Port: '+_conf.ViewServPort);
+notice.log('INFO',  'Splice Server run in Port: '+_conf.SpliceServPort);
 
 
 setTimeout(function(){
