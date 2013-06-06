@@ -20,8 +20,9 @@ module.exports = function(extname){
 		"xml": "text/xml"
 	};
 
-
-	if (extname == 'less') {
+	if (extname == 'php') {
+		return mime['html'];
+	} else if (extname == 'less') {
 		return mime['css'];
 	} else {
 		return mime[extname] || 'text/plain';
