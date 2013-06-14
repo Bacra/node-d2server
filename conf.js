@@ -5,7 +5,7 @@ module.exports = {
 	'DocumentRoot': 'D:/Projects/',
 	'Domain': 'test.com',
 	'SourcePath': SourcePath,
-	'AppConfigFile': SourcePath + '.appconf',
+	'AppConfigFile': SourcePath + 'AppConf.js',
 	'DynamicDataPath': SourcePath + '.data/',
 	'StyleMapFile': SourcePath+'.stylemap',
 	'DevServPort': 82,
