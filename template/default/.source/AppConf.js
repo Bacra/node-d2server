@@ -9,7 +9,7 @@ module.exports = {
 	"HTML": {
 		"index/index.html": {
 			'index.html': {
-				'title': '首页-{@appName}'
+				'title': '首页'
 			}
 		}
 	},
