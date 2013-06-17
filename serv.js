@@ -9,12 +9,15 @@ var notice = require('./lib/notice.js'),
 	spliceServ = require('./lib/apps/spliceserv.js'),
 
 	listen = function(serv, port, name){
-		try {
-			serv.listen(port);
-			notice.log('SYS', name+' run in Port:'+port);
-		} catch (err) {
-			notice.error('SYS', name+' '+port+'Port is Occupied');
-		}
+		serv.on('clientError', function(err){
+				notice.error('SYS', name+'('+port+') '+err);
+			})
+			.on('error', function(err){
+				notice.error('SYS', name+' '+err);
+			})
+			.listen(port);
+
+		notice.log('SYS', name+' run in Port:'+port);
 	};
 
 listen(devServ, _conf.DevServPort, 'Dev Server');
