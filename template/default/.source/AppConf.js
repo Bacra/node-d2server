@@ -1,11 +1,9 @@
 module.exports = {
 	"baseLess": "common/b.less",
-	"sync": "D:/svn/产品-{@appName}/",
 	"MinCssName": false,
-	"alias": "{@appName}",
 	"defaultHeader": "common/header.html",
 	"defaultFooter": "common/footer.html",
-	"dataAPI": false,
+	"extra": ["wf_AppConf.js"],
 	"HTML": {
 		"index/index.html": {
 			'index.html': {
