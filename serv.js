@@ -10,7 +10,7 @@ var notice = require('./lib/notice.js'),
 
 	listen = function(serv, port, name){
 		serv.on('clientError', function(err){
-				notice.error('SYS', name+'('+port+') '+err);
+				notice.warn('Client', name+'('+port+') '+err);
 			})
 			.on('error', function(err){
 				notice.error('SYS', name+' '+err);
