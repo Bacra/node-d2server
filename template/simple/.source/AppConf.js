@@ -1,6 +1,5 @@
 module.exports = {
 	"baseLess": "",
-	"sync": "",
 	"MinCssName": false,
 	"alias": "",
 	"defaultHeader": "",
