@@ -4,7 +4,6 @@ module.exports = {
 	'DocumentRoot': 'D:/Projects/',
 	'Domain': 'test.com',
 	'SourcePath': SourcePath,
-	'RedirectFile': '.d2server.html',
 	'MainConfigFile': SourcePath + 'AppConf.js',
 	'AppConfigFile': SourcePath + 'wf_AppConf.js',
 	'DynamicDataPath': SourcePath + '.data/',
