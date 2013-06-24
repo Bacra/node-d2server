@@ -1,0 +1,3 @@
+[submodule "lib/parser/ejs"]
+	path = lib/parser/ejs
+	url = git://github.com/Bacra/ejs.git
