@@ -1,18 +1,18 @@
 module.exports = {
-	"baseLess": "common/b.less",
-	"MinCssName": false,
-	"defaultHeader": "common/header.html",
-	"defaultFooter": "common/footer.html",
-	"extra": ["wf_AppConf.js"],
-	"dataAPI": false,
-	"HTML": {
+	"baseLess": "common/b.less",					// less公共文件
+	"MinCssName": false,							// 压缩样式名的前缀
+	"defaultHeader": "common/header.html",			// 公共头部
+	"defaultFooter": "common/footer.html",			// 公共尾部
+	"extra": ["wf_AppConf.js"],						// 子配置文件
+	"dataAPI": false,								// 动态数据接口
+	"HTML": {							// 配置项目HTML（公共部分）
 		"index/index.html": {
 			'index.html': {
 				'title': '首页'
 			}
 		}
 	},
-	"fileMap": {
+	"fileMap": {						// 配置文件映射（公共部分）
 		"/css/base.min.css": [
 			'common/reset.css',
 			'common/base.css',

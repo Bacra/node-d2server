@@ -1,16 +1,16 @@
 var SourcePath = ".source/";
 
 module.exports = {
-	'DocumentRoot': 'D:/Projects/',
-	'Domain': 'test.com',
-	'SourcePath': SourcePath,
-	'MainConfigFile': SourcePath + 'AppConf.js',
-	'AppConfigFile': SourcePath + 'wf_AppConf.js',
-	'DynamicDataPath': SourcePath + '.data/',
-	'StyleMapFile': SourcePath+'.stylemap',
-	'DevServPort': 82,
-	'InfoServPort': 81,
-	'ViewServPort': 80,
-	'SpliceServPort': 83,
-	'AutoClearCache': 1200000
+	'DocumentRoot': 'D:/Projects/',				// 所有项目所在根目录
+	'Domain': 'test.com',						// 绑定的顶级域名
+	'SourcePath': SourcePath,					// 项目开发文件存放文件夹
+	'MainConfigFile': SourcePath + 'AppConf.js',	// 项目主体配置文件
+	'AppConfigFile': SourcePath + 'wf_AppConf.js',	// 项目成员各自的配置文件
+	'DynamicDataPath': SourcePath + '.data/',		// 存放动态数据的目录
+	'StyleMapFile': SourcePath+'.stylemap',			// 存放样式解析后的映射关系
+	'DevServPort': 82,				// 开发服务器端口
+	'InfoServPort': 81,				// 信息服务器端口
+	'ViewServPort': 80,				// 静态文件浏览服务器端口
+	'SpliceServPort': 83,			// 文件拼接服务器端口
+	'AutoClearCache': 1200000		// 自动清除缓存的定时器
 };
