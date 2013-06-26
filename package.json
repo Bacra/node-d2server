@@ -1,27 +1,29 @@
 {
-  "name": "D2Server",
-  "version": "3.0.0",
-  "description": "Web Server For D2",
-  "main": "server.js",
-  "scripts": {
-    "test": "modenon server.js",
-    "start": "node server.js"
-  },
-  "repository": "",
-  "keywords": [
-    "D2",
-    "nondejs",
-    "server",
-    "less",
-    "template"
-  ],
-  "dependencies": {
-    "less": "*"
-  },
-  "devDependencies": {
-
-  },
-  "author": "Bacra Woo <Bacra.Woo@gmail.com>",
-  "license": "MIT",
-  "readmeFilename": "README"
+	"name": "D2Server",
+	"version": "3.0.0",
+	"description": "Web Server For D2",
+	"author": {
+		"name": "Bacra Woo",
+		"email": "Bacra.Woo@gmail.com"
+	},
+	"main": "serv",
+	"repository": "",
+	"keywords": [
+		"D2",
+		"nondejs",
+		"server",
+		"less",
+		"template"
+	],
+	"dependencies": {
+		"less": "1.4.0",
+		"socket.io": "0.9.16",
+		"gcc": "0.2.0",
+		"yuicompressor": "2.4.8"
+	},
+	"engines": {
+		"node": ">=0.10.7"
+	},
+	"license": "MIT",
+	"readmeFilename": "README.md"
 }
