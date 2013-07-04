@@ -1,7 +1,7 @@
 var SourcePath = ".source/";
 
 module.exports = {
-	'DocumentRoot': 'D:/Projects/',				// 所有项目所在根目录
+	'DocumentRoot': __dirname + '/wwwroot/',				// 所有项目所在根目录
 	'Domain': 'test.com',						// 绑定的顶级域名
 	'SourcePath': SourcePath,					// 项目开发文件存放文件夹
 	'MainConfigFile': SourcePath + 'AppConf.js',	// 项目主体配置文件
