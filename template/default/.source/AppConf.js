@@ -1,4 +1,6 @@
 module.exports = {
+	"name": "{@appRoot}",							// 项目名称
+	"alias": "{@appRoot}",							// 项目的默认二级域名
 	"baseLess": "common/b.less",					// less公共文件
 	"MinCssName": false,							// 压缩样式名的前缀
 	"defaultHeader": "common/header.html",			// 公共头部
