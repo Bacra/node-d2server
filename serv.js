@@ -1,5 +1,5 @@
 var notice = require('./lib/notice.js'),
-	rl = require('./lib/apps/readcmd.js'),
+	rl = require('./lib/apps/cmd.js'),
 	_conf = require('./conf.js'),
 
 	listen = function(serv, port, name){
@@ -21,4 +21,4 @@ listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
 
 
 // plugs
-require('./lib/plugin/downserv.js');
+require('./lib/plugin/downServ.js');
