@@ -1,13 +1,12 @@
 {
 	"name": "D2Server",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"description": "Web Server For D2",
 	"author": {
 		"name": "Bacra Woo",
 		"email": "Bacra.Woo@gmail.com"
 	},
 	"main": "serv",
-	"repository": "",
 	"keywords": [
 		"D2",
 		"nondejs",
@@ -23,6 +22,10 @@
 	},
 	"engines": {
 		"node": ">=0.10.7"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Bacra/node-d2server.git"
 	},
 	"license": "MIT",
 	"readmeFilename": "README.md"
