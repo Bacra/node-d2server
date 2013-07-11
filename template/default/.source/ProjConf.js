@@ -1,11 +1,11 @@
 module.exports = {
-	"name": "{@appRoot}",							// 项目名称
-	"alias": "{@appRoot}",							// 项目的默认二级域名
+	"name": "{@projRoot}",							// 项目名称
+	"alias": "{@projRoot}",							// 项目的默认二级域名
 	"baseLess": "common/b.less",					// less公共文件
 	"MinCssName": false,							// 压缩样式名的前缀
 	"defaultHeader": "common/header.html",			// 公共头部
 	"defaultFooter": "common/footer.html",			// 公共尾部
-	"extra": ["wf_AppConf.js"],						// 子配置文件
+	"extra": ["wf_ProjConf.js"],						// 子配置文件
 	"dataAPI": false,								// 动态数据接口
 	"HTML": {							// 配置项目HTML（公共部分）
 		"index/index.html": {
