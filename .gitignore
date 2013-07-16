@@ -1,4 +1,8 @@
 Thumbs.db
-node_modules
-wwwroot
-start.bat
+/node_modules/
+/wwwroot/
+/start.bat
+
+/template/*
+!/template/default/
+!/template/simple/
