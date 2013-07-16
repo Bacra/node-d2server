@@ -3,6 +3,7 @@ module.exports = {
 	"alias": "{@projRoot}",							// 项目的默认二级域名
 	"baseLess": "common/b.less",					// less公共文件
 	"MinCssName": false,							// 压缩样式名的前缀
+	"hostname": false,								// 线上资源域名
 	"defaultHeader": "common/header.html",			// 公共头部
 	"defaultFooter": "common/footer.html",			// 公共尾部
 	"extra": ["wf_ProjConf.js"],						// 子配置文件
