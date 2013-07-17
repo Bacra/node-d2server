@@ -1,4 +1,4 @@
-module.exports = function(extname){
+module.exports = function(fileType){
 	var mime = {
 		"css": "text/css",
 		"gif": "image/gif",
@@ -20,11 +20,11 @@ module.exports = function(extname){
 		"xml": "text/xml"
 	};
 
-	if (extname == 'php') {
+	if (fileType == 'php') {
 		return mime['html'];
-	} else if (extname == 'less') {
+	} else if (fileType == 'less') {
 		return mime['css'];
 	} else {
-		return mime[extname] || 'text/plain';
+		return mime[fileType] || 'text/plain';
 	}
 };
