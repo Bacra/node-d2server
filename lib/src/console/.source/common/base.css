@@ -1,0 +1,10 @@
+body{font:normal 12px/1.4 arial, "Microsoft YaHei","\5B8B\4F53";background:#FFF; color:#333; }
+input,select{vertical-align:middle;font:normal 12px/1.4 arial, "Microsoft YaHei","\5B8B\4F53"; }
+textarea{font:normal 12px arial, "Microsoft YaHei","\5B8B\4F53"; }
+b, i { font-style: normal;}
+input, textarea {outline: none; resize: none;}
+.clear:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+.clear {zoom:1; /* for IE6 IE7 */}
+.none {display: none;}
+a{text-decoration:none; color:#333;}
+a:hover{text-decoration: underline;}

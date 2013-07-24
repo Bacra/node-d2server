@@ -2,6 +2,7 @@
 
 * 新的dataAPI接口方法，设置动态数据更简单，附加自动Cache功能
 * 不重启server，直接读取外部转入的项目
+* info server增加console页面
 
 
 

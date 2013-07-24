@@ -1,0 +1,159 @@
+@min-width: 600px;
+
+.wf_mMain {
+	min-width: @min-width - 150px;
+	position: relative;
+	padding-left: 150px;
+	position: relative;
+
+	.__tit {
+		margin: 18px 20px 9px;
+		font-size: 18px;
+		color: #666;
+	}
+	.__status {
+		text-align: center;
+		padding: 6px 12px;
+		border: 1px solid #EBAC83;
+		background: #F8F381;
+		box-shadow: 0 0 2px #fff inset;
+		font-size: 16px;
+		text-shadow: 1px 1px 1px #fff;
+		color: #666;
+		font-weight: bold;
+		margin: 4px;
+		min-width: @min-width - 32px;
+	}
+
+	.__lt {
+		position: absolute;
+		width: 150px;
+		top: 0;
+		left: 0px;
+	}
+	.__gt {
+		width: 100%;
+		min-height: 400px;
+		height: auto;
+		*height: 400px;
+	}
+	.__h1 {
+		font-size: 16px;
+		padding: 18px 4px 12px;
+		border-bottom: 1px solid @borderColor;
+	}
+	.__h2 {
+		font-size: 14px;
+		color: #333;
+		margin: 22px 0 8px;
+	}
+	.__body {
+		margin-top: 12px;
+		padding-bottom: 40px;
+	}
+}
+
+
+/* 左侧导航 */
+.wf_mNav {
+	.__item {
+		border-left: 6px solid transparent;
+		margin-bottom: 2px;
+
+		.--cur {
+			border-color: rgb(78, 87, 100);
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+	a {
+		display: block;
+		padding: 6px 20px;
+		color: #999;
+	}
+}
+
+
+/* 简单的标签 */
+.wf_mTags {
+	.__tag {
+		cursor: pointer;
+		float: left;
+		padding: 4px 12px;
+		background: #E4DBDB;
+		margin-right: 6px;
+
+		.--cur {
+			background: #B2C5EE;
+			text-shadow: 1px 1px 1px #e1e1e1;
+		}
+
+		.--before {
+			border-radius: 7px 0 0 7px;
+		}
+		.--after {
+			border-radius: 0 7px 7px 0;
+		}
+	}
+}
+
+
+/* footer */
+.wf_mFooter {
+	padding: 6px 0;
+	border-top: 1px solid #ccc;
+	margin-top: 8px;
+	text-align: center;
+	color: #999;
+	a {
+		margin: 0 8px;
+		color: #999;
+	}
+}
+
+
+/* table base */
+.wf_mTable {
+	width: 96%;
+	margin: 0 auto;
+
+	th {
+		padding-left: 6px;
+		font-weight: bold;
+		border-bottom: 1px solid @borderColor;
+	}
+
+	td {
+		padding: 4px 6px;
+		border-bottom: 1px dotted @borderColor;
+		font-size: 14px;
+	}
+	th, td {
+		text-align: left;
+		&.wf_mTable__agnC {
+			text-align: center;
+		}
+	}
+}
+
+
+/* Simple ul list */
+.wf_mList {
+	border-bottom: 1px dotted @borderColor;
+	font-size: 14px;
+
+	li {
+		position: relative;
+		padding: 6px 0;
+		border-top: 1px dotted @borderColor;
+
+		i {
+			position: absolute;
+			right: 6px;
+			font-size: 12px;
+			margin-top: 2px;
+		}
+	}
+}
