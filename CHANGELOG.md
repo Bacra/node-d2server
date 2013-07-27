@@ -1,8 +1,16 @@
+## 3.2.0
+
+* info server增加console页面
+
+
+
+
 ## 3.1.0
 
 * 新的dataAPI接口方法，设置动态数据更简单，附加自动Cache功能
 * 不重启server，直接读取外部转入的项目
-* info server增加console页面
+* 重新设置`header`和`footer`的配置方案，解决多个配置文件之间设置默认值时存在的不和谐的冲突；同时再提供一层默认值的设置方案（可直接在`HTML`子元素中，设置`header`和`footer`），原先的`defaultHeader`和`defaultFooter`作为跨配置文件的设置存在
+
 
 
 
