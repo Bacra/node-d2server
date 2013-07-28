@@ -56,22 +56,25 @@
 
 /* 左侧导航 */
 .wf_mNav {
-	.__item {
-		border-left: 6px solid transparent;
-		margin-bottom: 2px;
-
-		.--cur {
-			border-color: rgb(78, 87, 100);
-
-			a {
-				text-decoration: none;
-			}
-		}
-	}
 	a {
 		display: block;
 		padding: 6px 20px;
 		color: #999;
+		border-left: 6px solid transparent;
+	}
+	.__item {
+		margin-bottom: 2px;
+		.--cur {
+			a {
+				text-decoration: none;
+				border-color: rgb(78, 87, 100);
+			}
+		}
+		.--btm {
+			padding-bottom: 12px;
+			border-bottom: 1px solid @borderColor;
+			margin-bottom: 12px;
+		}
 	}
 }
 
