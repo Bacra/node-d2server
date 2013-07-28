@@ -2,6 +2,7 @@
 
 * 修正目录存在时，初始化项目，无法自动导入到server中的错误
 * 修正MainProjConf文件HTML配置未被正确解析的错误
+* 修正MainProjConf定义的sync参数无效的问题
 
 
 
