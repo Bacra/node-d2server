@@ -1,4 +1,4 @@
 .git
 node_modules
 wwwroot
-lib/src/console/console
+lib/src/console
