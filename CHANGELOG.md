@@ -1,6 +1,7 @@
 ## 3.1.3
 
 * 修正不使用alias后，无法获取Project信息的问题
+* 修正spliceServer在合并非js css资源时，直接输出第一个文件的问题
 
 
 
