@@ -1,9 +1,24 @@
 D2Server
 ========
 
-D2Server用nodejs编写完成，
-项目包含众多功能组件，涵盖了 **EJS** 、 **AutoF5** 、 **Less** 、 **splice File** 、 **init Object** 、 **DataAPI** 、 **File Sync** 、 **Download Files** 、 **Web Hosting** 、 **Min Css** 、 **Min JS** 、 **Min Css Name** 等模块。
-软件开发目的是为了方便前端同学更好地组织开发文件，快速调试页面。
+D2Server用nodejs编写，为方便前端同学更好地组织开发文件，快速调试页面而开发的服务器环境。
+使用D2Server完全可以替换Apache的开发环境（[了解如何组织动态数据](http://bacra.github.io/node-d2server/dataAPI.html)），构建一个基于静态文件和测试数据的前端开发环境。
+
+
+
+## Features
+
+* 使用项目配置文件管理项目，项目信息简单明了
+* 针对团队协作，可每人设置独立的项目配置文件，由D2Server来合并配置信息
+* 项目下设置独立的开发目录，分离开发文件和导出文件
+* 项目文件保存后，自动刷新浏览器，CSS文件的更新可实现动态加载新样式（兼容IE6）
+* 项目中使用 **EJS** 模版引擎处理HTML代码
+* 项目中使用 **LESS** 编译CSS文件，并针对[BEM命名](http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html)规则，进行优化
+* 使用 **DataAPI** ，不改变生产环境下的数据源文件路径，快速模拟动态数据，并实现自动化的管理
+* 一键导出项目生产环境的最终文件，JS使用 **gcc** 压缩，CSS使用 **yuicompressor** 压缩
+* 导出项目过程中，可以针对[符合规范的样式命名](http://bacra.github.io/node-d2server/MinCssName.html)，提供样式命名的压缩
+* 动态合并开发源文件，方便使用Fiddler等调试工具
+* 可设置多个项目初始化文件配置方案，通过`init`命令快速创建项目
 
 
 
@@ -11,32 +26,16 @@ D2Server用nodejs编写完成，
 
 	node serv.js
 
-默认状态下，占用如下端口：
-
-80: View Server 可浏览编译后文件
-
-81: Info Server 各种杂七杂八的功能都放在这个Server下
-
-82: Develop Server 开发使用的Server
-
-83: Splice Server 调试使用的Server
-
-相关端口配置，见[`conf.js`](./conf.js)
+了解更多：http://bacra.github.io/node-d2server
 
 
 
 
-## Get Started
+## ChangeLog & TodoList
 
-在server环境下，运行`init d2server`；
-在系统host文件中，添加 '127.0.0.1 d2server.test.com'和'127.0.0.1 test.com'；
-然后在浏览器中打开 http://d2server.test.com/index.html，
-恭喜你，创建项目成功啦～～
+你可以在[CHANGELOG.md](./CHANGELOG.md)中找到D2Server的更新状况
 
-聪明的你，打开'd2server/.source/AppConf.js'，是不是一下子明白了这个server环境的运行原理了呢
-
-更多功能介绍及详细文档，见 https://github.com/Bacra/node-d2server/wiki
-
+同时，我们也会在[TODO.md](./TODO.md)中公布D2Server的开发进度
 
 
 
