@@ -1,3 +1,9 @@
+## 3.1.3
+
+* 修正不使用alias后，无法获取Project信息的问题
+
+
+
 ## 3.1.2
 
 * 修正MainProjConf定义的sync参数无效的问题
