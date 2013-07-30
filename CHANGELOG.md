@@ -1,6 +1,16 @@
 ## 3.2.0
 
 * info server增加console页面
+* 针对fileMap中的文件，追加`sync`同步机制
+* 项目配置文件增加catalog参数，简化项目相对于域名的内嵌目录
+
+
+
+
+## 3.1.3
+
+* 修正不使用alias后，无法获取Project信息的问题
+* 修正spliceServer在合并非js css资源时，直接输出第一个文件的问题
 
 
 
