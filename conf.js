@@ -13,5 +13,8 @@ module.exports = {
 	'InfoServPort': 81,				// 信息服务器端口
 	'ViewServPort': 80,				// 静态文件浏览服务器端口
 	'SpliceServPort': 83,			// 文件拼接服务器端口
-	'AutoClearCache': 1200000		// 自动清除缓存的定时器
+	'AutoClearCache': 20*60*1000,		// 自动清除缓存的定时器
+	'MaxCacheFileSize': 2*1024*1024*8,	// 缓存中单个文件最大体积
+	'EJS_openTag': '<%',				// EJS 开始标签
+	'EJS_closeTag': '%>'				// EJS 结束标签
 };

@@ -3,6 +3,8 @@
 * info server增加console页面
 * 针对fileMap中的文件，追加`sync`同步机制
 * 项目配置文件增加catalog参数，简化项目相对于域名的内嵌目录
+* D2Server `conf.js`中增加EJS开始和结束标签的定义
+* 增加缓存中单个文件最大体积的判断，大文件不进行缓存
 
 
 
