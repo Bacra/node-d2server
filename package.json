@@ -1,7 +1,7 @@
 {
 	"name": "D2Server",
 	"version": "3.3.0",
-	"description": "Web Server For D2",
+	"description": "An File Server for D2 developers",
 	"author": {
 		"name": "Bacra Woo",
 		"email": "Bacra.Woo@gmail.com"
