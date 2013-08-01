@@ -1,3 +1,6 @@
+
+
+
 ;(function($){
 	var $win = $(window),
 		$body = $(document.body),
@@ -95,3 +98,5 @@
 		inputsVariables.val('')
 	})
 })(window.jQuery);
+
+
