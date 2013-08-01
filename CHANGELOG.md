@@ -2,10 +2,30 @@
 https://github.com/Bacra/node-d2server/releases
 
 
+
+
+## v3.2.0
+
+* 针对fileMap中的文件，追加`sync`同步机制
+* 项目配置文件增加`catalog`参数，简化项目相对于域名的内嵌目录
+* D2Server `conf.js`中增加EJS开始和结束标签的定义
+* 增加缓存中单个文件最大体积的判断，大文件不进行缓存
+* 强制`include`的HTML file不能作为入口被直接访问
+* 更加智能的项目配置合并规则（`fileMap`和`HTML`配置，只要文件解析后路径相同，配置属性就会自动合并）
+
+### Fix
+
+* 修正`fileMap`中定义文件，路径不再依据HTML中的访问路径，而是以项目根目录为基准
+* 修正无法转化使用EJS动态添加的资源路径（css less js），例如使用`extJS`、`extCss`以及使用变量拼出来的路径
+
+
+
+
 ## v3.1.3
 
-* 修正不使用alias后，无法获取Project信息的问题
+* 修正不使用`alias`后，无法获取Project信息的问题
 * 修正spliceServer在合并非js css资源时，直接输出第一个文件的问题
+
 
 
 
@@ -42,6 +62,7 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+
 ## v3.0.1
 
 * 配置文件分离，由主配置文件可以衍生出多个子配置文件，方便团队协作开发
@@ -51,6 +72,7 @@ https://github.com/Bacra/node-d2server/releases
 * 优化MinCssName参数，可实现前缀与key一一对应的配置
 * 增加项目初始化cmd，提供可选择的初始化文件解决方案
 * 优化EJS模版引擎
+
 
 
 

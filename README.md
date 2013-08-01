@@ -15,8 +15,11 @@ D2Server用nodejs编写，为方便前端同学更好地组织开发文件，快
 * 项目中使用 **EJS** 模版引擎处理HTML代码
 * 项目中使用 **LESS** 编译CSS文件，并针对[BEM命名](http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html)规则，进行优化
 * 使用 **DataAPI** ，不改变生产环境下的数据源文件路径，快速模拟动态数据，并实现自动化的管理
+* 配置项目`alias`配置参数，一键创建二级域名指向
 * 一键导出项目生产环境的最终文件，JS使用 **gcc** 压缩，CSS使用 **yuicompressor** 压缩
+* 配置项目`sync`配置参数，在导出项目文件的同时，实现JS、CSS等文件的同步
 * 导出项目过程中，可以针对[符合规范的样式命名](http://bacra.github.io/node-d2server/MinCssName.html)，提供样式命名的压缩
+* 针对开发文件使用文件缓存队列机制，减少IO开销，Server更快响应请求
 * 动态合并开发源文件，方便使用Fiddler等调试工具
 * 可设置多个项目初始化文件配置方案，通过`init`命令快速创建项目
 
