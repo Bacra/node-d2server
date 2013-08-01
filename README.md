@@ -36,7 +36,8 @@ D2Server用nodejs编写，为方便前端同学更好地组织开发文件，快
 
 ## ChangeLog & TodoList
 
-你可以在[CHANGELOG.md](./CHANGELOG.md)中找到D2Server的更新状况
+你可以在[CHANGELOG.md](./CHANGELOG.md)中找到D2Server的更新状况，
+通过github下载对应[版本源码](https://github.com/Bacra/node-d2server/releases)
 
 同时，我们也会在[TODO.md](./TODO.md)中公布D2Server的开发进度
 
