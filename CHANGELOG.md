@@ -3,6 +3,14 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+## v3.3.0
+
+### Fix
+
+* 修正开发环境下，页面js占用`module`变量导致`socket.io`初始化失败的问题
+
+
+
 
 ## v3.2.0
 
