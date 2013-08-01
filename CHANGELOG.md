@@ -8,6 +8,7 @@ https://github.com/Bacra/node-d2server/releases
 ### Fix
 
 * 修正开发环境下，页面js占用`module`变量导致`socket.io`初始化失败的问题
+* 修正项目配置文件`HTML`属性合并规则，判断条件统一为导出目录是否一致
 
 
 
