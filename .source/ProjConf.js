@@ -30,21 +30,15 @@ module.exports = {
 	},
 	"fileMap": {						// 配置文件映射（公共部分）
 		"css/base.min.css": [
+			'bootstrap/bootstrap.css',
 			'common/bootstrap-doc.css',
-			'common/nav.less',
-			'common/frame.less',
-
-			"index/index.less"
+			'common/frame.less'
 		],
 
 		"js/base.min.js": [
-			'common/nav.js',
-			'common/nav.test.js',
+			'bootstrap/bootstrap.js',
 			'common/frame.js',
-			'common/frame.test.js',
-
-			"index/index.js",
-			"index/index.test.js"
+			'common/google-analytics.js'
 		]
 	}
 };

@@ -45,9 +45,5 @@ module.exports = {
 			}
 		}*/
 	},						// 配置项目HTML
-	"fileMap": {
-		'css/bootstrap.min.css': [
-			'bootstrap/bootstrap.css'
-		]
-	}					// 配置项目文件映射
+	"fileMap": {}					// 配置项目文件映射
 };
