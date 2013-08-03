@@ -3,18 +3,18 @@
 		<div class="bs-sidebar affix">
 			<ul class="nav bs-sidenav">
 				<li class="active">
-					<a href="#overview">Overview</a>
+					<a href="#overview">前期准备</a>
 					<ul class="nav">
 						<li>
 							<a href="#os">系统环境及配置</a>
 						</li>
+						<li>
+							<a href="#download">下载源码</a>
+						</li>
+						<li>
+							<a href="#module">安装组件</a>
+						</li>
 					</ul>
-				</li>
-				<li>
-					<a href="#download">下载源码</a>
-				</li>
-				<li>
-					<a href="#module">安装组件</a>
 				</li>
 				<li>
 					<a href="#confg">配置客户端</a>
@@ -49,7 +49,7 @@
 		<!-- Overview：begin -->
 		<div class="bs-docs-section">
 			<div class="page-header">
-				<h1 id="overview">Overview</h1>
+				<h1 id="overview">前期准备</h1>
 			</div>
 			<p class="lead">
 				D2Server运行的基础是在客户端搭建的服务器环境，所以首先我们要先下载安装搭建Server环境。这是一劳永逸的过程，搭建好之后，你就不需要再关注Server的配置，而将所有的精力投在项目上。让D2Server在后台为你默默助力吧。
@@ -73,36 +73,30 @@
 				后台挂靠D2Server，占用内存一般在100-150MB左右，2G内存的电脑跑着无压力。对系统其他资源需求很少，可忽略。
 			</p>
 			<!-- 系统环境及配置：end -->
-		</div>
-		<!-- Overview：end -->
 
-		
-
-		<!-- 下载源码：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="download">下载源码</h1>
-			</div>
-			<p>从Github上下载项目源码，有太多途径可以选择，下面就介绍几种常用的：</p>
-			<h3>通过Git Clone（推荐）</h3>
+			<hr>
+			<!-- 下载源码：begin -->
+			<h3 id="download">下载源码</h3>
+			<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
+			<hr>
+			<h4>通过Git Clone（推荐）</h4>
 			<p>
-				推荐使用git进行项目的安装，方便以后的更新。
+				推荐使用git进行项目的安装，方便以后的版本迭代更新。
 			</p>
 			<div class="highlight">
 				<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
 cd node-d2server
 git submodule update --init</code></pre>
 			</div>
-			<hr>
 			<h5>更优的处理方案</h5>
 			<p>
-				由于使用项目时必须修改<a href="<%= master %>conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="<%= fork %>" target="_blank">Fork</a>一份副本，然后再通过上面的方式部署到本地。
+				由于使用项目时必须修改<a href="<%= master %>conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="<%= fork %>" target="_blank">Fork</a>一份副本，然后再通过上面的方式将Fork的副本部署到本地。
 			</p>
 			<p>
 				以后版本迭代更加方便，连<code>conf.js</code>文件都不需要顾虑，直接<code>git pull</code>拉取线上资源即可。
 			</p>
 			<hr>
-			<h3>直接下载</h3>
+			<h4>直接下载</h4>
 			<ol>
 				<li>
 					通过<a href="<%= masterZip %>" target="_blank">这个连接</a>，直接将项目打包成zip下载到本地。
@@ -111,21 +105,17 @@ git submodule update --init</code></pre>
 					解压文件，再下载<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>并解压到<code>lib/module/parseHTML/ejs</code>目录
 				</li>
 			</ol>
-			<hr>
 			<p>
 				你也可以通过<a href="<%= releases %>" target="_blank">Releases</a>获取项目之前的版本。
 			</p>
 			<p>
 				<b>注：</b>从<a href="<%= releases %>" target="_blank">Releases</a>下载的源码，也需要手动下载解压<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>。
 			</p>
-		</div>
-		<!-- 下载源码：end -->
-
-		<!-- 安装组建：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="module">安装组件</h1>
-			</div>
+			<!-- 下载源码：end -->
+			
+			<hr>
+			<!-- 安装组建：begin -->
+			<h3 id="module">安装组件</h3>
 			<p>
 				D2Server所需的组件，可以通过<code>npm</code>一键安装。
 			</p>
@@ -153,8 +143,10 @@ npm install</code></pre>
 					 </p>
 				</li>
 			</ul>
+			<!-- 安装组件：end -->
 		</div>
-		<!-- 安装组件：end -->
+		<!-- Overview：end -->
+
 
 		<!-- 配置客户端：begin -->
 		<div class="bs-docs-section">
@@ -194,9 +186,6 @@ module.exports = {
 			</p>
 			<p>
 				需要注意一下几个port参数，查看这些端口是否已经被占用（尤其是<code>ViewServPort</code>的80端口）。
-			</p>
-			<p>
-				<strong>修改完配置文件之后，你需要创建<code>DocumentRoot</code>指定的目录结构，这个目录下将保存你的项目。</strong>
 			</p>
 			<p>
 				PS：不推荐修改除<code>DocumentRoot</code>之外的目录结构，除非你在工作中遇到了困难（注意和团队其他成员协调好）
