@@ -5,11 +5,15 @@ https://github.com/Bacra/node-d2server/releases
 
 ## v3.3.0
 
+* MinCssName对id也将进行缩减转化
+* ejs页面增加`sys`变量， **之前的`title` `extJS` `extCSS`变量都转到`sys`下**
+* ejs页面变量`sys`增加`catalog` `href` `srcFile` `outFile`等实用变量值
+* ejs页面增加`root`变量，是ejs页面变量的顶层，所有变量都依附于他
+
 ### Fix
 
 * 修正开发环境下，页面js占用`module`变量导致`socket.io`初始化失败的问题
 * 修正项目配置文件`HTML`属性合并规则，判断条件统一为导出目录是否一致
-* MinCssName对id也将进行缩减转化
 * 修正MinCssName配置方案的key对应相同值时，转化结果出现重复值的问题
 
 
