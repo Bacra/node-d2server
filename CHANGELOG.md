@@ -9,6 +9,8 @@ https://github.com/Bacra/node-d2server/releases
 
 * 修正开发环境下，页面js占用`module`变量导致`socket.io`初始化失败的问题
 * 修正项目配置文件`HTML`属性合并规则，判断条件统一为导出目录是否一致
+* MinCssName对id也将进行缩减转化
+* 修正MinCssName配置方案的key对应相同值时，转化结果出现重复值的问题
 
 
 
