@@ -19,6 +19,13 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+
+## v3.2.1
+
+* 修正第二次修改项目的配置文件时，提示`alias`或则`hostname`存在的问题
+
+
+
 ## v3.2.0
 
 * 针对fileMap中的文件，追加`sync`同步机制
