@@ -8,7 +8,7 @@ https://github.com/Bacra/node-d2server/releases
 ## v3.2.1
 
 * 修正`baseLess`在ProjConfig重置之后，反复绑定watch事件的BUG
-
+* 修正第二次修改项目的配置文件时，提示`alias`或则`hostname`存在的问题
 
 
 
