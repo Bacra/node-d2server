@@ -1,7 +1,7 @@
 module.exports = {
 	"name": "{@projRoot}",							// 项目名称
 	"alias": "{@projRoot}",							// 项目的默认二级域名
-	"sync": false,									// 同步目录
+	"sync": false,									// fileMap文件同步目录
 	"catalog": false,								// 项目内嵌的二级目录
 	"baseLess": "common/b.less",					// less公共文件
 	"MinCssName": false,							// 压缩样式名的前缀

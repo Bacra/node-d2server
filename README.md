@@ -2,7 +2,7 @@ D2Server
 ========
 
 D2Server用nodejs编写，为方便前端同学更好地组织开发文件，快速调试页面而开发的服务器环境。
-使用D2Server完全可以替换Apache的开发环境（[了解如何组织动态数据](http://bacra.github.io/node-d2server/dataAPI.html)），构建一个基于静态文件和测试数据的前端开发环境。
+使用D2Server完全可以替换Apache的开发环境（[了解如何组织动态数据](http://bacra.github.io/node-d2server/module.html#dataapi)），构建一个基于静态文件和测试数据的前端开发环境。
 
 
 
@@ -18,28 +18,29 @@ D2Server用nodejs编写，为方便前端同学更好地组织开发文件，快
 * 配置项目`alias`配置参数，一键创建二级域名指向
 * 一键导出项目生产环境的最终文件，JS使用 **gcc** 压缩，CSS使用 **yuicompressor** 压缩
 * 配置项目`sync`配置参数，在导出项目文件的同时，实现JS、CSS等文件的同步
-* 导出项目过程中，可以针对[符合规范的样式命名](http://bacra.github.io/node-d2server/MinCssName.html)，提供样式命名的压缩
+* 导出项目过程中，可以针对[符合规范的样式命名](http://bacra.github.io/node-d2server/module.html#mincssname)，提供样式命名的压缩
 * 针对开发文件使用文件缓存队列机制，减少IO开销，Server更快响应请求
 * 动态合并开发源文件，方便使用Fiddler等调试工具
 * 可设置多个项目初始化文件配置方案，通过`init`命令快速创建项目
 
 
 
-## Run Server
+## Get Started
 
-	node serv.js
-
-了解更多：http://bacra.github.io/node-d2server
+Checkout to: http://bacra.github.io/node-d2server/get-started.html
 
 
 
 
-## ChangeLog & TodoList
+## ChangeLog
 
-你可以在[CHANGELOG.md](./CHANGELOG.md)中找到D2Server的更新状况，
-通过github下载对应[版本源码](https://github.com/Bacra/node-d2server/releases)
+在[CHANGELOG.md](./CHANGELOG.md)文件中找到D2Server的更新说明，
+也通过github下载对应[版本源码](https://github.com/Bacra/node-d2server/releases)
 
-同时，我们也会在[TODO.md](./TODO.md)中公布D2Server的开发进度
+
+
+## TodoList
+通过[TODO.md](./TODO.md)可以查看D2Server正在开发的新功能
 
 
 
