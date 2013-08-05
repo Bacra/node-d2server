@@ -8,6 +8,8 @@ https://github.com/Bacra/node-d2server/releases
 ## v3.2.1
 
 * 修正第二次修改项目的配置文件时，提示`alias`或则`hostname`存在的问题
+* 修正DataAPI返回数据mime信息错误的问题
+* 当`wget`数据请求失败时，DataAPI也会创建相应的数据文件
 
 
 
