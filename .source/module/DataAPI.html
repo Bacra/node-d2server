@@ -1,0 +1,75 @@
+<!-- DataAPI:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="dataapi">DataAPI</h1>
+	</div>
+	<p class="lead">
+		通过DataAPI，可以很方便的地组织动态数据，配合<code>wget</code>，自动将线上资源缓存到本地，尽可能地节约开发者时间。
+	</p>
+	<p>
+		DataAPI的配置放置在每个项目<code>MainConfigFile</code>文件中，对应的配置参数为<code>DataAPI</code>，在<code>ProjConfigFile</code>中定义无效。
+	</p>
+	<p>
+		针对每个接口数据的配置信息，存放在项目的<code>DynamicDataFile</code>文件中，以<code>JSON</code>的格式保存。
+	</p>
+	<hr>
+	<h3 id="dataapi-opts">参数配置</h3>
+	<p class="lead">
+		DataAPI的配置方案，经历了3次大重写，我们力求用最简单的入口控制实现他的功能。从最开始的直接使用<code>function</code>进行流程控制，到现在的<code>JSON</code>格式，定义几个参数就可以完成功能的配置，我们希望能让大家看到我们的进步。
+	</p>
+	<p>
+		项目配置文件中的<code>DataAPI</code>参数主要定义如何从请求地址中，获取所需要的参数，来拼接临时文件名；以及定义<code>wget</code>所需的参数。
+	</p>
+	<p>
+		如果你希望关闭DataAPI功能，直接设置参数值为<code>false</code>即可。
+	</p>
+	<div class="highlight">
+		<pre><code class="prettyprint">// 项目配置文件 DataAPI参数的配置
+{
+	"hostname": undefined,		// 定义wget从何处下载数据
+	"port": undefined,		// 定义wget下载数据时使用的端口
+	"update": true,			// 是否使用wget下载最新的数据
+	"excludeQuery": [],		// 拼接缓存文件名时，忽略这些参数
+	"defaultMime": "text/plain",	// 在没指明文件类型的情况下，默认的mime返回值
+	"formatQueryName": "format"	// 根据这个请求参数来定义文件拓展名
+}</code></pre>
+	</div>
+	<hr>
+	<p>
+		针对每个接口数据，可以配置<code>mime</code> <code>extname</code> <code>wait</code>参数（后续会增加更多可以自定义的参数）。
+	</p>
+	<p>
+		这些参数一般都是继承<code>DataAPI</code>配置中的默认值，同时也会根据<code>wget</code>请求结果做调整。
+	</p>
+	<ul>
+		<li>
+			<code>mime</code>：指明数据返回给浏览器的mime信息
+		</li>
+		<li>
+			<code>extname</code>：指明文件保存的格式
+		</li>
+		<li>
+			<code>wait</code>：设置返回值的延迟时间
+		</li>
+	</ul>
+	<hr>
+	<h3 id="dataapi-file">文件管理</h3>
+	<p>
+		DataAPI的数据文件，都保存在<code>DynamicDataPath</code>目录下。
+	</p>
+	<p>
+		具体数据文件以<code>请求路径+文件名 / 请求参数组成的文件名</code>的路径进行保存，保证所有数据文件均有一层且只有一层文件夹。
+	</p>
+	<p>
+		针对<code>wget</code>自动下载的数据文件，文件名会加上<code>[CACHE]</code>的前缀（注：用户修改过的数据文件，请删除<code>[CACHE]</code>前缀，防止被覆盖）。
+	</p>
+	<hr>
+	<h3 id="wget">wget</h3>
+	<p>
+		通过wget可以很方便地下载线上资源到本地，但<strong>目前尚未提供相应的调用接口，同时不支持<code>https</code>的请求</strong>。
+	</p>
+	<p>
+		如果有你许多文件需要下载，又希望能保持线上的目录结构，那么你可以访问<code>http://test.com:81/download</code>。将你需要下载的文件列表填入文本框中（以换行分割），提交之后，D2Server会自动将文件下载到指定的项目文件夹中。
+	</p>
+</div>
+<!-- DataAPI:end -->

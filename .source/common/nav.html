@@ -8,14 +8,11 @@
 		</button>
 		<div class="nav-collapse collapse wf_mNavbar__collapse">
 			<ul class="nav navbar-nav">
-				<li<% if (title == 'Get Started') { %> class="active"<%}%>>
-					<a href="/node-d2server/get-started.html">Get Started</a>
+				<li<% if (sys.title == 'Get Started') { %> class="active"<%}%>>
+					<a href="/<%= sys.catalog %>get-started.html">Get Started</a>
 				</li>
-				<li<% if (title == 'Module') { %> class="active"<%}%>>
-					<a href="/node-d2server/module.html">Module</a>
-				</li>
-				<li<% if (title == 'Note') { %> class="active"<%}%>>
-					<a href="/node-d2server/note.html">Note</a>
+				<li<% if (sys.title == 'Module') { %> class="active"<%}%>>
+					<a href="/<%= sys.catalog %>module.html">Module</a>
 				</li>
 				<li>
 					<a href="https://github.com/Bacra/node-d2server/releases">Download</a>

@@ -84,7 +84,7 @@
 				推荐使用git进行项目的安装，方便以后的版本迭代更新。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
+<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
 cd node-d2server
 git submodule update --init</code></pre>
 			</div>
@@ -123,7 +123,7 @@ git submodule update --init</code></pre>
 				所以，请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">cd node-d2server
+<pre><code class="prettyprint">cd node-d2server
 npm install</code></pre>
 			</div>
 			<hr>
@@ -157,7 +157,7 @@ npm install</code></pre>
 				打开D2Server根目录下的<a href="<%= master %>/conf.js" target="_blank">conf.js</a>，可以配置的属性如下：
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">var SourcePath = ".source/";
+<pre><code class="prettyprint">var SourcePath = ".source/";
 
 module.exports = {
 	'DocumentRoot': __dirname + '/wwwroot/',			// 所有项目所在根目录
@@ -202,14 +202,14 @@ module.exports = {
 				启动D2Server的入口是<code>serv.js</code>，直接用NodeJS调用即可
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">cd node-d2server
+<pre><code class="prettyprint">cd node-d2server
 node serv.js</code></pre>
 			</div>
 			<p>
 				之后就是一些运行状况的输出，如下图
 			</p>
 			<p>
-				<img width="641" height="238" src="/node-d2server/images/start.png" alt="D2Server Start" />
+				<img width="641" height="238" src="/<%= sys.catalog %>images/start.png" alt="D2Server Start" />
 			</p>
 			<p>
 				一般不出现黄色或则红色标注的信息，Server就可以判定为运行正常。
@@ -271,7 +271,7 @@ node serv.js</code></pre>
 				打开具体项目的<code>.source/ProjConf.js</code>文件，你就可以查看这个项目的配置情况了。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">module.exports = {
+<pre><code class="prettyprint">module.exports = {
 	"name": "d2server",					// 项目名称
 	"alias": 'd2server',					// 项目的默认二级域名
 	"sync": 'c:/svn/d2server/',				// fileMap文件同步目录
@@ -311,18 +311,19 @@ node serv.js</code></pre>
 		]
 	}
 };</code></pre>
-				<p>
-					配置文件中，改动比较多的，是<code>HTML</code>和<code>fileMap</code>属性。其他属性一般只在项目初始化的时候修改，之后团队协作的话，最好不好修改；有修改依旧协商解决（至少要告知其他人）。
-				</p>
-				<h4><code>HTML</code>属性</h4>
-				<p>
-					<b>值结构：</b>相对于<code>SourePath</code>目录的开发文件路径 => 相对于项目根目录的导出文件路径 => 导出文件的相关属性配置。
-				</p>
-				<p>
-					<strong><code>HTML</code>配置是将一个HTML文件，通过不同的参数配置，拆分成独立的文件，同时给每个新的HTML文件声明一个访问地址。</strong>
-				</p>
-				<div class="highlight">
-					<pre><code class="prettyprint">{
+			</div>
+			<p>
+				配置文件中，改动比较多的，是<code>HTML</code>和<code>fileMap</code>属性。其他属性一般只在项目初始化的时候修改，之后团队协作的话，最好不好修改；有修改依旧协商解决（至少要告知其他人）。
+			</p>
+			<h4><code>HTML</code>属性</h4>
+			<p>
+				<b>值结构：</b>相对于<code>SourePath</code>目录的开发文件路径 => 相对于项目根目录的导出文件路径 => 导出文件的相关属性配置。
+			</p>
+			<p>
+				<strong><code>HTML</code>配置是将一个HTML文件，通过不同的参数配置，拆分成独立的文件，同时给每个新的HTML文件声明一个访问地址。</strong>
+			</p>
+			<div class="highlight">
+<pre><code class="prettyprint">{
 	"HTML": {
 		"index/index.html": {			// 该路径相对于.source目录，是开发文件的路径
 			'index.html': {			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
@@ -337,134 +338,145 @@ node serv.js</code></pre>
 		}
 	}
 }</code></pre>
-				</div>
-				<h4><code>fileMap</code>属性</h4>
-				<p>
-					<b>值结构：</b>相对于项目根目录的导出文件路径 => 相对于<code>SourePath</code>目录的开发文件路径。
-				</p>
-				<p>
-					<strong><code>fileMap</code>配置是将各个资源文件合并成一个文件，同时声明一个新的访问地址。</strong>
-				</p>
-				<div class="highlight">
-					<pre><code class="prettyprint">{
+		</div>
+		<h4><code>fileMap</code>属性</h4>
+		<p>
+			<b>值结构：</b>相对于项目根目录的导出文件路径 => 相对于<code>SourePath</code>目录的开发文件路径。
+		</p>
+		<p>
+			<strong><code>fileMap</code>配置是将各个资源文件合并成一个文件，同时声明一个新的访问地址。</strong>
+		</p>
+		<div class="highlight">
+<pre><code class="prettyprint">{
 	"fileMap": {
-		"css/base.min.css": [			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
-			'common/bootstrap-doc.css',	// 该路径相对于.source目录，是开发文件的路径
-			'common/nav.less',		// 配置在这个数组里面的文件，在项目导出的时候，会自动合并
-			'common/frame.less',
+	"css/base.min.css": [			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
+		'common/bootstrap-doc.css',	// 该路径相对于.source目录，是开发文件的路径
+		'common/nav.less',		// 配置在这个数组里面的文件，在项目导出的时候，会自动合并
+		'common/frame.less',
 
-			"index/index.less"
-		],
+		"index/index.less"
+	],
 
-		"js/base.min.js": [
-			'common/nav.js',
-			'common/nav.test.js',
-			'common/frame.js',
-			'common/frame.test.js',
+	"js/base.min.js": [
+		'common/nav.js',
+		'common/nav.test.js',
+		'common/frame.js',
+		'common/frame.test.js',
 
-			"index/index.js",
-			"index/index.test.js"
-		]
+		"index/index.js",
+		"index/index.test.js"
+	]
 	}
 }</code></pre>
-				</div>
-				<hr>
-				<h5>补充信息</h5>
-				<ul>
-					<li>
-						如果有定义<code>extra</code>参数，那么完整的<code>HTML</code> <code>fileMap</code>以及<code>MinCssName</code>配置信息，还要参考附加的子配置文件
-					</li>
-					<li>
-						如果创建了<code>ProjConfigFile</code>，那么<code>sync</code> <code>alias</code>的值，以<code>ProjConfigFile</code>配置文件中的属性为准
-					</li>
-					<li>
-						该开发文档本身就是基于D2Server开发的，你可以从<a href="<%= pageZip %>" target="_blank">这里</a>下载到这个项目
-					</li>
-				</ul>
-			</div>
-			<!-- 配置项目：end -->
-
-			<!-- 访问目录：begin -->
-			<hr>
-			<h3 id="visite">访问目录</h3>
-			<p>
-				查看创建项目的文件夹，你会发现文件夹根目录空空如也。但你却可以通过下面的方式访问到<code>index.html</code>文件，是不是很神奇。
-			</p>
-			<ul>
-				<li>
-					<p>
-						浏览器中访问<code>http://test.com:82/&lt;%projectName%&gt;/index.html</code>，即可打开项目的初始化页面。
-					</p>
-				</li>
-				<li>
-					<p>
-						也可以在系统host添加 <code>127.0.0.1 &lt;%projectName%&gt;.test.com</code>
-					</p>
-					<p>
-						然后在浏览器中访问<code>http://&lt;%projectName%&gt;.test.com:82/index.html</code>。
-					</p>
-				</li>
-			</ul>
-			<hr>
-			<h5>你可能感兴趣的事</h5>
-			<ul>
-				<li>
-					在浏览器中使用键盘快捷键<code>`</code>，即可打开项目配置<code>HTML</code>页面列表，实现浏览器中快速切换项目页面
-				</li>
-				<li>
-					打开<b>真实被引用的</b>资源文件，编辑内容然后保存，浏览器的页面内容也会自动刷新
-				</li>
-			</ul>
-			<!-- 访问目录：end -->
-
-
-			<!-- 导出项目：begin -->
-			<hr>
-			<h3 id="export">导出项目</h3>
-			<p>
-				代码码了一天，想转给后端同事的时候却发现，项目目录依然如初始化的时候空空如也。总不能把<code>.source</code>文件夹丢给后端的同事，“你们自己合一下，我下班了”。
-			</p>
-			<p>
-				那该怎么办呢？<code>export</code>命令来帮你。
-			</p>
-			<p>
-				在D2Server启动后终端cmd中运行<code>export</code>命令。
-			</p>
-			<div class="highlight">
-				<pre><code class="prettyprint">export &lt;%projectName%&gt;</code></pre>
-			<p>
-				待终端显示“Everything is done”，你进项目文件夹看看，是不是所需要的文件都自动合并好了。
-			</p>
-			<hr>
-			<h5>你可能感兴趣的事</h5>
-			<ul>
-				<li>
-					给项目设置<code>sync</code>同步路径，导出文件的同时，定义在<code>fileMap</code>中的文件，也会自动同步到目标文件夹
-				</li>
-				<li>
-					<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中
-				</li>
-			</ul>
-			<!-- 导出项目：end -->
 		</div>
-		<!-- 项目管理：end -->
+		<hr>
+		<h5>补充信息</h5>
+		<ul>
+			<li>
+				如果有定义<code>extra</code>参数，那么完整的<code>HTML</code> <code>fileMap</code>以及<code>MinCssName</code>配置信息，还要参考附加的子配置文件
+			</li>
+			<li>
+				如果创建了<code>ProjConfigFile</code>，那么<code>sync</code> <code>alias</code>的值，以<code>ProjConfigFile</code>配置文件中的属性为准
+			</li>
+			<li>
+				该开发文档本身就是基于D2Server开发的，你可以从<a href="<%= pageZip %>" target="_blank">这里</a>下载到这个项目
+			</li>
+		</ul>
+		
+		<!-- 配置项目：end -->
 
-		<!-- 结束语：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="finish">结束语</h1>
-			</div>
-			<p class="lead">
-				恭喜你，完成了D2Server的客户端配置，现在你可以利用D2Server为你的项目助力了。
-			</p>
-			<p class="lead">
-				你也可以移步到<a href="/node-d2server/module.html">Module页面</a>了解更多D2Server特性。
-			</p>
-			<hr>
-			<p>
-				如果在配置环境时遇到了问题，欢迎向我们<a href="<%= releases %>" target="_blank">反馈错误</a>。
-			</p>
+		<!-- 访问目录：begin -->
+		<hr>
+		<h3 id="visite">访问目录</h3>
+		<p>
+			查看创建项目的文件夹，你会发现文件夹根目录空空如也。但你却可以通过下面的方式访问到<code>index.html</code>文件，是不是很神奇。
+		</p>
+		<ul>
+			<li>
+				<p>
+					浏览器中访问<code>http://test.com:82/&lt;%projectName%&gt;/index.html</code>，即可打开项目的初始化页面。
+				</p>
+			</li>
+			<li>
+				<p>
+					也可以在系统host添加 <code>127.0.0.1 &lt;%projectName%&gt;.test.com</code>
+				</p>
+				<p>
+					然后在浏览器中访问<code>http://&lt;%projectName%&gt;.test.com:82/index.html</code>。
+				</p>
+			</li>
+		</ul>
+		<hr>
+		<h5>你可能感兴趣的事</h5>
+		<ul>
+			<li>
+				在浏览器中使用键盘快捷键<code>`</code>，即可打开项目配置<code>HTML</code>页面列表，实现浏览器中快速切换项目页面
+			</li>
+			<li>
+				打开<b>真实被引用的</b>资源文件，编辑内容然后保存，浏览器的页面内容也会自动刷新
+			</li>
+		</ul>
+		<!-- 访问目录：end -->
+
+
+		<!-- 导出项目：begin -->
+		<hr>
+		<h3 id="export">导出项目</h3>
+		<p>
+			代码码了一天，想转给后端同事的时候却发现，项目目录依然如初始化的时候空空如也。总不能把<code>.source</code>文件夹丢给后端的同事，“你们自己合一下，我下班了”。
+		</p>
+		<p>
+			那该怎么办呢？<code>export</code>命令来帮你。
+		</p>
+		<p>
+			在D2Server启动后终端cmd中运行<code>export</code>命令。
+		</p>
+		<div class="highlight">
+			<pre><code class="prettyprint">export &lt;%projectName%&gt;</code></pre>
 		</div>
-		<!-- 结束语：end -->
+		<p>
+			待终端显示“Everything is done”，你进项目文件夹看看，是不是所需要的文件都自动合并好了。
+		</p>
+		<hr>
+		<h5>你可能感兴趣的事</h5>
+		<ul>
+			<li>
+				给项目设置<code>sync</code>同步路径，导出文件的同时，定义在<code>fileMap</code>中的文件，也会自动同步到目标文件夹
+			</li>
+			<li>
+				<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中
+			</li>
+		</ul>
+		<!-- 导出项目：end -->
 	</div>
+	<!-- 项目管理：end -->
+
+	<!-- 结束语：begin -->
+	<div class="bs-docs-section">
+		<div class="page-header">
+			<h1 id="finish">结束语</h1>
+		</div>
+		<p class="lead">
+			恭喜你，完成了D2Server的客户端配置，现在你可以利用D2Server为你的项目助力了。
+		</p>
+		<p class="lead">
+			你也可以移步到<a href="/<%= sys.catalog %>module.html">Module页面</a>了解更多D2Server特性。
+		</p>
+
+		<hr>
+		<h5>一点点需要注意的事</h5>
+		<ul>
+			<li>
+				D2Server的各个配置参数，除了定义<code>Domain</code> <code>hostname</code> <code>alias</code>这些与域名相关的路径时，不需要加结束的"/"，其他定义目录的配置参数，都需要以"\"结尾，<b>这个很重要</b>。
+			</li>
+			<li>
+				D2Server内部机制是区分路径的大小写的，windows用户需要特别注意，不区分路径大小写，很可能造成文件修改之后，浏览器中刷新无变化等众多灵异状况。
+			</li>
+		</ul>
+		<hr>
+		<p>
+			如果在配置环境时遇到了问题，欢迎向我们<a href="<%= nodeLib %>/issues" target="_blank">反馈</a>。
+		</p>
+	</div>
+	<!-- 结束语：end -->
 </div>
