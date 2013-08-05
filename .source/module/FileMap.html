@@ -1,0 +1,27 @@
+<!-- FileMap:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="filemap">FileMap</h1>
+	</div>
+	<p class="lead">
+		FileMap是D2Server最基础的两个模块之一。FileMap模块在DevServ中，是将原始的访问路径进行拆分的数据来源；在SpliceServer中，将分散在各个文件夹中的开发文件进行整合拼接输出。
+	</p>
+	<p>
+		FileMap的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>FileMap</code>。
+	</p>
+	<p>
+		<code>FileMap</code>在进行子配置文件属性拼接时，受<code>extra</code>定义的子配置文件顺序影响，详情见<a href="#extconfigfile">ExtraConfigFile</a>。
+	</p>
+	<ul>
+		<li>
+			DevServ中，D2Server会将JS CSS LESS的源文件路径拆分成许多子路径；其他文件类型，则直接进行字节流的合并。
+		</li>
+		<li>
+			<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中。
+		</li>
+		<li>
+			为更好组织文件，请避免使用<code>.m+数字</code>的后缀命名资源文件。
+		</li>
+	</ul>
+</div>
+<!-- FileMap:end -->

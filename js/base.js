@@ -1,102 +1,46 @@
-
-
-
 ;(function($){
-	var $win = $(window),
-		$body = $(document.body),
-		navHeight = $('.navbar').outerHeight(true) + 10;
+	$(function(){
+		var $win = $(window),
+			$body = $(document.body),
+			navHeight = $('.navbar').outerHeight(true) + 10;
 
-	$body.scrollspy({
-		target: '.bs-sidebar',
-		offset: navHeight
-	});
+		$body.scrollspy({
+			target: '.bs-sidebar',
+			offset: navHeight
+		});
 
-	$('.bs-docs-container [href=#]').click(function(e) {
-		e.preventDefault()
-	});
 
-	$body.on('click', '.bs-sidenav [href^=#]', function(e) {
-		var $target = $(this.getAttribute('href'))
+		$body.on('click', '.bs-sidenav [href^=#]', function(e) {
+			var $target = $(this.getAttribute('href'));
+			e.preventDefault(); // prevent browser scroll
+			$win.scrollTop($target.offset().top - navHeight + 10);
+		});
 
-		e.preventDefault() // prevent browser scroll
 
-		$win.scrollTop($target.offset().top - navHeight);
-	});
 
-	// back to top
-	setTimeout(function() {
-		var $sideBar = $('.bs-sidebar')
-
-		$sideBar.affix({
-			offset: {
-				top: function() {
-					var offsetTop = $sideBar.offset().top
-					var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10)
-					var navOuterHeight = $('.wf_mNavbar').height()
-
-					return (this.top = offsetTop - navOuterHeight - sideBarMargin)
-				},
-				bottom: function() {
-					return (this.bottom = $('.bs-footer').outerHeight(true))
+		// 处理hash值
+		var hashchange = function(){
+			setTimeout(function(){
+				if (window.location.hash) {
+					var $target = $(window.location.hash);
+					if ($target.length) {
+						$win.scrollTop($target.offset().top - navHeight + 10);
+					}
 				}
-			}
-		})
-	}, 100)
+			}, 100);
+		};
 
-	setTimeout(function() {
-		$('.bs-top').affix()
-	}, 100)
+		hashchange();
+		$win.on('hashchange', hashchange);
 
-	// tooltip demo
-	$('.tooltip-demo').tooltip({
-		selector: "[data-toggle=tooltip]"
-	})
-
-	$('.tooltip-test').tooltip()
-	$('.popover-test').popover()
-
-	$('.bs-docs-navbar').tooltip({
-		selector: "a[data-toggle=tooltip]",
-		container: ".bs-docs-navbar .nav"
-	})
-
-	// popover demo
-	$("[data-toggle=popover]")
-		.popover()
-
-	// button state demo
-	$('#fat-btn')
-		.click(function() {
-			var btn = $(this)
-			btn.button('loading')
-			setTimeout(function() {
-				btn.button('reset')
-			}, 3000)
-		})
-
-	// carousel demo
-	$('.bs-docs-carousel-example').carousel()
-
-	// javascript build logic
-	var inputsComponent = $("#less input"),
-		inputsPlugin = $("#plugins input"),
-		inputsVariables = $("#less-variables input");
-
-	// toggle all plugin checkboxes
-	$('#less .toggle').on('click', function(e) {
-		e.preventDefault()
-		inputsComponent.prop('checked', !inputsComponent.is(':checked'))
-	})
-
-	$('#plugins .toggle').on('click', function(e) {
-		e.preventDefault()
-		inputsPlugin.prop('checked', !inputsPlugin.is(':checked'))
-	})
-
-	$('#less-variables .toggle').on('click', function(e) {
-		e.preventDefault()
-		inputsVariables.val('')
-	})
+	});
 })(window.jQuery);
 
 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-42846617-1', 'bacra.github.io');
+ga('send', 'pageview');

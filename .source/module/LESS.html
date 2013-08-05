@@ -1,0 +1,79 @@
+<!-- LESS:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="less">LESS</h1>
+	</div>
+	<p class="lead">
+		关于LESS不想多说什么，工作中已经离不开他，LESS包含到D2Server也是情理之中的事。
+	</p>
+	<p>
+		如果你还不知道如何使用LESS处理你的CSS代码，请访问<a href="http://www.lesscss.net/" target="_blank">LESS中文</a>。
+	</p>
+
+	<hr>
+	<h3 id="less-bem">BEM命名规则</h3>
+	<p class="lead">
+		如果写CSS是一门技术活，那么给CSS命名则是一项艺术创作工作。很多时候，我们不是在纠结CSS效果怎么写，而是在苦恼到底如何命名才能做到CSS之间不冲突，而又能尽可能多地实现样式的复用。
+	</p>
+	<p class="lead">
+		BEM在众多CSS命名规范中，通用性和灵活性都非常赞，使用BEM之后，HTML代码结构也变得非常清晰容易理解。但BEM有一个非常严重的弊端，按照标准版的写法产生出来的CSS命名会异常的长，这就导致编写过程中，需要频繁地进行复制黏贴。
+	</p>
+	<p>
+		还不了解BEM的童鞋可以阅读这篇文章<a href="http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html" target="_blank">《BEM思想之彻底弄清BEM语法》</a>。
+	</p>
+	<p>
+		为了更好享受BEM的便捷之处，D2Server针对LESS文件的编译进行了优化。所有以<code>.__</code> <code>.--</code>开头的样式，会自动和前面的样式名合并，形成一个符合BEM命名的样式。
+	</p>
+	<p>例如</p>
+	<div class="highlight">
+<pre><code class="prettyprint lang-less">.ex_main {
+	.__lt {
+		float: left;
+	}
+	.__gt {
+		float: right;
+	}
+	.__tag {
+		border-bottom: 1px solid #ccc;
+		.--ed {
+			border-color: #333;
+		}
+	}
+}</code></pre>
+</div>
+	<p>
+		上面的代码经过D2Server处理之后的结果如下：
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint lang-css">.ex_main__lt {
+  float: left;
+}
+.ex_main__gt {
+  float: right;
+}
+.ex_main__tag {
+  border-bottom: 1px solid #ccc;
+}
+.ex_main__tag--ed {
+  border-color: #333;
+}</code></pre>
+	</div>
+	<p>
+		使用BEM命名规则来规范书写CSS的习惯，再使用D2Server的<a href="#mincssname">MinCssName</a>对CSS命名进行压缩。
+	</p>
+
+
+
+	<hr>
+	<h3 id="less-extra">BaseLess</h3>
+	<p class="lead">
+		在进行项目开发过程中，难免会遇到一些变量或则函数需要全局共享，可惜LESS没有带这个功能，所以D2Server又来插一脚了。
+	</p>
+	<p>
+		在项目的<code>MainConfigFile</code>配置文件中，通过<code>baseLess</code>参数来定义全局的LESS文件。
+	</p>
+	<p>
+		<b>注意：</b>全局LESS文件的内容，在编译的时候会累加到所有LESS文件的头部，所以请不要定义会输出具体CSS代码的LESS语句。
+	</p>
+</div>
+<!-- LESS:end -->

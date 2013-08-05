@@ -1,0 +1,72 @@
+<!-- EJS:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="ejs">EJS</h1>
+	</div>
+	<p class="lead">
+		CSS、JS代码能很好的复用，那么在开发HTML的时候，能不能实现代码的重用呢？
+	</p>
+	<p class="lead">
+		<a href="<%= phpLib %>">PHP版的D2Server</a>，我们自己写了一个类似于PHPTAL的模版引擎；换成NodeJS重写之后，为了更好地兼容后台模版引擎，我们选择更加主流的标签语法。而在模版引擎的选择上，我们使用当前NodeJS中的成熟型代表——EJS。
+	</p>
+	<p>
+		EJS的标签语法非常普及，标志性符号是<code>&lt;%</code> <code>%&gt;</code>（可在Server的<a href="<%= master%>conf.js">conf.js</a>中更改开始结束标签）。具体的EJS标签语法见<a href="https://github.com/Bacra/ejs" target="_blank">Github</a>项目说明。
+	</p>
+	
+
+	
+	<hr>
+	<h3 id="ejs-param">模版参数</h3>
+	<p>
+		使用D2Server，可以很方便地定义变量赋值给EJS。定义变量通过在项目配置文件<code><a href="#html-conf">HTML</a></code>参数的<code>data</code>进行赋值。
+	</p>
+	<p>
+		除了用户自定义的变量外，D2Server还会附加<code>sys</code> <code>root</code>两个变量给EJS。
+	</p>
+	<ul>
+		<li>
+			<code>sys</code>包含Server运行过程中的一些状态属性，包括<code>title</code> <code>extJS</code> <code>extCSS</code> <code>href</code> <code>catalog</code> <code>srcFile</code> <code>outFile</code> <code>block</code> <code>htmlVirtualFileDirname</code> <code>projConf</code>。<b>可以引用这些变量，但不要修改值</b>，避免出现未知错误。
+		</li>
+		<li>
+			<code>root</code>参数是对<code>data</code>变量的引用，方便在EJS中做变量定义情况的判断。
+		</li>
+	</ul>
+
+
+
+	<hr>
+	<h3 id="ejs-extra">语法拓展</h3>
+	<p class="lead">
+		EJS的语法相当灵活，但却不适合进行一些日常开发。为了更好地处理工作中的零碎日常。我们又对EJS进行了定制化的标签语法封装。
+	</p>
+	<h4>block标签语法</h4>
+	<p>
+		block顾名思义，就是将HTML代码碎片化。通过block可以定义一个代码块，然后根据<code>HTML</code>配置中的<code>block</code>参数进行页面是否需要这一块代码的判断。
+	</p>
+	<p>
+		定义block非常简单，只要完成一个闭合标签即可。
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint">&lt;% block block命名 %&gt;
+&lt;!-- ...HTML代码片段... --&gt;
+&lt;% endBlock %&gt;
+</code></pre>
+	</div>
+
+
+	<hr>
+	<h4>loop标签语法</h4>
+	<p>
+		loop顾名思义，就是循环其中内容。通过loop可以定义一个用于循环的代码块，从而解放copy，HTML代码也更加简明。
+	</p>
+	<p>
+		定义loop也只需要一个闭合标签。
+	</p>
+		<div class="highlight">
+<pre><code class="prettyprint">&lt;% loop times( : timeVar 可选) %&gt;
+&lt;!-- ...HTML代码片段... --&gt;
+&lt;% endLoop %&gt;
+</code></pre>
+	</div>
+</div>
+<!-- EJS:end -->

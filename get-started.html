@@ -4,13 +4,13 @@
 <meta charset="utf-8" />
 <title>Get Started - An File Server for D2 developers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/node-d2server/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/common/bootstrap/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/node-d2server/css/base.min.css" />
-<script type="text/javascript" src="/node-d2server/js/jq.min.js"></script>
+<script type="text/javascript" src="/common/jquery/jquery.min.js"></script>
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top wf_mNavbar">
+<div class="navbar navbar-inverse navbar-fixed-top eC">
 	<div class="container">
 		<a href="/node-d2server/index.html" class="navbar-brand">D2Server</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".wf_mNavbar__collapse">
@@ -18,16 +18,13 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<div class="nav-collapse collapse wf_mNavbar__collapse">
+		<div class="nav-collapse collapse eD">
 			<ul class="nav navbar-nav">
 				<li class="active">
 					<a href="/node-d2server/get-started.html">Get Started</a>
 				</li>
 				<li>
 					<a href="/node-d2server/module.html">Module</a>
-				</li>
-				<li>
-					<a href="/node-d2server/note.html">Note</a>
 				</li>
 				<li>
 					<a href="https://github.com/Bacra/node-d2server/releases">Download</a>
@@ -49,21 +46,21 @@
 <!-- Content Begin -->
 <div class="row">
 	<div class="col-lg-3">
-		<div class="bs-sidebar">
+		<div class="bs-sidebar affix">
 			<ul class="nav bs-sidenav">
 				<li class="active">
-					<a href="#overview">Overview</a>
+					<a href="#overview">前期准备</a>
 					<ul class="nav">
 						<li>
-							<a href="#os">系统环境要求</a>
+							<a href="#os">系统环境及配置</a>
+						</li>
+						<li>
+							<a href="#download">下载源码</a>
+						</li>
+						<li>
+							<a href="#module">安装组件</a>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<a href="#download">下载源码</a>
-				</li>
-				<li>
-					<a href="#module">安装组件</a>
 				</li>
 				<li>
 					<a href="#confg">配置客户端</a>
@@ -75,13 +72,13 @@
 					<a href="#project">项目管理</a>
 					<ul class="nav">
 						<li>
-							<a href="#init">初始化项目</a>
+							<a href="#init">初始化</a>
 						</li>
 						<li>
-							<a href="#edit">编辑项目配置文件</a>
+							<a href="#edit">配置项目</a>
 						</li>
 						<li>
-							<a href="#visite">访问项目</a>
+							<a href="#visite">访问目录</a>
 						</li>
 						<li>
 							<a href="#export">导出项目</a>
@@ -98,7 +95,7 @@
 		<!-- Overview：begin -->
 		<div class="bs-docs-section">
 			<div class="page-header">
-				<h1 id="overview">Overview</h1>
+				<h1 id="overview">前期准备</h1>
 			</div>
 			<p class="lead">
 				D2Server运行的基础是在客户端搭建的服务器环境，所以首先我们要先下载安装搭建Server环境。这是一劳永逸的过程，搭建好之后，你就不需要再关注Server的配置，而将所有的精力投在项目上。让D2Server在后台为你默默助力吧。
@@ -109,8 +106,8 @@
 			</p>
 			<hr>
 
-			<!-- 系统环境：begin -->
-			<h3 id="os">系统环境要求</h3>
+			<!-- 系统环境及配置：begin -->
+			<h3 id="os">系统环境及配置</h3>
 			<p>
 				D2Server运行需要<a href="http://nodejs.org/" target="_blank">NodeJS</a>环境，其中压缩JS和CSS过程需要<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank">JAVA</a>环境。
 			</p>
@@ -121,37 +118,31 @@
 			<p>
 				后台挂靠D2Server，占用内存一般在100-150MB左右，2G内存的电脑跑着无压力。对系统其他资源需求很少，可忽略。
 			</p>
-			<!-- 系统环境：end -->
-		</div>
-		<!-- Overview：end -->
+			<!-- 系统环境及配置：end -->
 
-		
-
-		<!-- 下载源码：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="download">下载源码</h1>
-			</div>
-			<p>从Github上下载项目源码，有太多途径可以选择，下面就介绍几种常用的：</p>
-			<h3>通过Git Clone（推荐）</h3>
+			<hr>
+			<!-- 下载源码：begin -->
+			<h3 id="download">下载源码</h3>
+			<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
+			<hr>
+			<h4>通过Git Clone（推荐）</h4>
 			<p>
-				推荐使用git进行项目的安装，方便以后的更新。
+				推荐使用git进行项目的安装，方便以后的版本迭代更新。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
+<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
 cd node-d2server
 git submodule update --init</code></pre>
 			</div>
-			<hr>
 			<h5>更优的处理方案</h5>
 			<p>
-				由于使用项目时必须修改<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="https://github.com/Bacra/node-d2server/fork" target="_blank">Fork</a>一份副本，然后再通过上面的方式部署到本地。
+				由于使用项目时必须修改<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="https://github.com/Bacra/node-d2server/fork" target="_blank">Fork</a>一份副本，然后再通过上面的方式将Fork的副本部署到本地。
 			</p>
 			<p>
 				以后版本迭代更加方便，连<code>conf.js</code>文件都不需要顾虑，直接<code>git pull</code>拉取线上资源即可。
 			</p>
 			<hr>
-			<h3>直接下载</h3>
+			<h4>直接下载</h4>
 			<ol>
 				<li>
 					通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">这个连接</a>，直接将项目打包成zip下载到本地。
@@ -160,21 +151,17 @@ git submodule update --init</code></pre>
 					解压文件，再下载<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>并解压到<code>lib/module/parseHTML/ejs</code>目录
 				</li>
 			</ol>
-			<hr>
 			<p>
 				你也可以通过<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>获取项目之前的版本。
 			</p>
 			<p>
 				<b>注：</b>从<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>下载的源码，也需要手动下载解压<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>。
 			</p>
-		</div>
-		<!-- 下载源码：end -->
-
-		<!-- 安装组建：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="module">安装组件</h1>
-			</div>
+			<!-- 下载源码：end -->
+			
+			<hr>
+			<!-- 安装组建：begin -->
+			<h3 id="module">安装组件</h3>
 			<p>
 				D2Server所需的组件，可以通过<code>npm</code>一键安装。
 			</p>
@@ -182,7 +169,7 @@ git submodule update --init</code></pre>
 				所以，请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">cd node-d2server
+<pre><code class="prettyprint">cd node-d2server
 npm install</code></pre>
 			</div>
 			<hr>
@@ -202,8 +189,10 @@ npm install</code></pre>
 					 </p>
 				</li>
 			</ul>
+			<!-- 安装组件：end -->
 		</div>
-		<!-- 安装组件：end -->
+		<!-- Overview：end -->
+
 
 		<!-- 配置客户端：begin -->
 		<div class="bs-docs-section">
@@ -214,7 +203,7 @@ npm install</code></pre>
 				打开D2Server根目录下的<a href="https://github.com/Bacra/node-d2server/blob/master//conf.js" target="_blank">conf.js</a>，可以配置的属性如下：
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">var SourcePath = ".source/";
+<pre><code class="prettyprint">var SourcePath = ".source/";
 
 module.exports = {
 	'DocumentRoot': __dirname + '/wwwroot/',			// 所有项目所在根目录
@@ -245,9 +234,6 @@ module.exports = {
 				需要注意一下几个port参数，查看这些端口是否已经被占用（尤其是<code>ViewServPort</code>的80端口）。
 			</p>
 			<p>
-				<strong>修改完配置文件之后，你需要创建<code>DocumentRoot</code>指定的目录结构，这个目录下将保存你的项目。</strong>
-			</p>
-			<p>
 				PS：不推荐修改除<code>DocumentRoot</code>之外的目录结构，除非你在工作中遇到了困难（注意和团队其他成员协调好）
 			</p>
 		</div>
@@ -262,7 +248,7 @@ module.exports = {
 				启动D2Server的入口是<code>serv.js</code>，直接用NodeJS调用即可
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">cd node-d2server
+<pre><code class="prettyprint">cd node-d2server
 node serv.js</code></pre>
 			</div>
 			<p>
@@ -290,8 +276,8 @@ node serv.js</code></pre>
 				对于我们还是D2Server，项目都是最核心的部分。D2Server从项目创建开始，到最后的工作交接，每一步都力求最大化节约中间时间，协助你处理琐碎的例如文件整理等工作。
 			</p>
 
-			<!-- 初始化项目：begin -->
-			<h3 id="init">初始化项目</h3>
+			<!-- 初始化：begin -->
+			<h3 id="init">初始化</h3>
 			<p>
 				当前，我们还没项目可以用来做测试。
 			</p>
@@ -321,17 +307,17 @@ node serv.js</code></pre>
 			<p>
 				<b>注意：</b>创建配置方案的时候，不要忘了创建项目主体配置文件<code>MainConfigFile</code>噢
 			</p>
-			<!-- 初始化项目：end -->
+			<!-- 初始化：end -->
 
 
-			<!-- 编辑项目配置文件：begin -->
+			<!-- 配置项目：begin -->
 			<hr>
-			<h3 id="edit">编辑项目配置文件</h3>
+			<h3 id="edit">配置项目</h3>
 			<p>
 				打开具体项目的<code>.source/ProjConf.js</code>文件，你就可以查看这个项目的配置情况了。
 			</p>
 			<div class="highlight">
-				<pre><code class="prettyprint">module.exports = {
+<pre><code class="prettyprint">module.exports = {
 	"name": "d2server",					// 项目名称
 	"alias": 'd2server',					// 项目的默认二级域名
 	"sync": 'c:/svn/d2server/',				// fileMap文件同步目录
@@ -371,18 +357,19 @@ node serv.js</code></pre>
 		]
 	}
 };</code></pre>
-				<p>
-					配置文件中，改动比较多的，是<code>HTML</code>和<code>fileMap</code>属性。其他属性一般只在项目初始化的时候修改，之后团队协作的话，最好不好修改；有修改依旧协商解决（至少要告知其他人）。
-				</p>
-				<h4><code>HTML</code>属性</h4>
-				<p>
-					<b>值结构：</b>相对于<code>SourePath</code>目录的开发文件路径 => 相对于项目根目录的导出文件路径 => 导出文件的相关属性配置。
-				</p>
-				<p>
-					<strong><code>HTML</code>配置是将一个HTML文件，通过不同的参数配置，拆分成独立的文件，同时给每个新的HTML文件声明一个访问地址。</strong>
-				</p>
-				<div class="highlight">
-					<pre><code class="prettyprint">{
+			</div>
+			<p>
+				配置文件中，改动比较多的，是<code>HTML</code>和<code>fileMap</code>属性。其他属性一般只在项目初始化的时候修改，之后团队协作的话，最好不好修改；有修改依旧协商解决（至少要告知其他人）。
+			</p>
+			<h4><code>HTML</code>属性</h4>
+			<p>
+				<b>值结构：</b>相对于<code>SourePath</code>目录的开发文件路径 => 相对于项目根目录的导出文件路径 => 导出文件的相关属性配置。
+			</p>
+			<p>
+				<strong><code>HTML</code>配置是将一个HTML文件，通过不同的参数配置，拆分成独立的文件，同时给每个新的HTML文件声明一个访问地址。</strong>
+			</p>
+			<div class="highlight">
+<pre><code class="prettyprint">{
 	"HTML": {
 		"index/index.html": {			// 该路径相对于.source目录，是开发文件的路径
 			'index.html': {			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
@@ -397,136 +384,147 @@ node serv.js</code></pre>
 		}
 	}
 }</code></pre>
-				</div>
-				<h4><code>fileMap</code>属性</h4>
-				<p>
-					<b>值结构：</b>相对于项目根目录的导出文件路径 => 相对于<code>SourePath</code>目录的开发文件路径。
-				</p>
-				<p>
-					<strong><code>fileMap</code>配置是将各个资源文件合并成一个文件，同时声明一个新的访问地址。</strong>
-				</p>
-				<div class="highlight">
-					<pre><code class="prettyprint">{
+		</div>
+		<h4><code>fileMap</code>属性</h4>
+		<p>
+			<b>值结构：</b>相对于项目根目录的导出文件路径 => 相对于<code>SourePath</code>目录的开发文件路径。
+		</p>
+		<p>
+			<strong><code>fileMap</code>配置是将各个资源文件合并成一个文件，同时声明一个新的访问地址。</strong>
+		</p>
+		<div class="highlight">
+<pre><code class="prettyprint">{
 	"fileMap": {
-		"css/base.min.css": [			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
-			'common/bootstrap-doc.css',	// 该路径相对于.source目录，是开发文件的路径
-			'common/nav.less',		// 配置在这个数组里面的文件，在项目导出的时候，会自动合并
-			'common/frame.less',
+	"css/base.min.css": [			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
+		'common/bootstrap-doc.css',	// 该路径相对于.source目录，是开发文件的路径
+		'common/nav.less',		// 配置在这个数组里面的文件，在项目导出的时候，会自动合并
+		'common/frame.less',
 
-			"index/index.less"
-		],
+		"index/index.less"
+	],
 
-		"js/base.min.js": [
-			'common/nav.js',
-			'common/nav.test.js',
-			'common/frame.js',
-			'common/frame.test.js',
+	"js/base.min.js": [
+		'common/nav.js',
+		'common/nav.test.js',
+		'common/frame.js',
+		'common/frame.test.js',
 
-			"index/index.js",
-			"index/index.test.js"
-		]
+		"index/index.js",
+		"index/index.test.js"
+	]
 	}
 }</code></pre>
-				</div>
-				<hr>
-				<h5>补充信息</h5>
-				<ul>
-					<li>
-						如果有定义<code>extra</code>参数，那么完整的<code>HTML</code> <code>fileMap</code>以及<code>MinCssName</code>配置信息，还要参考附加的子配置文件
-					</li>
-					<li>
-						如果创建了<code>ProjConfigFile</code>，那么<code>sync</code> <code>alias</code>的值，以<code>ProjConfigFile</code>配置文件中的属性为准
-					</li>
-					<li>
-						该开发文档本身就是基于D2Server开发的，你可以从<a href="https://github.com/Bacra/node-d2server/archive/gh-pages.zip" target="_blank">这里</a>下载到这个项目
-					</li>
-				</ul>
-			</div>
-			<!-- 编辑项目配置文件：end -->
-
-			<!-- 访问项目：begin -->
-			<hr>
-			<h3 id="visite">访问项目</h3>
-			<p>
-				查看创建项目的文件夹，你会发现文件夹根目录空空如也。但你却可以通过下面的方式访问到<code>index.html</code>文件，是不是很神奇。
-			</p>
-			<ul>
-				<li>
-					<p>
-						浏览器中访问<code>http://test.com:82/&lt;%projectName%&gt;/index.html</code>，即可打开项目的初始化页面。
-					</p>
-				</li>
-				<li>
-					<p>
-						也可以在系统host添加 <code>127.0.0.1 &lt;%projectName%&gt;.test.com</code>
-					</p>
-					<p>
-						然后在浏览器中访问<code>http://&lt;%projectName%&gt;.test.com:82/index.html</code>。
-					</p>
-				</li>
-			</ul>
-			<hr>
-			<h5>你可能感兴趣的事</h5>
-			<ul>
-				<li>
-					在浏览器中使用键盘快捷键<code>`</code>，即可打开项目配置<code>HTML</code>页面列表，实现浏览器中快速切换项目页面
-				</li>
-				<li>
-					打开<b>真实被引用的</b>资源文件，编辑内容然后保存，浏览器的页面内容也会自动刷新
-				</li>
-			</ul>
-			<!-- 访问项目：end -->
-
-
-			<!-- 导出项目：begin -->
-			<hr>
-			<h3 id="export">导出项目</h3>
-			<p>
-				代码码了一天，想转给后端同事的时候却发现，项目目录依然如初始化的时候空空如也。总不能把<code>.source</code>文件夹丢给后端的同事，“你们自己合一下，我下班了”。
-			</p>
-			<p>
-				那该怎么办呢？<code>export</code>命令来帮你。
-			</p>
-			<p>
-				在D2Server启动后终端cmd中运行<code>export</code>命令。
-			</p>
-			<div class="highlight">
-				<pre><code class="prettyprint">export &lt;%projectName%&gt;</code></pre>
-			<p>
-				待终端显示“Everything is done”，你进项目文件夹看看，是不是所需要的文件都自动合并好了。
-			</p>
-			<hr>
-			<h5>你可能感兴趣的事</h5>
-			<ul>
-				<li>
-					给项目设置<code>sync</code>同步路径，导出文件的同时，定义在<code>fileMap</code>中的文件，也会自动同步到目标文件夹
-				</li>
-				<li>
-					<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中
-				</li>
-			</ul>
-			<!-- 导出项目：end -->
 		</div>
-		<!-- 项目管理：end -->
+		<hr>
+		<h5>补充信息</h5>
+		<ul>
+			<li>
+				如果有定义<code>extra</code>参数，那么完整的<code>HTML</code> <code>fileMap</code>以及<code>MinCssName</code>配置信息，还要参考附加的子配置文件
+			</li>
+			<li>
+				如果创建了<code>ProjConfigFile</code>，那么<code>sync</code> <code>alias</code>的值，以<code>ProjConfigFile</code>配置文件中的属性为准
+			</li>
+			<li>
+				该开发文档本身就是基于D2Server开发的，你可以从<a href="https://github.com/Bacra/node-d2server/archive/gh-pages.zip" target="_blank">这里</a>下载到这个项目
+			</li>
+		</ul>
+		
+		<!-- 配置项目：end -->
 
-		<!-- 结束语：begin -->
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<h1 id="finish">结束语</h1>
-			</div>
-			<p class="lead">
-				恭喜你，完成了D2Server的客户端配置，现在你可以利用D2Server为你的项目助力了。
-			</p>
-			<p class="lead">
-				你也可以移步到<a href="/node-d2server/module.html">Module页面</a>了解更多D2Server特性。
-			</p>
-			<hr>
-			<p>
-				如果在配置环境时遇到了问题，欢迎向我们<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">反馈错误</a>。
-			</p>
+		<!-- 访问目录：begin -->
+		<hr>
+		<h3 id="visite">访问目录</h3>
+		<p>
+			查看创建项目的文件夹，你会发现文件夹根目录空空如也。但你却可以通过下面的方式访问到<code>index.html</code>文件，是不是很神奇。
+		</p>
+		<ul>
+			<li>
+				<p>
+					浏览器中访问<code>http://test.com:82/&lt;%projectName%&gt;/index.html</code>，即可打开项目的初始化页面。
+				</p>
+			</li>
+			<li>
+				<p>
+					也可以在系统host添加 <code>127.0.0.1 &lt;%projectName%&gt;.test.com</code>
+				</p>
+				<p>
+					然后在浏览器中访问<code>http://&lt;%projectName%&gt;.test.com:82/index.html</code>。
+				</p>
+			</li>
+		</ul>
+		<hr>
+		<h5>你可能感兴趣的事</h5>
+		<ul>
+			<li>
+				在浏览器中使用键盘快捷键<code>`</code>，即可打开项目配置<code>HTML</code>页面列表，实现浏览器中快速切换项目页面
+			</li>
+			<li>
+				打开<b>真实被引用的</b>资源文件，编辑内容然后保存，浏览器的页面内容也会自动刷新
+			</li>
+		</ul>
+		<!-- 访问目录：end -->
+
+
+		<!-- 导出项目：begin -->
+		<hr>
+		<h3 id="export">导出项目</h3>
+		<p>
+			代码码了一天，想转给后端同事的时候却发现，项目目录依然如初始化的时候空空如也。总不能把<code>.source</code>文件夹丢给后端的同事，“你们自己合一下，我下班了”。
+		</p>
+		<p>
+			那该怎么办呢？<code>export</code>命令来帮你。
+		</p>
+		<p>
+			在D2Server启动后终端cmd中运行<code>export</code>命令。
+		</p>
+		<div class="highlight">
+			<pre><code class="prettyprint">export &lt;%projectName%&gt;</code></pre>
 		</div>
-		<!-- 结束语：end -->
+		<p>
+			待终端显示“Everything is done”，你进项目文件夹看看，是不是所需要的文件都自动合并好了。
+		</p>
+		<hr>
+		<h5>你可能感兴趣的事</h5>
+		<ul>
+			<li>
+				给项目设置<code>sync</code>同步路径，导出文件的同时，定义在<code>fileMap</code>中的文件，也会自动同步到目标文件夹
+			</li>
+			<li>
+				<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中
+			</li>
+		</ul>
+		<!-- 导出项目：end -->
 	</div>
+	<!-- 项目管理：end -->
+
+	<!-- 结束语：begin -->
+	<div class="bs-docs-section">
+		<div class="page-header">
+			<h1 id="finish">结束语</h1>
+		</div>
+		<p class="lead">
+			恭喜你，完成了D2Server的客户端配置，现在你可以利用D2Server为你的项目助力了。
+		</p>
+		<p class="lead">
+			你也可以移步到<a href="/node-d2server/module.html">Module页面</a>了解更多D2Server特性。
+		</p>
+
+		<hr>
+		<h5>一点点需要注意的事</h5>
+		<ul>
+			<li>
+				D2Server的各个配置参数，除了定义<code>Domain</code> <code>hostname</code> <code>alias</code>这些与域名相关的路径时，不需要加结束的"/"，其他定义目录的配置参数，都需要以"\"结尾，<b>这个很重要</b>。
+			</li>
+			<li>
+				D2Server内部机制是区分路径的大小写的，windows用户需要特别注意，不区分路径大小写，很可能造成文件修改之后，浏览器中刷新无变化等众多灵异状况。
+			</li>
+		</ul>
+		<hr>
+		<p>
+			如果在配置环境时遇到了问题，欢迎向我们<a href="https://github.com/Bacra/node-d2server/issues" target="_blank">反馈</a>。
+		</p>
+	</div>
+	<!-- 结束语：end -->
 </div>
 <!-- Content End -->
 
@@ -535,7 +533,7 @@ node serv.js</code></pre>
 
 
 </div>
-<footer class="wf_mFooter">
+<footer class="eA">
 	<p>
 		Designed by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>. Built by <a href="https://github.com/Bacra" target="_blank">Bacra</a>.
 	</p>
@@ -544,9 +542,8 @@ node serv.js</code></pre>
 		, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
 	</p>
 </footer>
-<script type="text/javascript" src="/node-d2server/js/google-code-prettify/run_prettify.js"></script>
-<script type="text/javascript" src="/node-d2server/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/common/google-code-prettify/run_prettify.js"></script>
+<script type="text/javascript" src="/common/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="/node-d2server/js/base.min.js"></script>
-<script type="text/javascript" src="/node-d2server/js/google-analytics.js"></script>
 </body>
 </html>

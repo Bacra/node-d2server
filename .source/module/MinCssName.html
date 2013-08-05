@@ -1,0 +1,28 @@
+<!-- MinCssName:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="mincssname">MinCssName</h1>
+	</div>
+	<p class="lead">
+		是否设想过，将开发的页面中的CSS样式命名也进行压缩呢，让源码显得更加简单。国外很多网站都开始做这一块的优化，例如<a href="https://www.gmail.com" target="_blank">Gmail</a>；国内<a href="http://www.zhihu.com/" target="_blank">知乎</a>等也在做这一块的尝试。而现在，你只要通过D2Server管理项目，就可以很方便地将这一特性运用于生产中。
+	</p>
+	<p>
+		MinCssName的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>MinCssName</code>。
+	</p>
+	<p>
+		如果需要关闭MinCssName功能，可以直接在<code>MainConfigFile</code>配置文件设置参数值为<code>false</code>。
+	</p>
+	<ul>
+		<li>
+			配置参数类型的为<code>JSON</code>（<code>MainConfigFile</code>配置文件的参数也可以设置成<code>true</code>），格式是原样式名前缀（不带"."或则"#"）=>替换之后的前缀名。
+		</li>
+		<li>
+			CSS样式命名的压缩操作已经整合到<code>export</code>导出过程中，无需执行其他额外的命令。
+		</li>
+		<li>
+			<strong>使用MinCssName必须遵循预设的CSS前缀命名规则</strong>，样式或则id必须以前缀开头，后跟大写字母开头的样式命名。<br />
+			D2Server检索HTML、CSS、JS代码，并以字符串的形式进行替换。所以，在其他方面，请不要使用样式前缀来命名HTML标签、JS函数以及变量等，也不要使用固有的变量来定义原样式名前缀。
+		</li>
+	</ul>
+</div>
+<!-- MinCssName:end -->

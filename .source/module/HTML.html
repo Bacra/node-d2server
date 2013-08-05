@@ -1,0 +1,89 @@
+<!-- HTML:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="html">HTML</h1>
+	</div>
+	<p class="lead">
+		HTML是D2Server最基础的两个模块之一。HTML模块主要是负责为开发文件中的HTML文件，创建访问路径，配置相关EJS参数；在项目文件管理上，主要是将单个HTML开发文件依据EJS的逻辑，拆分成多个导出文件。
+	</p>
+	<p>
+		HTML的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>HTML</code>。
+	</p>
+	<p>
+		HTML模块的操作，除了<a href="#ejs">EJS的语法</a>之外，其他的内容都体现在项目配置的属性设置上。
+	</p>
+
+
+
+	<hr>
+	<h3 id="html-conf">参数配置</h3>
+	<p>
+		<b>（示例）</b>项目配置文件中<code>HTML</code>的配置如下（涵盖所有用户可定义参数）
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint">{
+	"HTML": {
+		"header": "common/header1.html",		// 自动引入的header文件1
+		"footer": "common/footer1.html",		// 自动引入的footer文件1
+		"index/index.html": {
+			"extJS": ["/mjs1.js"],				// 页面需要额外引入的JS文件路径1
+			"extCSS": ["/mcss1.css", "/mless1.less"],	// 页面需要额外引入的CSS文件路径1
+			"header": "common/header2.html",		// 自动引入的header文件2
+			"footer": "common/footer2.html",		// 自动引入的footer文件2
+			'index.html': {
+				"extJS": ["/mjs2.js"],				// 页面需要额外引入的JS文件路径2
+				"extCSS": ["/mcss2.css", "/mless2.less"],	// 页面需要额外引入的CSS文件路径2
+				"header": "common/header3.html",		// 自动引入的header文件3
+				"footer": "common/footer3.html",		// 自动引入的footer文件3
+				"title": "D2Server",
+				"block": "index",
+				"data": {					// 在这里定义EJS的参数
+					"param1": "value1",
+					"param2": "value2",
+				}
+			},
+			"somepage.html": {
+				"title": "xxxx",				// 页面标题
+				"block": "some some2"				// block参数
+			}
+		},
+
+		"page/page.html": {				// 该路径相对于.source目录，是开发文件的路径
+			"mypage.html": {			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
+				"footer": false,			// 定义false，则取消引入footer文件
+				"title": "NAME"
+			}
+		},
+
+		// 最简单的配置
+		"page/page2.html": {
+			"mypage2.html": {}
+		}
+	}
+}</code></pre>
+	</div>
+	<hr>
+	<h5 id="html-conf">配置参数结构说明</h5>
+	<ul>
+		<li>
+			<code>HTML</code>的配置参数分成三层，分别是：开发文件路径=>浏览器访问及导出路径=>页面配置参数。
+		</li>
+		<li>
+			在这三层中，均可以定义<code>header</code> <code>footer</code>变量，后两层还可以定义<code>extJS</code> <code>extCSS</code>变量。定义变量所在的层数越大，变量权重越高。
+		</li>
+		<li>
+			为了更好的管理子配置文件中<code>HTML</code>的<code>header</code> <code>footer</code> 的定义，在<code>MainConfigFile</code>配置文件中，可以设置<code>defaultHeader</code> <code>defaultFooter</code>参数。<br />
+			这两个参数，会被所有的子配置文件继承；这两个参数处于最外层，所以权重也最低；在<code>ProjConfigFile</code>中定义无效。
+		</li>
+		<li>
+			使用<code>header</code> <code>footer</code>定义HTML的头部，不需要在HTML文件中再使用EJS的<code>include</code>去读取文件，D2Server会自动将头部和尾部内容包含到正文的开头和结尾。
+		</li>
+		<li>
+			传递给<code>EJS</code>的变量，除了用户自定义的参数之后，还会附加一些系统参数，详见<a href="#ejs-param">EJS的变量</a>。
+		</li>
+		<li>
+			<code>block</code>参数与<a href="#ejs-extra">EJS拓展语法</a>中的<code>block</code> 密切相关；以空格间隔定义多个<code>block</code>。
+		</li>
+	</ul>
+</div>
+<!-- HTML:end -->

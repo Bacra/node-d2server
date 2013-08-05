@@ -1,10 +1,22 @@
 var nodeLib = 'https://github.com/Bacra/node-d2server',
 	phpLib = 'https://github.com/Bacra/php-d2server',
 	masterZip = nodeLib+'/archive/master.zip',
+	devZip = nodeLib+'/archive/dev.zip',
 	pageZip = nodeLib+'/archive/gh-pages.zip',
 	releases = nodeLib+'/releases',
 	fork = nodeLib+'/fork',
-	master = nodeLib+'/blob/master/';
+	master = nodeLib+'/blob/master/',
+
+	_data = {
+		'nodeLib': nodeLib,
+		'phpLib': phpLib,
+		'masterZip': masterZip,
+		'devZip': devZip,
+		'pageZip': pageZip,
+		'releases': releases,
+		'fork': fork,
+		'master': master
+	};
 
 
 module.exports = {
@@ -12,42 +24,25 @@ module.exports = {
 	"sync": false,			// fileMap文件同步目录
 	"HTML": {
 		'footer': 'common/footer-code.html',
+		"index/index.html": {
+			'footer': 'common/footer.html',
+			'index.html': {
+				'title': 'D2Server',
+				'data': _data
+			}
+		},
 		'getStarted/getStarted.html': {
 			'get-started.html': {
 				'title': 'Get Started',
-				'data': {
-					'nodeLib': nodeLib,
-					'phpLib': phpLib,
-					'masterZip': masterZip,
-					'pageZip': pageZip,
-					'releases': releases,
-					'fork': fork,
-					'master': master
-				}
-			}
-		},
-		'common/building.html': {
-			'note.html': {
-				'title': 'Note'
-			},
-			'module.html': {
-				'title': 'Module'
-			}
-		}
-		/*'note/note.html': {
-			'note.html': {
-				'title': 'Note'
+				'data': _data
 			}
 		},
 		'module/module.html': {
 			'module.html': {
-				'title': 'Module'
+				'title': 'Module',
+				'data': _data
 			}
-		}*/
+		}
 	},						// 配置项目HTML
-	"fileMap": {
-		'css/bootstrap.min.css': [
-			'bootstrap/bootstrap.css'
-		]
-	}					// 配置项目文件映射
+	"fileMap": {}					// 配置项目文件映射
 };

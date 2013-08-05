@@ -4,13 +4,13 @@
 <meta charset="utf-8" />
 <title>Module - An File Server for D2 developers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/node-d2server/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/common/bootstrap/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/node-d2server/css/base.min.css" />
-<script type="text/javascript" src="/node-d2server/js/jq.min.js"></script>
+<script type="text/javascript" src="/common/jquery/jquery.min.js"></script>
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top wf_mNavbar">
+<div class="navbar navbar-inverse navbar-fixed-top eC">
 	<div class="container">
 		<a href="/node-d2server/index.html" class="navbar-brand">D2Server</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".wf_mNavbar__collapse">
@@ -18,16 +18,13 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<div class="nav-collapse collapse wf_mNavbar__collapse">
+		<div class="nav-collapse collapse eD">
 			<ul class="nav navbar-nav">
 				<li>
 					<a href="/node-d2server/get-started.html">Get Started</a>
 				</li>
 				<li class="active">
 					<a href="/node-d2server/module.html">Module</a>
-				</li>
-				<li>
-					<a href="/node-d2server/note.html">Note</a>
 				</li>
 				<li>
 					<a href="https://github.com/Bacra/node-d2server/releases">Download</a>
@@ -47,9 +44,531 @@
 
 
 <!-- Content Begin -->
-<div class="bs-masthead">
-	<div class="container">
-		<h1>Build...</h1>
+<div class="row">
+	<div class="col-lg-3">
+		<div class="bs-sidebar affix">
+			<ul class="nav bs-sidenav">
+				<li class="active">
+					<a href="#overview">Overview</a>
+				</li>
+				<li>
+					<a href="#dataapi">DataAPI</a>
+					<ul class="nav">
+						<li>
+							<a href="#dataapi-opts">参数配置</a>
+						</li>
+						<li>
+							<a href="#dataapi-file">文件管理</a>
+						</li>
+						<li>
+							<a href="#wget">wget</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#mincssname">MinCssName</a>
+				</li>
+				<li>
+					<a href="#extconfigfile">ExtraConfigFile</a>
+				</li>
+				<li>
+					<a href="#html">HTML</a>
+					<ul class="nav">
+						<li>
+							<a href="#html-conf">参数配置</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#filemap">FileMap</a>
+				</li>
+				<li>
+					<a href="#catalog">Catalog</a>
+				</li>
+				<li>
+					<a href="#ejs">EJS</a>
+					<ul class="nav">
+						<li>
+							<a href="#ejs-param">模版参数</a>
+						</li>
+						<li>
+							<a href="#ejs-extra">语法拓展</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#less">LESS</a>
+					<ul class="nav">
+						<li>
+							<a href="#less-bem">BEM命名规则</a>
+						</li>
+						<li>
+							<a href="#less-extra">BaseLess</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#final">Final</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-lg-9">
+		<!-- Overview：begin -->
+		<div class="bs-docs-section">
+			<div class="page-header">
+				<h1 id="overview">Overview</h1>
+			</div>
+			<p class="lead">
+				D2Server汇集了许多实用的模块，而且这些模块只要进行一些简单的配置，就可以帮你节约许多时间。同时，D2Server也针对外部模块进行了一些功能性地拓展，让他们更好地服务于前端开发工作。
+			</p>
+			<hr>
+			<p>
+				如果你还不了解D2Server，请先查看<a href="https://github.com/Bacra/node-d2server/blob/master//README.md">说明文档</a>，判断D2Server是否你所需要的。
+			</p>
+			<p>
+				如果你还不知道如何使用D2Server，请先阅读我们的<a href="/node-d2server/get-started.html">快速部署教程</a>。
+			</p>
+		</div>
+
+		<!-- DataAPI:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="dataapi">DataAPI</h1>
+	</div>
+	<p class="lead">
+		通过DataAPI，可以很方便的地组织动态数据，配合<code>wget</code>，自动将线上资源缓存到本地，尽可能地节约开发者时间。
+	</p>
+	<p>
+		DataAPI的配置放置在每个项目<code>MainConfigFile</code>文件中，对应的配置参数为<code>DataAPI</code>，在<code>ProjConfigFile</code>中定义无效。
+	</p>
+	<p>
+		针对每个接口数据的配置信息，存放在项目的<code>DynamicDataFile</code>文件中，以<code>JSON</code>的格式保存。
+	</p>
+	<hr>
+	<h3 id="dataapi-opts">参数配置</h3>
+	<p class="lead">
+		DataAPI的配置方案，经历了3次大重写，我们力求用最简单的入口控制实现他的功能。从最开始的直接使用<code>function</code>进行流程控制，到现在的<code>JSON</code>格式，定义几个参数就可以完成功能的配置，我们希望能让大家看到我们的进步。
+	</p>
+	<p>
+		项目配置文件中的<code>DataAPI</code>参数主要定义如何从请求地址中，获取所需要的参数，来拼接临时文件名；以及定义<code>wget</code>所需的参数。
+	</p>
+	<p>
+		如果你希望关闭DataAPI功能，直接设置参数值为<code>false</code>即可。
+	</p>
+	<div class="highlight">
+		<pre><code class="prettyprint">// 项目配置文件 DataAPI参数的配置
+{
+	"hostname": undefined,		// 定义wget从何处下载数据
+	"port": undefined,		// 定义wget下载数据时使用的端口
+	"update": true,			// 是否使用wget下载最新的数据
+	"excludeQuery": [],		// 拼接缓存文件名时，忽略这些参数
+	"defaultMime": "text/plain",	// 在没指明文件类型的情况下，默认的mime返回值
+	"formatQueryName": "format"	// 根据这个请求参数来定义文件拓展名
+}</code></pre>
+	</div>
+	<hr>
+	<p>
+		针对每个接口数据，可以配置<code>mime</code> <code>extname</code> <code>wait</code>参数（后续会增加更多可以自定义的参数）。
+	</p>
+	<p>
+		这些参数一般都是继承<code>DataAPI</code>配置中的默认值，同时也会根据<code>wget</code>请求结果做调整。
+	</p>
+	<ul>
+		<li>
+			<code>mime</code>：指明数据返回给浏览器的mime信息
+		</li>
+		<li>
+			<code>extname</code>：指明文件保存的格式
+		</li>
+		<li>
+			<code>wait</code>：设置返回值的延迟时间
+		</li>
+	</ul>
+	<hr>
+	<h3 id="dataapi-file">文件管理</h3>
+	<p>
+		DataAPI的数据文件，都保存在<code>DynamicDataPath</code>目录下。
+	</p>
+	<p>
+		具体数据文件以<code>请求路径+文件名 / 请求参数组成的文件名</code>的路径进行保存，保证所有数据文件均有一层且只有一层文件夹。
+	</p>
+	<p>
+		针对<code>wget</code>自动下载的数据文件，文件名会加上<code>[CACHE]</code>的前缀（注：用户修改过的数据文件，请删除<code>[CACHE]</code>前缀，防止被覆盖）。
+	</p>
+	<hr>
+	<h3 id="wget">wget</h3>
+	<p>
+		通过wget可以很方便地下载线上资源到本地，但<strong>目前尚未提供相应的调用接口，同时不支持<code>https</code>的请求</strong>。
+	</p>
+	<p>
+		如果有你许多文件需要下载，又希望能保持线上的目录结构，那么你可以访问<code>http://test.com:81/download</code>。将你需要下载的文件列表填入文本框中（以换行分割），提交之后，D2Server会自动将文件下载到指定的项目文件夹中。
+	</p>
+</div>
+<!-- DataAPI:end -->
+
+		<!-- MinCssName:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="mincssname">MinCssName</h1>
+	</div>
+	<p class="lead">
+		是否设想过，将开发的页面中的CSS样式命名也进行压缩呢，让源码显得更加简单。国外很多网站都开始做这一块的优化，例如<a href="https://www.gmail.com" target="_blank">Gmail</a>；国内<a href="http://www.zhihu.com/" target="_blank">知乎</a>等也在做这一块的尝试。而现在，你只要通过D2Server管理项目，就可以很方便地将这一特性运用于生产中。
+	</p>
+	<p>
+		MinCssName的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>MinCssName</code>。
+	</p>
+	<p>
+		如果需要关闭MinCssName功能，可以直接在<code>MainConfigFile</code>配置文件设置参数值为<code>false</code>。
+	</p>
+	<ul>
+		<li>
+			配置参数类型的为<code>JSON</code>（<code>MainConfigFile</code>配置文件的参数也可以设置成<code>true</code>），格式是原样式名前缀（不带"."或则"#"）=>替换之后的前缀名。
+		</li>
+		<li>
+			CSS样式命名的压缩操作已经整合到<code>export</code>导出过程中，无需执行其他额外的命令。
+		</li>
+		<li>
+			<strong>使用MinCssName必须遵循预设的CSS前缀命名规则</strong>，样式或则id必须以前缀开头，后跟大写字母开头的样式命名。<br />
+			D2Server检索HTML、CSS、JS代码，并以字符串的形式进行替换。所以，在其他方面，请不要使用样式前缀来命名HTML标签、JS函数以及变量等，也不要使用固有的变量来定义原样式名前缀。
+		</li>
+	</ul>
+</div>
+<!-- MinCssName:end -->
+
+		<!-- ExtraConfigFile:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="extconfigfile">ExtraConfigFile</h1>
+	</div>
+	<p class="lead">
+		项目开发少不了团队协作，通常我们也会使用SVN、Git这些快速有效的文件管理工具来管理我们的开发项目。但如果因为使用D2Server而导致<code>MainConfigFile</code>成了文件冲突的重灾区，这是我们所不愿看到的。为此，D2Server有ExtraConfigFile这样一个专门的模块，将<code>MainConfigFile</code>分割，可以为每个成员创建独自占有的配置文件。
+	</p>
+	<p>
+		ExtraConfigFile的配置放置在每个项目<code>MainConfigFile</code>文件中，对应的配置参数为<code>extra</code>，在<code>ProjConfigFile</code>中定义无效。
+	</p>
+	<ul>
+		<li>
+			<code>extra</code>的格式为数组，保存内容为子配置文件的路径，路径相对于<code>MainConfigFile</code>文件所在目录。
+		</li>
+		<li>
+			<code>extra</code>中定义的顺序，将影响配置文件的合并顺序，直接表现为<a href="#filemap">FileMap</a>上，会影响js css等文件的合并顺序。
+		</li>
+		<li>
+			<b>（经验）</b>将共用的配置信息写入<code>MainConfigFile</code>配置文件，而针对成员各自分配的页面配置信息，写到每个人的<code>ProjConfigFile</code>子配置文件，然后通过<code>MainConfigFile</code>的<code>extra</code>进行子配置文件的整合。
+		</li>
+	</ul>
+</div>
+<!-- ExtraConfigFile:end -->
+
+		<!-- HTML:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="html">HTML</h1>
+	</div>
+	<p class="lead">
+		HTML是D2Server最基础的两个模块之一。HTML模块主要是负责为开发文件中的HTML文件，创建访问路径，配置相关EJS参数；在项目文件管理上，主要是将单个HTML开发文件依据EJS的逻辑，拆分成多个导出文件。
+	</p>
+	<p>
+		HTML的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>HTML</code>。
+	</p>
+	<p>
+		HTML模块的操作，除了<a href="#ejs">EJS的语法</a>之外，其他的内容都体现在项目配置的属性设置上。
+	</p>
+
+
+
+	<hr>
+	<h3 id="html-conf">参数配置</h3>
+	<p>
+		<b>（示例）</b>项目配置文件中<code>HTML</code>的配置如下（涵盖所有用户可定义参数）
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint">{
+	"HTML": {
+		"header": "common/header1.html",		// 自动引入的header文件1
+		"footer": "common/footer1.html",		// 自动引入的footer文件1
+		"index/index.html": {
+			"extJS": ["/mjs1.js"],				// 页面需要额外引入的JS文件路径1
+			"extCSS": ["/mcss1.css", "/mless1.less"],	// 页面需要额外引入的CSS文件路径1
+			"header": "common/header2.html",		// 自动引入的header文件2
+			"footer": "common/footer2.html",		// 自动引入的footer文件2
+			'index.html': {
+				"extJS": ["/mjs2.js"],				// 页面需要额外引入的JS文件路径2
+				"extCSS": ["/mcss2.css", "/mless2.less"],	// 页面需要额外引入的CSS文件路径2
+				"header": "common/header3.html",		// 自动引入的header文件3
+				"footer": "common/footer3.html",		// 自动引入的footer文件3
+				"title": "D2Server",
+				"block": "index",
+				"data": {					// 在这里定义EJS的参数
+					"param1": "value1",
+					"param2": "value2",
+				}
+			},
+			"somepage.html": {
+				"title": "xxxx",				// 页面标题
+				"block": "some some2"				// block参数
+			}
+		},
+
+		"page/page.html": {				// 该路径相对于.source目录，是开发文件的路径
+			"mypage.html": {			// 该路径相对于项目根目录，是导出文件（浏览器访问）路径
+				"footer": false,			// 定义false，则取消引入footer文件
+				"title": "NAME"
+			}
+		},
+
+		// 最简单的配置
+		"page/page2.html": {
+			"mypage2.html": {}
+		}
+	}
+}</code></pre>
+	</div>
+	<hr>
+	<h5 id="html-conf">配置参数结构说明</h5>
+	<ul>
+		<li>
+			<code>HTML</code>的配置参数分成三层，分别是：开发文件路径=>浏览器访问及导出路径=>页面配置参数。
+		</li>
+		<li>
+			在这三层中，均可以定义<code>header</code> <code>footer</code>变量，后两层还可以定义<code>extJS</code> <code>extCSS</code>变量。定义变量所在的层数越大，变量权重越高。
+		</li>
+		<li>
+			为了更好的管理子配置文件中<code>HTML</code>的<code>header</code> <code>footer</code> 的定义，在<code>MainConfigFile</code>配置文件中，可以设置<code>defaultHeader</code> <code>defaultFooter</code>参数。<br />
+			这两个参数，会被所有的子配置文件继承；这两个参数处于最外层，所以权重也最低；在<code>ProjConfigFile</code>中定义无效。
+		</li>
+		<li>
+			使用<code>header</code> <code>footer</code>定义HTML的头部，不需要在HTML文件中再使用EJS的<code>include</code>去读取文件，D2Server会自动将头部和尾部内容包含到正文的开头和结尾。
+		</li>
+		<li>
+			传递给<code>EJS</code>的变量，除了用户自定义的参数之后，还会附加一些系统参数，详见<a href="#ejs-param">EJS的变量</a>。
+		</li>
+		<li>
+			<code>block</code>参数与<a href="#ejs-extra">EJS拓展语法</a>中的<code>block</code> 密切相关；以空格间隔定义多个<code>block</code>。
+		</li>
+	</ul>
+</div>
+<!-- HTML:end -->
+
+		<!-- FileMap:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="filemap">FileMap</h1>
+	</div>
+	<p class="lead">
+		FileMap是D2Server最基础的两个模块之一。FileMap模块在DevServ中，是将原始的访问路径进行拆分的数据来源；在SpliceServer中，将分散在各个文件夹中的开发文件进行整合拼接输出。
+	</p>
+	<p>
+		FileMap的配置放置在每个项目所有项目的配置中，对应的配置参数为<code>FileMap</code>。
+	</p>
+	<p>
+		<code>FileMap</code>在进行子配置文件属性拼接时，受<code>extra</code>定义的子配置文件顺序影响，详情见<a href="#extconfigfile">ExtraConfigFile</a>。
+	</p>
+	<ul>
+		<li>
+			DevServ中，D2Server会将JS CSS LESS的源文件路径拆分成许多子路径；其他文件类型，则直接进行字节流的合并。
+		</li>
+		<li>
+			<code>fileMap</code>中，资源文件名以<code>.test</code>结尾（不包含文件拓展名）的文件，不会合并到最终文件中。
+		</li>
+		<li>
+			为更好组织文件，请避免使用<code>.m+数字</code>的后缀命名资源文件。
+		</li>
+	</ul>
+</div>
+<!-- FileMap:end -->
+
+		<!-- Catalog:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="catalog">Catalog</h1>
+	</div>
+	<p class="lead">
+		Catalog模块主要是在浏览器访问路径和项目文件存储之间建立对应关系过程中，缩减目录结构。简单的理解，就是一个超级简单的伪静态规则。
+	</p>
+	<h5>具体是怎么一个效果呢？</h5>
+	<p>
+		如果<code>MainConfigFile</code>中定义<code>catelog</code>参数为“mySite/”（在<code>ProjConfigFile</code>中定义无效），那么在浏览器中请求“/mySite/js/jq.min.js”文件，实际对应项目“/js/jq.min.js”文件。
+	</p>
+</div>
+<!-- Catalog:end -->
+
+		<!-- EJS:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="ejs">EJS</h1>
+	</div>
+	<p class="lead">
+		CSS、JS代码能很好的复用，那么在开发HTML的时候，能不能实现代码的重用呢？
+	</p>
+	<p class="lead">
+		<a href="https://github.com/Bacra/php-d2server">PHP版的D2Server</a>，我们自己写了一个类似于PHPTAL的模版引擎；换成NodeJS重写之后，为了更好地兼容后台模版引擎，我们选择更加主流的标签语法。而在模版引擎的选择上，我们使用当前NodeJS中的成熟型代表——EJS。
+	</p>
+	<p>
+		EJS的标签语法非常普及，标志性符号是<code>&lt;%</code> <code>%&gt;</code>（可在Server的<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js">conf.js</a>中更改开始结束标签）。具体的EJS标签语法见<a href="https://github.com/Bacra/ejs" target="_blank">Github</a>项目说明。
+	</p>
+	
+
+	
+	<hr>
+	<h3 id="ejs-param">模版参数</h3>
+	<p>
+		使用D2Server，可以很方便地定义变量赋值给EJS。定义变量通过在项目配置文件<code><a href="#html-conf">HTML</a></code>参数的<code>data</code>进行赋值。
+	</p>
+	<p>
+		除了用户自定义的变量外，D2Server还会附加<code>sys</code> <code>root</code>两个变量给EJS。
+	</p>
+	<ul>
+		<li>
+			<code>sys</code>包含Server运行过程中的一些状态属性，包括<code>title</code> <code>extJS</code> <code>extCSS</code> <code>href</code> <code>catalog</code> <code>srcFile</code> <code>outFile</code> <code>block</code> <code>htmlVirtualFileDirname</code> <code>projConf</code>。<b>可以引用这些变量，但不要修改值</b>，避免出现未知错误。
+		</li>
+		<li>
+			<code>root</code>参数是对<code>data</code>变量的引用，方便在EJS中做变量定义情况的判断。
+		</li>
+	</ul>
+
+
+
+	<hr>
+	<h3 id="ejs-extra">语法拓展</h3>
+	<p class="lead">
+		EJS的语法相当灵活，但却不适合进行一些日常开发。为了更好地处理工作中的零碎日常。我们又对EJS进行了定制化的标签语法封装。
+	</p>
+	<h4>block标签语法</h4>
+	<p>
+		block顾名思义，就是将HTML代码碎片化。通过block可以定义一个代码块，然后根据<code>HTML</code>配置中的<code>block</code>参数进行页面是否需要这一块代码的判断。
+	</p>
+	<p>
+		定义block非常简单，只要完成一个闭合标签即可。
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint">&lt;% block block命名 %&gt;
+&lt;!-- ...HTML代码片段... --&gt;
+&lt;% endBlock %&gt;
+</code></pre>
+	</div>
+
+
+	<hr>
+	<h4>loop标签语法</h4>
+	<p>
+		loop顾名思义，就是循环其中内容。通过loop可以定义一个用于循环的代码块，从而解放copy，HTML代码也更加简明。
+	</p>
+	<p>
+		定义loop也只需要一个闭合标签。
+	</p>
+		<div class="highlight">
+<pre><code class="prettyprint">&lt;% loop times( : timeVar 可选) %&gt;
+&lt;!-- ...HTML代码片段... --&gt;
+&lt;% endLoop %&gt;
+</code></pre>
+	</div>
+</div>
+<!-- EJS:end -->
+
+		<!-- LESS:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="less">LESS</h1>
+	</div>
+	<p class="lead">
+		关于LESS不想多说什么，工作中已经离不开他，LESS包含到D2Server也是情理之中的事。
+	</p>
+	<p>
+		如果你还不知道如何使用LESS处理你的CSS代码，请访问<a href="http://www.lesscss.net/" target="_blank">LESS中文</a>。
+	</p>
+
+	<hr>
+	<h3 id="less-bem">BEM命名规则</h3>
+	<p class="lead">
+		如果写CSS是一门技术活，那么给CSS命名则是一项艺术创作工作。很多时候，我们不是在纠结CSS效果怎么写，而是在苦恼到底如何命名才能做到CSS之间不冲突，而又能尽可能多地实现样式的复用。
+	</p>
+	<p class="lead">
+		BEM在众多CSS命名规范中，通用性和灵活性都非常赞，使用BEM之后，HTML代码结构也变得非常清晰容易理解。但BEM有一个非常严重的弊端，按照标准版的写法产生出来的CSS命名会异常的长，这就导致编写过程中，需要频繁地进行复制黏贴。
+	</p>
+	<p>
+		还不了解BEM的童鞋可以阅读这篇文章<a href="http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html" target="_blank">《BEM思想之彻底弄清BEM语法》</a>。
+	</p>
+	<p>
+		为了更好享受BEM的便捷之处，D2Server针对LESS文件的编译进行了优化。所有以<code>.__</code> <code>.--</code>开头的样式，会自动和前面的样式名合并，形成一个符合BEM命名的样式。
+	</p>
+	<p>例如</p>
+	<div class="highlight">
+<pre><code class="prettyprint lang-less">.ex_main {
+	.__lt {
+		float: left;
+	}
+	.__gt {
+		float: right;
+	}
+	.__tag {
+		border-bottom: 1px solid #ccc;
+		.--ed {
+			border-color: #333;
+		}
+	}
+}</code></pre>
+</div>
+	<p>
+		上面的代码经过D2Server处理之后的结果如下：
+	</p>
+	<div class="highlight">
+<pre><code class="prettyprint lang-css">.ex_main__lt {
+  float: left;
+}
+.ex_main__gt {
+  float: right;
+}
+.ex_main__tag {
+  border-bottom: 1px solid #ccc;
+}
+.ex_main__tag--ed {
+  border-color: #333;
+}</code></pre>
+	</div>
+	<p>
+		使用BEM命名规则来规范书写CSS的习惯，再使用D2Server的<a href="#mincssname">MinCssName</a>对CSS命名进行压缩。
+	</p>
+
+
+
+	<hr>
+	<h3 id="less-extra">BaseLess</h3>
+	<p class="lead">
+		在进行项目开发过程中，难免会遇到一些变量或则函数需要全局共享，可惜LESS没有带这个功能，所以D2Server又来插一脚了。
+	</p>
+	<p>
+		在项目的<code>MainConfigFile</code>配置文件中，通过<code>baseLess</code>参数来定义全局的LESS文件。
+	</p>
+	<p>
+		<b>注意：</b>全局LESS文件的内容，在编译的时候会累加到所有LESS文件的头部，所以请不要定义会输出具体CSS代码的LESS语句。
+	</p>
+</div>
+<!-- LESS:end -->
+		
+		<div class="bs-docs-section">
+			<div class="page-header">
+				<h1 id="final">结束语</h1>
+			</div>
+			<p>
+				D2Server在6月份之前，还是自己写着玩的一个项目，一些功能由于测试的项目有限，可能还存在问题，欢迎在使用后给我们<a href="https://github.com/Bacra/node-d2server/issues" target="_blank">反馈</a>。
+			</p>
+			<p>
+				D2Server的功能相对而言比较杂。项目也只是业余爱好，测试和开发时间并不怎么宽裕，请关注<a href="https://github.com/Bacra/node-d2server/blob/master/CHANGELOG.md" target="_blank">更新记录</a>，部分更新会存在不能向下兼容的问题。
+			</p>
+			<p>
+				我们也在积极开发更多方便D2er工作和使用的功能模块，你可以在<a href="https://github.com/Bacra/node-d2server/blob/master/TODO.md" target="_blank">这里</a>找到我们的开发计划。
+				也欢迎在Github上<a href="https://github.com/Bacra/node-d2server/fork">Fork D2Server</a>项目，让我们一起把D2Server做得更好。
+			</p>
+
+
+			<hr>
+			<h5>关于JavaScript的编译器CoffeeScript为什么没有包含进D2Server</h5>
+			<p>
+				CoffeeScript的确对简写JS代码做出了不可抹灭的功勋，以至于1.85版的JavaScript标准中，也可以看到CoffeeScript的影子。但CoffeeScript在国内貌似非常非常的不普及，也在MDN看到一些反对的声音，毕竟JavaScript也不是脚本语言。
+			</p>
+		</div>
 	</div>
 </div>
 <!-- Content End -->
@@ -59,7 +578,7 @@
 
 
 </div>
-<footer class="wf_mFooter">
+<footer class="eA">
 	<p>
 		Designed by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>. Built by <a href="https://github.com/Bacra" target="_blank">Bacra</a>.
 	</p>
@@ -68,9 +587,8 @@
 		, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
 	</p>
 </footer>
-<script type="text/javascript" src="/node-d2server/js/google-code-prettify/run_prettify.js"></script>
-<script type="text/javascript" src="/node-d2server/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/common/google-code-prettify/run_prettify.js"></script>
+<script type="text/javascript" src="/common/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="/node-d2server/js/base.min.js"></script>
-<script type="text/javascript" src="/node-d2server/js/google-analytics.js"></script>
 </body>
 </html>

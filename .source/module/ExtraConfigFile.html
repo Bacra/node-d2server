@@ -1,0 +1,24 @@
+<!-- ExtraConfigFile:begin -->
+<div class="bs-docs-section">
+	<div class="page-header">
+		<h1 id="extconfigfile">ExtraConfigFile</h1>
+	</div>
+	<p class="lead">
+		项目开发少不了团队协作，通常我们也会使用SVN、Git这些快速有效的文件管理工具来管理我们的开发项目。但如果因为使用D2Server而导致<code>MainConfigFile</code>成了文件冲突的重灾区，这是我们所不愿看到的。为此，D2Server有ExtraConfigFile这样一个专门的模块，将<code>MainConfigFile</code>分割，可以为每个成员创建独自占有的配置文件。
+	</p>
+	<p>
+		ExtraConfigFile的配置放置在每个项目<code>MainConfigFile</code>文件中，对应的配置参数为<code>extra</code>，在<code>ProjConfigFile</code>中定义无效。
+	</p>
+	<ul>
+		<li>
+			<code>extra</code>的格式为数组，保存内容为子配置文件的路径，路径相对于<code>MainConfigFile</code>文件所在目录。
+		</li>
+		<li>
+			<code>extra</code>中定义的顺序，将影响配置文件的合并顺序，直接表现为<a href="#filemap">FileMap</a>上，会影响js css等文件的合并顺序。
+		</li>
+		<li>
+			<b>（经验）</b>将共用的配置信息写入<code>MainConfigFile</code>配置文件，而针对成员各自分配的页面配置信息，写到每个人的<code>ProjConfigFile</code>子配置文件，然后通过<code>MainConfigFile</code>的<code>extra</code>进行子配置文件的整合。
+		</li>
+	</ul>
+</div>
+<!-- ExtraConfigFile:end -->
