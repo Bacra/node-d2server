@@ -3,7 +3,7 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
-## v3.3.0
+## v3.2.2
 
 * MinCssName对id也将进行缩减转化
 * ejs页面增加`sys`变量， **之前的`title` `extJS` `extCSS`变量都转到`sys`下**
