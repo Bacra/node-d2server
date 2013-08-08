@@ -1,22 +1,23 @@
 var nodeLib = 'https://github.com/Bacra/node-d2server',
-	phpLib = 'https://github.com/Bacra/php-d2server',
-	masterZip = nodeLib+'/archive/master.zip',
-	devZip = nodeLib+'/archive/dev.zip',
-	pageZip = nodeLib+'/archive/gh-pages.zip',
-	releases = nodeLib+'/releases',
-	fork = nodeLib+'/fork',
-	master = nodeLib+'/blob/master/',
 
 	_data = {
 		'nodeLib': nodeLib,
-		'phpLib': phpLib,
-		'masterZip': masterZip,
-		'devZip': devZip,
-		'pageZip': pageZip,
-		'releases': releases,
-		'fork': fork,
-		'master': master
+		'phpLib': 'https://github.com/Bacra/php-d2server',
+		'masterZip': nodeLib+'/archive/master.zip',
+		'devZip': nodeLib+'/archive/dev.zip',
+		'pageZip': nodeLib+'/archive/gh-pages.zip',
+		'releases': nodeLib+'/releases',
+		'fork': nodeLib+'/fork',
+		'master': nodeLib+'/blob/master/',
+		'author': 'https://plus.google.com/102678188433989978435?rel=author'
 	};
+
+
+function buildData(description){
+	var data = Object.create(_data);
+	data.description = description;
+	return data;
+}
 
 
 module.exports = {
@@ -30,25 +31,25 @@ module.exports = {
 			'footer': 'common/footer.html',
 			'index.html': {
 				'title': 'D2Server',
-				'data': _data
+				'data': buildData('下载使用D2Server管理前端项目，进行团队协同开发，让前端开发人员更加集中精力于自己的工作。推荐使用D2Server搭建前端开发服务器环境，代替Apache')
 			}
 		},
 		'getStarted/getStarted.html': {
 			'get-started.html': {
 				'title': 'Get Started',
-				'data': _data
+				'data': buildData('D2Server入门初级中文教程，从下载D2Server开始，一步一步教你如何使用D2Server管理前端项目')
 			}
 		},
 		'module/module.html': {
 			'module.html': {
 				'title': 'Module',
-				'data': _data
+				'data': buildData('D2Server API中文文档，介绍D2Server各个模块组件的参数配置方法，了解D2Server的强大功能')
 			}
 		},
 		'getStarted/downloadPage.html': {
 			'download.html': {
 				'title': 'Download',
-				'data': _data
+				'data': buildData('通过git clone D2Server，或则Fork项目。也可以通过Github下载到D2Server的历史版本源码')
 			}
 		},
 		'feedback/feedback.html': {
@@ -56,7 +57,7 @@ module.exports = {
 				'header': 'common/header.html',
 				'footer': 'common/footer.html',
 				'title': 'Feedback',
-				'data': _data
+				'data': buildData(null)
 			}
 		}
 	},						// 配置项目HTML
