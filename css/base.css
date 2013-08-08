@@ -83,6 +83,7 @@ body {
   position: relative;
   padding: 30px 15px;
   text-align: center;
+  min-width: 300px;
 }
 .bs-masthead h1 {
   font-size: 50px;
@@ -117,6 +118,12 @@ body {
   margin-left: 20px;
 }
 
+.bs-btn {
+	padding: 8px 12px;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
 
 
 
@@ -132,7 +139,13 @@ body {
 	.highlight {
 		display: none;
 	}
+	.bs-btn {
+		padding: 4px 8px;
+		font-size: 10px;
+		border-radius: 2px;
+	}
 }
+
 
 
 /* Tablets and up */
@@ -175,6 +188,11 @@ body {
 	.bs-sidebar.affix .bs-sidenav {
 		margin-top: 0;
 		margin-bottom: 0;
+	}
+	.bs-btn {
+		padding: 14px 16px;
+		font-size: 18px;
+		border-radius: 6px;
 	}
 }
 
