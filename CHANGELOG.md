@@ -6,6 +6,8 @@ https://github.com/Bacra/node-d2server/releases
 # v3.2.3
 
 * 修正HTML中内嵌css、js导致`MinCssName`压缩错误的问题
+* 优化`MinCssName`，有效提高`export`导出效率
+
 
 
 
