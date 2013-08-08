@@ -1,0 +1,23 @@
+<div class="container" style="text-align: center;">
+	<h3 style="padding-top: 62px;">
+		正在带你前往Github项目的<a href="<%= nodeLib %>/issues">Issues</a>进行反馈操作
+	</h3>
+	<p>如果浏览器没有自动跳转，<a href="<%= nodeLib %>/issues">请点击此处</a></p>
+	<p>
+		<a href="#" id="wf_stopReBt">终止跳转</a>
+	</p>
+</div>
+<% include ../common/footer-text.html %>
+<script type="text/javascript">
+;(function(){
+	var wait = setTimeout(function(){
+		window.location.href="<%= nodeLib %>/issues";
+	}, 2000);
+
+	document.getElementById('wf_stopReBt').onclick = function(){
+		clearTimeout(wait);
+		this.parentNode.parentNode.removeChild(this.parentNode);
+		return false;
+	};
+})();
+</script>

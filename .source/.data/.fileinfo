@@ -17,5 +17,6 @@
 	"common_google-code-prettify_prettify.css/[NULL]": {
 		"mime": "text/css"
 	},
-	"node-d2server_ejs-param/[NULL]": {}
+	"node-d2server_ejs-param/[NULL]": {},
+	"node-d2server_/[NULL]": {}
 }

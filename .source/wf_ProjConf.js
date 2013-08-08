@@ -24,7 +24,9 @@ module.exports = {
 	"sync": false,			// fileMap文件同步目录
 	"HTML": {
 		'footer': 'common/footer-code.html',
+		'header': 'common/header-code.html',
 		"index/index.html": {
+			'header': 'common/header.html',
 			'footer': 'common/footer.html',
 			'index.html': {
 				'title': 'D2Server',
@@ -40,6 +42,20 @@ module.exports = {
 		'module/module.html': {
 			'module.html': {
 				'title': 'Module',
+				'data': _data
+			}
+		},
+		'getStarted/downloadPage.html': {
+			'download.html': {
+				'title': 'Download',
+				'data': _data
+			}
+		},
+		'feedback/feedback.html': {
+			'feedback.html': {
+				'header': 'common/header.html',
+				'footer': 'common/footer.html',
+				'title': 'Feedback',
 				'data': _data
 			}
 		}

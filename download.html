@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Download - An File Server for D2 developers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/common/bootstrap/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/node-d2server/css/base.min.css" />
+<script type="text/javascript" src="/common/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top eC">
+	<div class="container">
+		<a href="/node-d2server/index.html" class="navbar-brand">D2Server</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".eD">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<div class="nav-collapse collapse eD">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="/node-d2server/get-started.html">Get Started</a>
+				</li>
+				<li>
+					<a href="/node-d2server/module.html">Module</a>
+				</li>
+				<li class="active">
+					<a href="/node-d2server/download.html">Download</a>
+				</li>
+				<li>
+					<a href="/node-d2server/feedback.html">Feedback</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container">
+
+
+
+
+
+<!-- Content Begin -->
+<div class="container">
+	<h1>下载源码</h1>
+	<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
+<hr>
+<h4>通过Git Clone（推荐）</h4>
+<p>
+	推荐使用git进行项目的安装，方便以后的版本迭代更新。
+</p>
+<div class="highlight">
+<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
+cd node-d2server
+git submodule update --init</code></pre>
+</div>
+<h5>更优的处理方案</h5>
+<p>
+	由于使用项目时必须修改<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="https://github.com/Bacra/node-d2server/fork" target="_blank">Fork</a>一份副本，然后再通过上面的方式将Fork的副本部署到本地。
+</p>
+<p>
+	以后版本迭代更加方便，连<code>conf.js</code>文件都不需要顾虑，直接<code>git pull</code>拉取线上资源即可。
+</p>
+<hr>
+<h4>直接下载</h4>
+<ol>
+	<li>
+		通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">这个连接</a>，直接将项目打包成zip下载到本地。
+	</li>
+	<li>
+		解压文件，再下载<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>并解压到<code>lib/module/parseHTML/ejs</code>目录
+	</li>
+</ol>
+<p>
+	你也可以通过<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>获取项目之前的版本。
+</p>
+<p>
+	<b>注：</b>从<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>下载的源码，也需要手动下载解压<a href="https://github.com/Bacra/ejs/archive/master.zip" target="_blank">EJS（定制版）</a>。
+</p>
+	<hr>
+	<h3>相关资源推荐</h3>
+	<ul>
+		<li>
+			<a href="https://help.github.com/" target="_blank">如何使用Git</a>
+		</li>
+		<li>
+			<a href="/node-d2server/get-started.html">了解如何安装组件及配置D2Server</a>
+		</li>
+		<li>
+			<a href="/node-d2server/feedback.html" target="_blank">下载遇到问题，我要反馈</a>
+		</li>
+		<li>
+			<a href="/node-d2server/get-started.html#project">怎么用D2Server管理前端开发项目</a>
+		</li>
+		<li>
+			<a href="/node-d2server/module.html">深入了解D2Server的各个模块</a>
+		</li>
+	</ul>
+</div>
+<!-- Content End -->
+
+
+
+
+
+</div>
+</div>
+<div class="eA">
+	<p>
+		Designed by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>. Built by <a href="https://github.com/Bacra" target="_blank">Bacra</a>.
+	</p>
+	<p>
+		Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>
+		, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+	</p>
+</div>
+<script type="text/javascript" src="/common/google-code-prettify/run_prettify.js"></script>
+<script type="text/javascript">var jiathis_config = {data_track_clickback:'true'};</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r5.gif&amp;uid=1375936934454860" charset="utf-8"></script>
+<script type="text/javascript" src="/common/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="/node-d2server/js/base.min.js"></script>
+</body>
+</html>

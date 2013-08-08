@@ -14,11 +14,11 @@
 				<li<% if (sys.title == 'Module') { %> class="active"<%}%>>
 					<a href="/<%= sys.catalog %>module.html">Module</a>
 				</li>
-				<li>
-					<a href="https://github.com/Bacra/node-d2server/releases">Download</a>
+				<li<% if (sys.title == 'Download') { %> class="active"<%}%>>
+					<a href="/<%= sys.catalog %>download.html">Download</a>
 				</li>
-				<li>
-					<a href="https://github.com/Bacra/node-d2server/issues">Feedback</a>
+				<li<% if (sys.title == 'Feedback') { %> class="active"<%}%>>
+					<a href="/<%= sys.catalog %>feedback.html">Feedback</a>
 				</li>
 			</ul>
 		</div>
