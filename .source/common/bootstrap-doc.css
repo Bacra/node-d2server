@@ -167,6 +167,11 @@ body {
 		margin-right: 15%;
 		font-size: 30px;
 	}
+	.bs-btn {
+		padding: 14px 16px;
+		font-size: 18px;
+		border-radius: 6px;
+	}
 }
 
 /* Tablets/desktops and up */
@@ -188,11 +193,6 @@ body {
 	.bs-sidebar.affix .bs-sidenav {
 		margin-top: 0;
 		margin-bottom: 0;
-	}
-	.bs-btn {
-		padding: 14px 16px;
-		font-size: 18px;
-		border-radius: 6px;
 	}
 }
 
