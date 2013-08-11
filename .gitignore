@@ -1,4 +1,5 @@
 Thumbs.db
+npm-debug.log
 /node_modules/
 /wwwroot/
 /start.bat
@@ -6,3 +7,5 @@ Thumbs.db
 /template/*
 !/template/default/
 !/template/simple/
+
+config.js

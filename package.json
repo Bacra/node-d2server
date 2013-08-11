@@ -18,7 +18,8 @@
 		"less": "1.4.0",
 		"socket.io": "0.9.16",
 		"gcc": "0.2.0",
-		"yuicompressor": "2.4.7"
+		"yuicompressor": "2.4.7",
+		"ejs.ext": "0.1.0"
 	},
 	"engines": {
 		"node": ">=0.10.7"
