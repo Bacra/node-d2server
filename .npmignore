@@ -8,8 +8,4 @@ npm-debug.log
 /wwwroot/
 /start.bat
 
-/template/*
-!/template/default/
-!/template/simple/
-
 conf.js
