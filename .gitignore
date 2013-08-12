@@ -8,4 +8,4 @@ npm-debug.log
 !/template/default/
 !/template/simple/
 
-config.js
+conf.js
