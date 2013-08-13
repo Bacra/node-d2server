@@ -6,7 +6,12 @@
 		"name": "Bacra Woo",
 		"email": "Bacra.Woo@gmail.com"
 	},
-	"main": "serv",
+	"homepage": "http://bacra.github.io/node-d2server/",
+	"main": "./serv.js",
+	"bin": {
+		"d2server": "./serv"
+	},
+	"preferGlobal": true,
 	"keywords": [
 		"D2",
 		"nondejs",
@@ -21,12 +26,16 @@
 		"yuicompressor": "2.4.7",
 		"ejs.ext": "0.1.0"
 	},
+	"devDependencies": {},
 	"engines": {
 		"node": ">=0.10.7"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/Bacra/node-d2server.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Bacra/node-d2server/issues"
 	},
 	"license": "MIT",
 	"readmeFilename": "README.md"
