@@ -9,8 +9,8 @@ if (require('fs').existsSync('./conf.js')){
 	listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
 
 	// plugs
-	require('./lib/plugin/downServ/downServ.js');
-	require('./lib/plugin/cmd/cmd.js');
+	require('./lib/module/downServ/downServ.js');
+	require('./lib/module/cmd/cmd.js');
 } else {
 	notice.error('SYS', 'Please edit "'+__dirname+require('path').sep+'conf.js.example" file and creates "conf.js" file');
 }

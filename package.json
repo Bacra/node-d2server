@@ -8,10 +8,6 @@
 	},
 	"homepage": "http://bacra.github.io/node-d2server/",
 	"main": "./serv.js",
-	"bin": {
-		"d2server": "./serv"
-	},
-	"preferGlobal": true,
 	"keywords": [
 		"D2",
 		"nondejs",
@@ -23,8 +19,7 @@
 		"less": "1.4.0",
 		"socket.io": "0.9.16",
 		"gcc": "0.2.0",
-		"yuicompressor": "2.4.7",
-		"ejs.ext": "0.1.0"
+		"yuicompressor": "2.4.7"
 	},
 	"devDependencies": {},
 	"engines": {
