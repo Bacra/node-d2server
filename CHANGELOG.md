@@ -3,6 +3,13 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+# v3.2.4
+
+* 完善页面内弹窗样式
+
+
+
+
 # v3.2.3
 
 * 修正HTML中内嵌css、js导致`MinCssName`压缩错误的问题
