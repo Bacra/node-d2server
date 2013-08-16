@@ -66,7 +66,7 @@
 				D2Server运行需要<a href="http://nodejs.org/" target="_blank">NodeJS</a>环境，其中压缩JS和CSS过程需要<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank">JAVA</a>环境。
 			</p>
 			<p>
-				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>对<code>socket.io-client</code>组建的源码编译（安装学习版即可）。
+				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>对<code>socket.io-client</code>组建的源码编译（安装学习版即可），详情见<a href="#module">安装组件</a>。
 			</p>
 			<hr>
 			<p>
@@ -100,6 +100,9 @@ npm install</code></pre>
 					<p>
 						window用户在运行<code>npm install</code>前，请务必确保已经安装<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>。
 					</p>
+					<p>
+						如果实在不想安装这个巨无霸，可以尝试下载已编译好的<a href="https://github.com/Bacra/node-d2server/releases/download/v3.2.3/socket.io-windows.zip" taget="_blank">socket.io</a>（win7下编译），解压到<code>/node_modules/socket.io/</code>。可通过浏览器自动刷新功能来判断socket是否生效。
+					</p>
 				</li>
 				<li>
 					<p>
@@ -108,11 +111,8 @@ npm install</code></pre>
 				</li>
 				<li>
 					<p>
-					 	如果<code>yuicompressor</code>安装失败，尝试修改<a href="<%= master %>package.json" target="_blank">package.json</a>，将<code>yuicompressor</code>版本号修改为<b>2.4.8</b>
-					 </p>
-					 <p>
-					 	不过，2.4.8针对“\9”的css hack存在编译bug
-					 </p>
+						如果<code>yuicompressor</code>安装失败，尝试修改<a href="<%= master %>package.json" target="_blank">package.json</a>，将<code>yuicompressor</code>版本号修改为<b>2.4.8</b>；或下载<a href="https://github.com/Bacra/node-d2server/releases/download/v3.2.3/yuicompressor-2.4.7.zip" taget="_blank">yuicompressor 2.4.7</a>，解压到<code>/node_modules/yuicompressor/</code>。
+					</p>
 				</li>
 			</ul>
 			<!-- 安装组件：end -->
