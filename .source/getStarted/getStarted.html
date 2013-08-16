@@ -66,7 +66,7 @@
 				D2Server运行需要<a href="http://nodejs.org/" target="_blank">NodeJS</a>环境，其中压缩JS和CSS过程需要<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank">JAVA</a>环境。
 			</p>
 			<p>
-				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>进行部分组建的源码编译（安装学习版即可）。
+				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>对<code>socket.io-client</code>组建的源码编译（安装学习版即可）。
 			</p>
 			<hr>
 			<p>
@@ -87,7 +87,7 @@
 				D2Server所需的组件，可以通过<code>npm</code>一键安装。
 			</p>
 			<p>
-				所以，请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
+				请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
 			</p>
 			<div class="highlight">
 <pre><code class="prettyprint">cd node-d2server
@@ -96,6 +96,11 @@ npm install</code></pre>
 			<hr>
 			<h5>补充信息</h5>
 			<ul>
+				<li>
+					<p>
+						window用户在运行<code>npm install</code>前，请务必确保已经安装<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>。
+					</p>
+				</li>
 				<li>
 					<p>
 						不用理会中途的warn信息，即使中途有源码编译失败，也不会影响到使用（可能有特例，欢迎<a href="/<%= sys.catalog %>feedback.html" target="_blank">反馈</a>）
@@ -121,7 +126,7 @@ npm install</code></pre>
 				<h1 id="confg">配置客户端</h1>
 			</div>
 			<p>
-				打开D2Server根目录下的<a href="<%= master %>/conf.js" target="_blank">conf.js</a>，可以配置的属性如下：
+				复制D2Server根目录下的<a href="<%= master %>/conf.js" target="_blank">conf.js.example</a>，新的文件名为<code>conf.js</code>。打开编辑<code>conf.js</code>文件，可以配置的属性如下：
 			</p>
 			<div class="highlight">
 <pre><code class="prettyprint">var SourcePath = ".source/";
@@ -182,7 +187,7 @@ node serv.js</code></pre>
 				一般不出现黄色或则红色标注的信息，Server就可以判定为运行正常。
 			</p>
 			<p>
-				<strong>Server启动之后，不要关闭终端；在关闭Server前，也不要重复启动Server</strong>
+				<strong>Server启动之后，不要关闭终端；在关闭当前Server前，也不要重复启动Server</strong>
 			</p>
 		</div>
 		<!-- 运行客户端：end -->
@@ -193,8 +198,7 @@ node serv.js</code></pre>
 				<h1 id="project">项目管理</h1>
 			</div>
 			<p class="lead">
-				做了如此多的准备工作，终于到项目管理这一页了。<br />
-				对于我们还是D2Server，项目都是最核心的部分。D2Server从项目创建开始，到最后的工作交接，每一步都力求最大化节约中间时间，协助你处理琐碎的例如文件整理等工作。
+				对于我们还是D2Server，项目都是最核心的部分。D2Server从项目创建开始，到最后的工作交接，每一步都力求最大化节约中间时间，协助你处理琐碎的日常工作。
 			</p>
 
 			<!-- 初始化：begin -->

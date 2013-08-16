@@ -112,7 +112,7 @@
 				D2Server运行需要<a href="http://nodejs.org/" target="_blank">NodeJS</a>环境，其中压缩JS和CSS过程需要<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank">JAVA</a>环境。
 			</p>
 			<p>
-				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>进行部分组建的源码编译（安装学习版即可）。
+				windows用户安装过程中，还需<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>对<code>socket.io-client</code>组建的源码编译（安装学习版即可）。
 			</p>
 			<hr>
 			<p>
@@ -126,39 +126,16 @@
 			<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
 <hr>
 <h4>通过Git Clone（推荐）</h4>
-<blockquote>
-	正在对D2Server的下载解决方案进行优化，Git方式暂时无法使用，敬请谅解
-</blockquote>
 <p>
 	推荐使用git进行项目的安装，方便以后的版本迭代更新。
 </p>
 <div class="highlight">
-<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
-cd node-d2server
-git submodule update --init</code></pre>
+<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server</code></pre>
 </div>
-<h5>更优的处理方案</h5>
-<p>
-	由于使用项目时必须修改<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="https://github.com/Bacra/node-d2server/fork" target="_blank">Fork</a>一份副本，然后再通过上面的方式将Fork的副本部署到本地。
-</p>
-<p>
-	以后版本迭代更加方便，连<code>conf.js</code>文件都不需要顾虑，直接<code>git pull</code>拉取线上资源即可。
-</p>
 <hr>
 <h4>直接下载</h4>
-<ol>
-	<li>
-		通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">这个连接</a>，直接将项目打包成zip下载到本地。
-	</li>
-	<li>
-		解压文件，再下载<a href="https://github.com/Bacra/d2server-ejs/archive/bacra-master.zip" target="_blank">EJS（定制版）</a>并解压到<code>lib/module/parseHTML/ejs</code>目录
-	</li>
-</ol>
 <p>
-	你也可以通过<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>获取项目之前的版本。
-</p>
-<p>
-	<b>注：</b>从<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>下载的源码，也需要手动下载解压<a href="https://github.com/Bacra/d2server-ejs/archive/bacra-master.zip" target="_blank">EJS（定制版）</a>。
+	通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">master zip</a>或则<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>，可直接将项目打包成zip下载到本地。
 </p>
 			<!-- 下载源码：end -->
 			
@@ -169,7 +146,7 @@ git submodule update --init</code></pre>
 				D2Server所需的组件，可以通过<code>npm</code>一键安装。
 			</p>
 			<p>
-				所以，请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
+				请确保已经安装NodeJS环境，并且已经将<code>node</code>和<code>npm</code>放入<code>path</code>目录。
 			</p>
 			<div class="highlight">
 <pre><code class="prettyprint">cd node-d2server
@@ -178,6 +155,11 @@ npm install</code></pre>
 			<hr>
 			<h5>补充信息</h5>
 			<ul>
+				<li>
+					<p>
+						window用户在运行<code>npm install</code>前，请务必确保已经安装<a href="http://www.microsoft.com/visualstudio/eng/downloads#d-2010-express" target="_blank">Visual Studio</a>。
+					</p>
+				</li>
 				<li>
 					<p>
 						不用理会中途的warn信息，即使中途有源码编译失败，也不会影响到使用（可能有特例，欢迎<a href="/node-d2server/feedback.html" target="_blank">反馈</a>）
@@ -203,7 +185,7 @@ npm install</code></pre>
 				<h1 id="confg">配置客户端</h1>
 			</div>
 			<p>
-				打开D2Server根目录下的<a href="https://github.com/Bacra/node-d2server/blob/master//conf.js" target="_blank">conf.js</a>，可以配置的属性如下：
+				复制D2Server根目录下的<a href="https://github.com/Bacra/node-d2server/blob/master//conf.js" target="_blank">conf.js.example</a>，新的文件名为<code>conf.js</code>。打开编辑<code>conf.js</code>文件，可以配置的属性如下：
 			</p>
 			<div class="highlight">
 <pre><code class="prettyprint">var SourcePath = ".source/";
@@ -264,7 +246,7 @@ node serv.js</code></pre>
 				一般不出现黄色或则红色标注的信息，Server就可以判定为运行正常。
 			</p>
 			<p>
-				<strong>Server启动之后，不要关闭终端；在关闭Server前，也不要重复启动Server</strong>
+				<strong>Server启动之后，不要关闭终端；在关闭当前Server前，也不要重复启动Server</strong>
 			</p>
 		</div>
 		<!-- 运行客户端：end -->
@@ -275,8 +257,7 @@ node serv.js</code></pre>
 				<h1 id="project">项目管理</h1>
 			</div>
 			<p class="lead">
-				做了如此多的准备工作，终于到项目管理这一页了。<br />
-				对于我们还是D2Server，项目都是最核心的部分。D2Server从项目创建开始，到最后的工作交接，每一步都力求最大化节约中间时间，协助你处理琐碎的例如文件整理等工作。
+				对于我们还是D2Server，项目都是最核心的部分。D2Server从项目创建开始，到最后的工作交接，每一步都力求最大化节约中间时间，协助你处理琐碎的日常工作。
 			</p>
 
 			<!-- 初始化：begin -->

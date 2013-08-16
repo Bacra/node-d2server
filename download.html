@@ -51,39 +51,16 @@
 			<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
 <hr>
 <h4>通过Git Clone（推荐）</h4>
-<blockquote>
-	正在对D2Server的下载解决方案进行优化，Git方式暂时无法使用，敬请谅解
-</blockquote>
 <p>
 	推荐使用git进行项目的安装，方便以后的版本迭代更新。
 </p>
 <div class="highlight">
-<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server
-cd node-d2server
-git submodule update --init</code></pre>
+<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server</code></pre>
 </div>
-<h5>更优的处理方案</h5>
-<p>
-	由于使用项目时必须修改<a href="https://github.com/Bacra/node-d2server/blob/master/conf.js" target="_blank">conf.js</a>文件，所以，你可以先<a href="https://github.com/Bacra/node-d2server/fork" target="_blank">Fork</a>一份副本，然后再通过上面的方式将Fork的副本部署到本地。
-</p>
-<p>
-	以后版本迭代更加方便，连<code>conf.js</code>文件都不需要顾虑，直接<code>git pull</code>拉取线上资源即可。
-</p>
 <hr>
 <h4>直接下载</h4>
-<ol>
-	<li>
-		通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">这个连接</a>，直接将项目打包成zip下载到本地。
-	</li>
-	<li>
-		解压文件，再下载<a href="https://github.com/Bacra/d2server-ejs/archive/bacra-master.zip" target="_blank">EJS（定制版）</a>并解压到<code>lib/module/parseHTML/ejs</code>目录
-	</li>
-</ol>
 <p>
-	你也可以通过<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>获取项目之前的版本。
-</p>
-<p>
-	<b>注：</b>从<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>下载的源码，也需要手动下载解压<a href="https://github.com/Bacra/d2server-ejs/archive/bacra-master.zip" target="_blank">EJS（定制版）</a>。
+	通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">master zip</a>或则<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>，可直接将项目打包成zip下载到本地。
 </p>
 			<hr>
 			<h3>相关资源推荐</h3>
