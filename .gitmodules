@@ -1,3 +1,0 @@
-[submodule "lib/module/parseHTML/ejs"]
-	path = lib/module/parseHTML/ejs
-	url = git://github.com/Bacra/ejs.git

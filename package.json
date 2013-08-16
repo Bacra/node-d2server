@@ -1,12 +1,13 @@
 {
-	"name": "D2Server",
-	"version": "3.2.2",
+	"name": "d2server",
+	"version": "3.2.3",
 	"description": "An File Server for D2 developers",
 	"author": {
 		"name": "Bacra Woo",
 		"email": "Bacra.Woo@gmail.com"
 	},
-	"main": "serv",
+	"homepage": "http://bacra.github.io/node-d2server/",
+	"main": "./serv.js",
 	"keywords": [
 		"D2",
 		"nondejs",
@@ -18,14 +19,19 @@
 		"less": "1.4.0",
 		"socket.io": "0.9.16",
 		"gcc": "0.2.0",
-		"yuicompressor": "2.4.7"
+		"yuicompressor": "2.4.7",
+		"mime": "1.2.10"
 	},
+	"devDependencies": {},
 	"engines": {
 		"node": ">=0.10.7"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/Bacra/node-d2server.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Bacra/node-d2server/issues"
 	},
 	"license": "MIT",
 	"readmeFilename": "README.md"

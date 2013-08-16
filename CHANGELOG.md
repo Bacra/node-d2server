@@ -3,6 +3,17 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+# v3.2.3
+
+* 修正HTML中内嵌css、js导致`MinCssName`压缩错误的问题
+* 优化`MinCssName`，有效提高`export`导出效率
+* 修改`ejs`模块的安装，直接通过`npm`
+* 将ejs的源码直接放入D2Server中，不再使用git子库进行引用
+* 使用node-mime开源项目代替mime.js
+
+
+
+
 ## v3.2.2
 
 * MinCssName对id也将进行缩减转化
