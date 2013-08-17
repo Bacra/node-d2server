@@ -8,6 +8,7 @@ https://github.com/Bacra/node-d2server/releases
 * 完善页面内弹窗样式，兼容更加复杂的页面样式环境
 * 页面内弹窗增加`Splice`的连接地址
 * 修正页面内弹窗的连接地址，自动根据当前访问地址判断是否使用`alias`
+* View页面也增加页面内弹窗
 
 
 
