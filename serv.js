@@ -7,8 +7,10 @@ listen('viewServ', _conf.ViewServPort, 'View Server');
 listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
 require('./lib/module/cmd/cmd.js');
 
-// plugins
-require('./lib/plugins/downServ/downServ.js');
+// 加载plugins
+require('fs').readdirSync(__dirname+'/lib/plugins/').forEach(function(dirname){
+	if (dirname != '.'&& dirname != '..') require('./lib/plugins/'+dirname+'/'+dirname+'.js');
+});
 
 
 
