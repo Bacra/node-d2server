@@ -1,16 +1,14 @@
-var notice = require('./lib/func/notice.js');
-
-var _conf = require('./lib/config.js');
+var notice = require('./lib/func/notice.js'),
+	_conf = require('./lib/config.js');
 
 listen('devServ', _conf.DevServPort, 'Dev Server');
 listen('infoServ', _conf.InfoServPort, 'Info Server');
 listen('viewServ', _conf.ViewServPort, 'View Server');
 listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
-
-// plugins
-require('./lib/module/downServ/downServ.js');
 require('./lib/module/cmd/cmd.js');
 
+// plugins
+require('./lib/plugins/downServ/downServ.js');
 
 
 
