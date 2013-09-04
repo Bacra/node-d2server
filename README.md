@@ -40,7 +40,7 @@ Checkout to: http://bacra.github.io/node-d2server/get-started.html
 
 
 ## TodoList
-通过[TODO.md](./TODO.md)可以查看D2Server正在开发的新功能
+通过[TODO.md](https://github.com/Bacra/node-d2server/blob/dev/TODO.md)可以查看D2Server正在开发的新功能
 
 
 
