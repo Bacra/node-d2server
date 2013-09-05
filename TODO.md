@@ -7,4 +7,3 @@
 * 将projConfig相关的notice独立出来
 * 完善notice，区分log、warn、error三种形式保存数据结构
 * 完善servUtil、ProjConfig、Cache的重构，增加更好的拓展性
-* API文档提供历史版本管理
