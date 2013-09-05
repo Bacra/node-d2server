@@ -9,13 +9,13 @@
 		<div class="nav-collapse collapse wf_mNavbar__collapse">
 			<ul class="nav navbar-nav">
 				<li<% if (sys.title == 'Get Started') { %> class="active"<%}%>>
-					<a href="/<%= sys.catalog %>get-started.html">Get Started</a>
+					<a href="/<%= sys.catalog %><%= version%>/get-started.html">Get Started</a>
 				</li>
 				<li<% if (sys.title == 'Module') { %> class="active"<%}%>>
-					<a href="/<%= sys.catalog %>module.html">Module</a>
+					<a href="/<%= sys.catalog %><%= version%>/module.html">Module</a>
 				</li>
 				<li<% if (sys.title == 'Download') { %> class="active"<%}%>>
-					<a href="/<%= sys.catalog %>download.html">Download</a>
+					<a href="/<%= sys.catalog %><%= version%>/download.html">Download</a>
 				</li>
 				<li<% if (sys.title == 'Feedback') { %> class="active"<%}%>>
 					<a href="/<%= sys.catalog %>feedback.html">Feedback</a>

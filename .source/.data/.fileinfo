@@ -18,5 +18,10 @@
 		"mime": "text/css"
 	},
 	"node-d2server_ejs-param/[NULL]": {},
-	"node-d2server_/[NULL]": {}
+	"node-d2server_/[NULL]": {},
+	"d2server_node-d2server_/[NULL]": {},
+	"d2server_node-d2server/[NULL]": {},
+	"index.html/[NULL]": {},
+	"node-d2server_module.html/[NULL]": {},
+	"node-d2server_versions.html/[NULL]": {}
 }
