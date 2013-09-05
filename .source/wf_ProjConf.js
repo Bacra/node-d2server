@@ -48,22 +48,22 @@ module.exports = {
 			},
 			{
 				'title': 'D2Server',
-				'data': buildData('下载使用D2Server管理前端项目，进行团队协同开发，让前端开发人员更加集中精力于自己的工作。推荐使用D2Server搭建前端开发服务器环境，代替Apache')
+				'data': buildData('下载使用D2Server管理前端项目，进行团队协同开发，让前端开发人员更加集中精力于自己的工作。推荐代替Apache使用D2Server搭建前端开发服务器环境')
 			}, true),
 		'getStarted/getStarted.html': createHTMLConf('get-started.html', {},
 			{
 				'title': 'Get Started',
-				'data': buildData('D2Server入门初级中文教程，从下载D2Server开始，一步一步教你如何使用D2Server管理前端项目')
+				'data': buildData('D2Server入门中文教程，从下载D2Server开始，一步一步教你如何使用D2Server管理前端项目，进行团队协作开发，可替代Apache搭建前端服务器开发环境')
 			}),
 		'module/module.html': createHTMLConf('module.html', {},
 			{
 				'title': 'Module',
-				'data': buildData('D2Server API中文文档，介绍D2Server各个模块组件的参数配置方法，了解D2Server的强大功能')
+				'data': buildData('D2Server API中文文档，介绍D2Server各个模块组件的参数配置方法，了解D2Server的强大功能，可替代Apache搭建前端服务器开发环境')
 			}),
 		'getStarted/downloadPage.html': createHTMLConf('download.html', {},
 			{
 				'title': 'Download',
-				'data': buildData('通过git clone D2Server，或则Fork项目。也可以通过Github下载到D2Server的历史版本源码')
+				'data': buildData('通过git下载安装更新D2Server，或通过Github下载到D2Server的历史版本源码。项目开源，基于NodeJS开发，可方便地进行自定义前端服务器开发环境')
 			}),
 		'feedback/feedback.html': {
 			'feedback.html': {
