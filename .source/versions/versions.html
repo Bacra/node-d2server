@@ -1,0 +1,16 @@
+<div id="wf_mDocVersion">
+<% versions.forEach(function(myVersion){ %>
+<a href="/<%= sys.catalog %><%= myVersion %>/index.html" data-docVersion="<%= myVersion %>" class="btn btn-default btn-sm"><%= myVersion %></a>
+<% }); %>
+</div>
+
+<script type="text/javascript">
+;(function(){
+	if (window._docVersion) {
+		var nodes = document.getElementById('wf_mDocVersion').getElementsByTagName('a');
+		for(var i = nodes.length; i--;){
+			if (nodes[i].getAttribute('data-docVersion') == _docVersion) nodes[i].className = 'btn btn-primary btn-sm';
+		}
+	}
+})();
+</script>

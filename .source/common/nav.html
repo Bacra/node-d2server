@@ -1,6 +1,7 @@
+<script type="text/javascript">var _docVersion="<%= version%>";</script>
 <div class="navbar navbar-inverse navbar-fixed-top wf_mNavbar">
 	<div class="container">
-		<a href="/node-d2server/index.html" class="navbar-brand">D2Server</a>
+		<a href="/<%= sys.catalog %><%= version%>/index.html" class="navbar-brand">D2Server <%= version%></a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".wf_mNavbar__collapse">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -20,7 +21,21 @@
 				<li<% if (sys.title == 'Feedback') { %> class="active"<%}%>>
 					<a href="/<%= sys.catalog %>feedback.html">Feedback</a>
 				</li>
+				<li<% if (sys.title == 'Versions') { %> class="active"<%}%>>
+					<a href="/<%= sys.catalog %>versions.html" data-toggle="modal" data-target="#wf_mNav__modal">Doc Version</a>
+				</li>
 			</ul>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="wf_mNav__modal" tabindex="-1" role="dialog" aria-labelledby="wf_mNav__modalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">API Version History</h4>
+			</div>
+			<div class="modal-body">Loading...</div>
 		</div>
 	</div>
 </div>

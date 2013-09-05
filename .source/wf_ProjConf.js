@@ -28,9 +28,9 @@ function buildData(description){
 	return data;
 }
 
-function createHTMLConf(htmlSrc, conf, htmlConf, is_cloneRoot){
+function createHTMLConf(htmlSrc, htmlConf){
+	var conf = {};
 	conf[version+'/'+htmlSrc] = htmlConf;
-	if (is_cloneRoot) conf[htmlSrc] = htmlConf;
 	return conf;
 }
 
@@ -38,41 +38,75 @@ function createHTMLConf(htmlSrc, conf, htmlConf, is_cloneRoot){
 module.exports = {
 	"alias": 'd2',			// 项目的二级域名
 	"sync": false,			// fileMap文件同步目录
-	"HTML": {
-		'footer': 'common/footer-code.html',
+	"HTML": {				// 配置项目HTML
 		'header': 'common/header-code.html',
-		"index/index.html": createHTMLConf('index.html',
-			{
-				'header': 'common/header.html',
-				'footer': 'common/footer.html'
+		'footer': 'common/footer-code.html',
+		'common/redirect.html': {
+			'header': false,
+			'footer': false,
+			'index.html': {
+				'title': 'redirect index',
+				'data': {
+					'version': version
+				}
 			},
-			{
+			'get-started.html': {
+				'title': 'redirect get-started',
+				'data': {
+					'version': version
+				}
+			},
+			'module.html': {
+				'title': 'redirect module',
+				'data': {
+					'version': version
+				}
+			},
+			'download.html': {
+				'title': 'redirect download',
+				'data': {
+					'version': version
+				}
+			},
+			'feedback.html': {
+				'title': 'redirect feedback',
+				'data': {
+					'version': version
+				}
+			}
+		},
+		"index/index.html": createHTMLConf('index.html', {
+				'header': 'common/header.html',
+				'footer': 'common/footer.html',
 				'title': 'D2Server',
 				'data': buildData('下载使用D2Server管理前端项目，进行团队协同开发，让前端开发人员更加集中精力于自己的工作。推荐代替Apache使用D2Server搭建前端开发服务器环境')
-			}, true),
-		'getStarted/getStarted.html': createHTMLConf('get-started.html', {},
-			{
+			}),
+		'getStarted/getStarted.html': createHTMLConf('get-started.html', {
 				'title': 'Get Started',
 				'data': buildData('D2Server入门中文教程，从下载D2Server开始，一步一步教你如何使用D2Server管理前端项目，进行团队协作开发，可替代Apache搭建前端服务器开发环境')
 			}),
-		'module/module.html': createHTMLConf('module.html', {},
-			{
+		'module/module.html': createHTMLConf('module.html', {
 				'title': 'Module',
 				'data': buildData('D2Server API中文文档，介绍D2Server各个模块组件的参数配置方法，了解D2Server的强大功能，可替代Apache搭建前端服务器开发环境')
 			}),
-		'getStarted/downloadPage.html': createHTMLConf('download.html', {},
-			{
+		'getStarted/downloadPage.html': createHTMLConf('download.html', {
 				'title': 'Download',
 				'data': buildData('通过git下载安装更新D2Server，或通过Github下载到D2Server的历史版本源码。项目开源，基于NodeJS开发，可方便地进行自定义前端服务器开发环境')
 			}),
-		'feedback/feedback.html': {
-			'feedback.html': {
+		'feedback/feedback.html': createHTMLConf('feedback.html', {
 				'header': 'common/header.html',
 				'footer': 'common/footer.html',
 				'title': 'Feedback',
 				'data': buildData(null)
+			}),
+		'versions/versions.html': {
+			'versions.html': {
+				'header': false,
+				'footer': false,
+				'title': 'Version History',
+				'data': buildData(null)
 			}
 		}
-	},						// 配置项目HTML
-	"fileMap": {}					// 配置项目文件映射
+	},
+	"fileMap": {}			// 配置项目文件映射
 };

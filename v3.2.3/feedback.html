@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Download - An File Server for D2 developers</title>
-<meta name="description" content="通过git下载安装更新D2Server，或通过Github下载到D2Server的历史版本源码。项目开源，基于NodeJS开发，可方便地进行自定义前端服务器开发环境" />
+<title>Feedback - An File Server for D2 developers</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="me" href="https://plus.google.com/102678188433989978435?rel=author" />
 <link rel="stylesheet" type="text/css" href="/common/bootstrap/bootstrap.css" />
@@ -29,10 +29,10 @@
 				<li>
 					<a href="/node-d2server/v3.2.3/module.html">Module</a>
 				</li>
-				<li class="active">
+				<li>
 					<a href="/node-d2server/v3.2.3/download.html">Download</a>
 				</li>
-				<li>
+				<li class="active">
 					<a href="/node-d2server/feedback.html">Feedback</a>
 				</li>
 				<li>
@@ -53,59 +53,27 @@
 		</div>
 	</div>
 </div>
-<div class="container">
 
 
 
 
 
 <!-- Content Begin -->
-<div class="container">
+<div class="container" style="text-align: center; min-width: 350px;">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1>下载源码</h1>
-			<p class="lead">你可以很方便地从Github上下载项目源码，<code>master</code>分支上保存着最新版的D2Server，<code>dev</code>分支则汇集着正在开发的新功能。</p>
-<hr>
-<h4>通过Git Clone（推荐）</h4>
-<p>
-	推荐使用git进行项目的安装，方便以后的版本迭代更新。
-</p>
-<div class="highlight">
-<pre><code class="prettyprint">git clone https://github.com/Bacra/node-d2server</code></pre>
-</div>
-<hr>
-<h4>直接下载</h4>
-<p>
-	通过<a href="https://github.com/Bacra/node-d2server/archive/master.zip" target="_blank">master zip</a>或则<a href="https://github.com/Bacra/node-d2server/releases" target="_blank">Releases</a>，可直接将项目打包成zip下载到本地。
-</p>
-			<hr>
-			<h3>相关资源推荐</h3>
-			<ul>
-				<li>
-					<a href="https://help.github.com/" target="_blank">如何使用Git</a>
-				</li>
-				<li>
-					<a href="/node-d2server/v3.2.3/get-started.html">了解如何安装组件及配置D2Server</a>
-				</li>
-				<li>
-					<a href="/node-d2server/feedback.html" target="_blank">下载遇到问题，我要反馈</a>
-				</li>
-				<li>
-					<a href="/node-d2server/v3.2.3/get-started.html#project">怎么用D2Server管理前端开发项目</a>
-				</li>
-				<li>
-					<a href="/node-d2server/v3.2.3/module.html">深入了解D2Server的各个模块</a>
-				</li>
-			</ul>
+			<p style="padding-top: 100px; font-size: 24px;">
+				正在带你前往Github项目的<a href="https://github.com/Bacra/node-d2server/issues">Issues</a>进行反馈操作
+			</p>
+			<p style="font-size: 18px; padding-top: 4px;">
+				你需要Github帐号才能发言
+			</p>
+			<p style="padding-top: 22px;">如果浏览器没有自动跳转，<a href="https://github.com/Bacra/node-d2server/issues">请点击此处</a></p>
+			<p>
+				<a href="#" id="wf_stopReBt">终止跳转</a>
+			</p>
 		</div>
 	</div>
-</div>
-<!-- Content End -->
-
-
-
-
-
 </div>
 </div>
 <div class="eA">
@@ -117,8 +85,25 @@
 		, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
 	</p>
 </div>
-<script type="text/javascript" src="/common/google-code-prettify/run_prettify.js"></script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r5.gif&amp;uid=1375936934454860" charset="utf-8"></script>
+<script type="text/javascript">
+;(function(){
+	var wait = setTimeout(function(){
+		window.location.href="https://github.com/Bacra/node-d2server/issues";
+	}, 2000);
+
+	document.getElementById('wf_stopReBt').onclick = function(){
+		clearTimeout(wait);
+		this.parentNode.parentNode.removeChild(this.parentNode);
+		return false;
+	};
+})();
+</script>
+<!-- Content End -->
+
+
+
+
+
 <script type="text/javascript" src="/common/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="/node-d2server/js/base.min.js"></script>
 </body>

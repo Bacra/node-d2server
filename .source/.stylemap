@@ -3,9 +3,12 @@
 		"wf_mFooter": "eA",
 		"wf_mFooter2": "eB",
 		"wf_mNavbar": "eC",
-		"wf_mNavbar__collapse": "eD"
+		"wf_mNavbar__collapse": "eD",
+		"wf_mNav__modal": "eE",
+		"wf_mNav__modalLabel": "eF",
+		"wf_mDocVersion": "eG"
 	},
 	"index": {
-		"e": 3
+		"e": 6
 	}
 }

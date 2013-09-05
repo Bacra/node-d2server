@@ -12,7 +12,7 @@ module.exports = {
 	"defaultFooter": "common/footer.html",			// 公共尾部
 	"extra": ["wf_ProjConf.js"],					// 子配置文件
 	"dataAPI": {									// 动态数据接口
-		'excludeQuery': ['v', 'version'],
+		'excludeQuery': ['v', 'version', '_'],
 		'update': false
 	},
 	"HTML": {},							// 配置项目HTML（公共部分）

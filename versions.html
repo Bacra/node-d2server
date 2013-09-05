@@ -1,0 +1,16 @@
+<div id="eG">
+
+<a href="/node-d2server/v3.2.3/index.html" data-docVersion="v3.2.3" class="btn btn-default btn-sm">v3.2.3</a>
+
+</div>
+
+<script type="text/javascript">
+;(function(){
+	if (window._docVersion) {
+		var nodes = document.getElementById('eG').getElementsByTagName('a');
+		for(var i = nodes.length; i--;){
+			if (nodes[i].getAttribute('data-docVersion') == _docVersion) nodes[i].className = 'btn btn-primary btn-sm';
+		}
+	}
+})();
+</script>
