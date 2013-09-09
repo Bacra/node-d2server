@@ -12,7 +12,7 @@ https://github.com/Bacra/node-d2server/releases
 * 修正某些状况下View Server无法获取项目信息的问题
 * 在`ejs`的HTML参数中，保留`sys`的`block`设置，同时也增加`blockReg`的正则表达式
 
-## Fix
+### Fix
 
 * 修正项目配置文件中`HTML`最里层配置（单个HTML文件的配置项目）不能复用的问题
 
