@@ -3,6 +3,22 @@ https://github.com/Bacra/node-d2server/releases
 
 
 
+# v3.2.4
+
+* 完善页面内弹窗样式，兼容更加复杂的页面样式环境
+* 页面内弹窗增加`Splice`的连接地址
+* 修正页面内弹窗的连接地址，自动根据当前访问地址判断是否使用`alias`
+* View页面也增加页面内弹窗
+* 修正某些状况下View Server无法获取项目信息的问题
+* 在`ejs`的HTML参数中，保留`sys`的`block`设置，同时也增加`blockReg`的正则表达式
+
+### Fix
+
+* 修正项目配置文件中`HTML`最里层配置（单个HTML文件的配置项目）不能复用的问题
+
+
+
+
 # v3.2.3
 
 * 修正HTML中内嵌css、js导致`MinCssName`压缩错误的问题

@@ -1,6 +1,6 @@
 {
 	"name": "d2server",
-	"version": "3.2.3",
+	"version": "3.2.4",
 	"description": "An File Server for D2 developers",
 	"author": {
 		"name": "Bacra Woo",
@@ -33,6 +33,11 @@
 	"bugs": {
 		"url": "https://github.com/Bacra/node-d2server/issues"
 	},
-	"license": "MIT",
+	"license": [
+		{
+			"type": "MIT",
+			"url": "http://bacra.github.io/node-d2server/blob/master/LICENSE.md"
+		}
+	],
 	"readmeFilename": "README.md"
 }

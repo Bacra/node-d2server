@@ -1,21 +1,28 @@
-var notice = require('./lib/func/notice.js');
+var notice = require('./lib/func/notice.js'),
+	_conf = require('./lib/config.js');
 
-if (require('fs').existsSync('./conf.js')){
-	var _conf = require('./conf.js');
-
-	listen('devServ', _conf.DevServPort, 'Dev Server');
-	listen('infoServ', _conf.InfoServPort, 'Info Server');
-	listen('viewServ', _conf.ViewServPort, 'View Server');
-	listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
-
-	// plugs
-	require('./lib/module/downServ/downServ.js');
-	require('./lib/module/cmd/cmd.js');
-} else {
-	notice.error('SYS', 'Please edit "'+__dirname+require('path').sep+'conf.js.example" file and creates "conf.js" file');
-}
+notice.log('SYS', 'start servers');
+listen('devServ', _conf.DevServPort, 'Dev Server');
+listen('infoServ', _conf.InfoServPort, 'Info Server');
+listen('viewServ', _conf.ViewServPort, 'View Server');
+listen('spliceServ', _conf.SpliceServPort, 'Splice Server');
+require('./lib/module/cmd/cmd.js');
 
 
+// 加载plugins
+notice.log('SYS', 'start load plugins');
+require('fs').readdirSync(__dirname+'/lib/plugins/').forEach(function(dirname){
+	if (dirname != '.'&& dirname != '..') {
+		require('./lib/plugins/'+dirname+'/'+dirname+'.js');
+		notice.log('SYS', 'load '+dirname+' plugin successs');
+	}
+});
+
+
+
+// 读取配置文件
+notice.log('SYS', 'start load Project Config');
+require('./lib/module/ProjConfig/runProjConfig.js');
 
 
 function listen(serv, port, name){
