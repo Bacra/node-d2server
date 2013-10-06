@@ -1,7 +1,7 @@
 var notice = require('./lib/func/notice.js'),
 	_conf = require('./lib/config.js');
 
-notice.log('SYS', 'start servers');
+notice.title('SYS', 'start servers');
 listen('devServ', _conf.DevServPort, 'Dev Server');
 listen('infoServ', _conf.InfoServPort, 'Info Server');
 listen('viewServ', _conf.ViewServPort, 'View Server');
@@ -10,18 +10,18 @@ require('./lib/module/cmd/cmd.js');
 
 
 // 加载plugins
-notice.log('SYS', 'start load plugins');
+notice.title('SYS', 'start load plugins');
 require('fs').readdirSync(__dirname+'/lib/plugins/').forEach(function(dirname){
 	if (dirname != '.'&& dirname != '..') {
 		require('./lib/plugins/'+dirname+'/'+dirname+'.js');
-		notice.log('SYS', 'load '+dirname+' plugin successs');
+		notice.info('SYS', 'load '+dirname+' plugin successs');
 	}
 });
 
 
 
 // 读取配置文件
-notice.log('SYS', 'start load Project Config');
+notice.title('SYS', 'start load Project Config');
 require('./lib/module/ProjConfig/runProjConfig.js');
 
 
@@ -34,5 +34,5 @@ function listen(serv, port, name){
 		})
 		.listen(port);
 
-	notice.log('SYS', name+' run in Port:'+port);
+	notice.info('SYS', name+' run in Port:'+port);
 }
