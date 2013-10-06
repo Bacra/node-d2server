@@ -1,5 +1,5 @@
 var notice = require('./lib/func/notice.js'),
-	_conf = require('./lib/config.js');
+	_conf = require('./lib/func/config.js');
 
 notice.title('SYS', 'start servers');
 listen('devServ', _conf.DevServPort, 'Dev Server');
