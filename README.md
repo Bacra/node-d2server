@@ -47,3 +47,7 @@ Checkout to: http://bacra.github.io/node-d2server/get-started.html
 ## License
 
 D2Server is available under the terms of the [MIT License](./LICENSE.md).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Bacra/node-d2server/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
